@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Dechthana from "@/assets/dechthana.jpg";
+import Dechthana from "@/assets/Dechthana.jpg";
 
 export default function Portfolio() {
   let position = [
