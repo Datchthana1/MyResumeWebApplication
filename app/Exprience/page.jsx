@@ -26,7 +26,7 @@ const Page = () => {
         Medium:
           "https://medium.com/@kaiza941/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%9A%E0%B8%9B%E0%B8%A7%E0%B8%94-728d043f6af1",
       },
-      picture: [VibeInContest, ProcedureOfDemostration, CompetitionContest],
+      picture: [VibeInContest, CompetitionContest, ProcedureOfDemostration],
     },
     "Data Engineer": {
       description:
@@ -49,12 +49,12 @@ const Page = () => {
 
           {/* รูปภาพ */}
           {details.picture && (
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-wrap md:flex-row gap-4">
               {details.picture.map((pic, index) => (
                 <Image
                   key={index}
                   src={pic}
-                  height={300}
+                  height={200}
                   className="rounded-2xl mb-4"
                   alt={`picture-${index}`}
                 />
