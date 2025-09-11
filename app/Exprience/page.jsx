@@ -50,7 +50,7 @@ const Page = () => {
   };
 
   return (
-    <div className="font-sans min-h-screen bg-gray-100 text-gray-900 px-5 pt-5 space-y-6">
+    <div className="font-sans min-h-screen bg-gray-100 text-gray-900 px-5 pt-5 space-y-6 pb-5">
       {Object.entries(Experience).map(([title, details], index) => (
         <div
           key={index}
