@@ -50,7 +50,7 @@ export default function Navbar() {
 
           {/* Mobile Menu */}
           <div
-            className={`fixed top-16 left-0 w-full md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2 z-50 ${
+            className={`fixed top-16 left-0 w-full md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2 z-50 rounded-b-2xl ${
               closing ? "animate-fadeOut-Navbar" : "animate-fadeInUp-Navbar"
             }`}
           >
