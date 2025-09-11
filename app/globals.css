@@ -19,6 +19,34 @@
   }
 }
 
+@keyframes fadeInUp-Navbar {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fadeInUp-Navbar {
+  animation: fadeInUp-Navbar 0.3s ease backwards;
+}
+
+@keyframes fadeOut-Navbar {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+.animate-fadeOut-Navbar {
+  animation: fadeOut-Navbar 0.3s ease forwards;
+}
+
 @keyframes fadeInUp {
   0% {
     opacity: 0;

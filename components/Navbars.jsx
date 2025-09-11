@@ -4,6 +4,15 @@ import Link from "next/link";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
+
+  const handleClose = () => {
+    setClosing(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setClosing(false);
+    }, 300); // ระยะเวลาให้ตรงกับ duration ของ fade-out
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white shadow-md z-50">
@@ -25,14 +34,10 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsOpen(true)}
               className="focus:outline-none"
             >
-              {isOpen ? (
-                <span className="text-2xl">&#10005;</span> // X icon
-              ) : (
-                <span className="text-2xl">&#9776;</span> // Hamburger
-              )}
+              <span className="text-2xl">&#9776;</span>
             </button>
           </div>
         </div>
@@ -41,24 +46,25 @@ export default function Navbar() {
       {isOpen && (
         <>
           {/* Overlay คลิกปิด */}
-          <div
-            className="fixed inset-0 z-40" // ครอบเต็มหน้าจอ
-            onClick={() => setIsOpen(false)}
-          ></div>
+          <div className="fixed inset-0 z-40" onClick={handleClose}></div>
 
           {/* Mobile Menu */}
-          <div className="fixed top-16 left-0 w-full md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2 z-50">
+          <div
+            className={`fixed top-16 left-0 w-full md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2 z-50 ${
+              closing ? "animate-fadeOut-Navbar" : "animate-fadeInUp-Navbar"
+            }`}
+          >
             <Link
               href="/"
               className="block hover:text-blue-300"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
             >
               Home
             </Link>
             <Link
               href="/Exprience"
               className="block hover:text-blue-300"
-              onClick={() => setIsOpen(false)}
+              onClick={handleClose}
             >
               About My Exprience
             </Link>
