@@ -5,7 +5,10 @@ import "./globals.css";
 export const metadata = {
   title: "My Resume Web",
   icons: {
-    icon: "/profile.png", // path จาก public
+    icon: [
+      { url: "/profile.png", sizes: "32x32" },
+      { url: "/profile.png", sizes: "16x16" },
+    ],
   },
 };
 
