@@ -34,10 +34,25 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <button
-              onClick={() => setIsOpen(true)}
-              className="focus:outline-none"
+              onClick={() => setIsOpen(!isOpen)}
+              className="focus:outline-none relative w-8 h-6 flex flex-col justify-between"
             >
-              <span className="text-2xl">&#9776;</span>
+              {/* Hamburger/X Lines */}
+              <span
+                className={`block h-0.5 w-full bg-white transform transition-all duration-300 ${
+                  isOpen ? "rotate-45 translate-y-2.5" : ""
+                }`}
+              ></span>
+              <span
+                className={`block h-0.5 w-full bg-white transition-all duration-300 ${
+                  isOpen ? "opacity-0" : ""
+                }`}
+              ></span>
+              <span
+                className={`block h-0.5 w-full bg-white transform transition-all duration-300 ${
+                  isOpen ? "-rotate-45 -translate-y-2.5" : ""
+                }`}
+              ></span>
             </button>
           </div>
         </div>

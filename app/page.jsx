@@ -75,6 +75,11 @@ export default function Portfolio() {
               <li>JavaScript (Basic)</li>
               <li>SQL (Intermediate)</li>
             </ul>
+            <h2 className="text-xl font-bold mb-4 pt-5">Language I Speak</h2>
+            <ul className="list-disc list-inside space-y-2 text-gray-700">
+              <li>English (B1-Intermediate)</li>
+              <li>Thai (Native)</li>
+            </ul>
           </div>
 
           {/* Experience */}
