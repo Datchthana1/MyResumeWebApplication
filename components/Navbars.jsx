@@ -38,16 +38,32 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2">
-          <Link href="/" className="block hover:text-blue-300">
-            Home
-          </Link>
-          <Link href="/Exprience" className="block hover:text-blue-300">
-            About My Exprience
-          </Link>
-        </div>
+        <>
+          {/* Overlay คลิกปิด */}
+          <div
+            className="fixed inset-0 z-40" // ครอบเต็มหน้าจอ
+            onClick={() => setIsOpen(false)}
+          ></div>
+
+          {/* Mobile Menu */}
+          <div className="fixed top-16 left-0 w-full md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2 z-50">
+            <Link
+              href="/"
+              className="block hover:text-blue-300"
+              onClick={() => setIsOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              href="/Exprience"
+              className="block hover:text-blue-300"
+              onClick={() => setIsOpen(false)}
+            >
+              About My Exprience
+            </Link>
+          </div>
+        </>
       )}
     </nav>
   );
