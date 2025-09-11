@@ -8,7 +8,7 @@ export default function Portfolio() {
     "Chatbot Developer",
   ];
   return (
-    <div className="font-sans min-h-screen bg-gray-100 text-gray-900">
+    <div className="font-sans min-h-screen bg-gray-100 text-gray-900 animate-fadeInUp">
       {/* Container */}
       <div className="max-w-5xl mx-auto px-6 py-12">
         {/* Header */}

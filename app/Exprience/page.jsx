@@ -40,32 +40,29 @@ const Page = () => {
       {Object.entries(Experience).map(([title, details], index) => (
         <div
           key={index}
-          className="bg-white rounded-2xl shadow-lg p-8 flex flex-col gap-4"
+          className="bg-white rounded-2xl shadow-lg p-8 flex flex-col gap-4 animate-fadeInUp"
+          style={{ animationDelay: `${index * 0.3}s` }}
         >
-          {/* ชื่อ Position */}
           <h2 className="text-xl font-bold text-blue-600 text-center md:text-left">
             {title}
           </h2>
 
-          {/* รูปภาพ */}
           {details.picture && (
             <div className="flex flex-wrap md:flex-row gap-4">
-              {details.picture.map((pic, index) => (
+              {details.picture.map((pic, idx) => (
                 <Image
-                  key={index}
+                  key={idx}
                   src={pic}
                   height={200}
                   className="rounded-2xl mb-4"
-                  alt={`picture-${index}`}
+                  alt={`picture-${idx}`}
                 />
               ))}
             </div>
           )}
 
-          {/* คำอธิบาย */}
           <p className="text-gray-700">{details.description}</p>
 
-          {/* Tools */}
           {details.Tools && (
             <div>
               <h3 className="font-semibold mt-2">Tools:</h3>
@@ -82,13 +79,12 @@ const Page = () => {
             </div>
           )}
 
-          {/* Link */}
           {details.link && (
-            <div className="">
+            <div>
               <h3 className="font-semibold mt-2">Links:</h3>
               <ul className="list-disc list-inside text-blue-500 text-left flex flex-col md:flex-row flex-wrap gap-5">
-                {Object.entries(details.link).map(([label, url], index) => (
-                  <li key={index}>
+                {Object.entries(details.link).map(([label, url], idx) => (
+                  <li key={idx}>
                     <a href={url} target="_blank" rel="noopener noreferrer">
                       {label}
                     </a>
