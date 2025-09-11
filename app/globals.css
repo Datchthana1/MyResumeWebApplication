@@ -29,10 +29,50 @@
     transform: translateY(0);
   }
 }
-
 .animate-fadeInUp {
-  opacity: 0;
-  animation: fadeInUp 0.8s ease forwards;
+  animation: fadeInUp 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+.animate-fadeOut {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeInOverlay {
+  0% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    backdrop-filter: blur(5px);
+  }
+}
+.animate-fadeInOverlay {
+  animation: fadeInOverlay 0.3s ease forwards;
+}
+
+@keyframes fadeOutOverlay {
+  0% {
+    opacity: 1;
+    backdrop-filter: blur(5px);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+}
+.animate-fadeOutOverlay {
+  animation: fadeOutOverlay 0.3s ease forwards;
 }
 
 body {

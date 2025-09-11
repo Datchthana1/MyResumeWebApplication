@@ -3,8 +3,12 @@ import Image from "next/image";
 import CompetitionContest from "@/assets/CompetitionContest.jpg";
 import ProcedureOfDemostration from "@/assets/ProcedureOfDemostration.webp";
 import VibeInContest from "@/assets/VibeInContest.jpg";
+import { useState } from "react";
 
 const Page = () => {
+  const [lightbox, setLightbox] = useState({ isOpen: false, src: null });
+  const [closing, setClosing] = useState(false);
+
   let Experience = {
     "Data Scientist": {
       description:
@@ -35,6 +39,16 @@ const Page = () => {
     },
   };
 
+  const closeLightbox = () => {
+    // เริ่ม fade-out
+    setClosing(true);
+    // หลัง animation 300ms ปิดจริง
+    setTimeout(() => {
+      setLightbox({ isOpen: false, src: null });
+      setClosing(false);
+    }, 300);
+  };
+
   return (
     <div className="font-sans min-h-screen bg-gray-100 text-gray-900 px-5 pt-5 space-y-6">
       {Object.entries(Experience).map(([title, details], index) => (
@@ -54,8 +68,12 @@ const Page = () => {
                   key={idx}
                   src={pic}
                   height={200}
-                  className="rounded-2xl mb-4"
+                  className="rounded-2xl mb-4 cursor-pointer"
                   alt={`picture-${idx}`}
+                  onClick={() => {
+                    setLightbox({ isOpen: true, src: pic });
+                    setClosing(false);
+                  }}
                 />
               ))}
             </div>
@@ -95,6 +113,37 @@ const Page = () => {
           )}
         </div>
       ))}
+
+      {/* Lightbox overlay */}
+      {lightbox.isOpen && (
+        <div
+          className={`fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-sm ${
+            closing ? "animate-fadeOutOverlay" : "animate-fadeInOverlay"
+          }`}
+          onClick={closeLightbox}
+        >
+          <div
+            className={`relative max-w-3xl max-h-[90vh] ${
+              closing ? "animate-fadeOut" : "animate-fadeInUp"
+            }`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={lightbox.src}
+              alt="Expanded image"
+              width={800}
+              height={600}
+              className="rounded-3xl object-contain"
+            />
+            <button
+              className="absolute top-2 right-2 text-white text-3xl"
+              onClick={closeLightbox}
+            >
+              &times;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
