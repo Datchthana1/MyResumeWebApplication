@@ -10,7 +10,7 @@ export default function Portfolio() {
   return (
     <div className="font-sans min-h-screen bg-gray-100 text-gray-900 pt-5 space-y-6">
       {/* Container */}
-      <div className="max-w-5xl mx-auto px-6 py-12 animate-fadeInUp">
+      <div className="max-w-5xl mx-auto px-6 py-6 animate-fadeInUp">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col md:flex-row items-center md:items-start gap-8">
           <div className="flex flex-col  items-center min-w-fit md:items-center w-full md:w-1/3">
@@ -70,10 +70,10 @@ export default function Portfolio() {
           {/* Skills */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <h2 className="text-xl font-bold mb-4">Programming Languages</h2>
-            <ul className="list-disc list-inside space-y-2 text-gray-700">
-              <li>Python (Intermediate)</li>
-              <li>JavaScript (Basic)</li>
-              <li>SQL (Intermediate)</li>
+            <ul className="list-none text-justify justify-around list-inside space-y-2 text-gray-700 flex flex-row ">
+              <li>Python </li>
+              <li>JavaScript</li>
+              <li>SQL</li>
             </ul>
             <h2 className="text-xl font-bold mb-4 pt-5">Language I Speak</h2>
             <ul className="list-disc list-inside space-y-2 text-gray-700">

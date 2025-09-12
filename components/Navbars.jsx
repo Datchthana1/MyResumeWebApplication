@@ -11,23 +11,35 @@ export default function Navbar() {
     setTimeout(() => {
       setIsOpen(false);
       setClosing(false);
-    }, 300); // ระยะเวลาให้ตรงกับ duration ของ fade-out
+    }, 300);
   };
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white shadow-md z-50">
+    <nav className="fixed top-0 left-0 w-full bg-gray-800/20 backdrop-blur-lg border-b border-gray-700/30 shadow-xl z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 font-bold text-lg">My Website</div>
+          <div className="flex-shrink-0">
+            <div className="font-bold text-2xl text-white hover:text-gray-200 hover:scale-105 transition-all duration-300 cursor-pointer">
+              My Website
+            </div>
+          </div>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex space-x-6">
-            <Link href="/" className="block hover:text-blue-300">
-              Home
+            <Link
+              href="/"
+              className="relative text-white hover:text-gray-100 px-4 py-2 rounded-xl transition-all duration-300 group"
+            >
+              <span className="relative z-10">Home</span>
+              <div className="absolute inset-0 bg-gray-500/20 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
             </Link>
-            <Link href="/Exprience" className="block hover:text-blue-300">
-              About My Exprience
+            <Link
+              href="/Experience"
+              className="relative text-white hover:text-gray-100 px-4 py-2 rounded-xl transition-all duration-300 group"
+            >
+              <span className="relative z-10">About My Experience</span>
+              <div className="absolute inset-0 bg-gray-500/20 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
             </Link>
           </div>
 
@@ -35,22 +47,22 @@ export default function Navbar() {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="focus:outline-none relative w-8 h-6 flex flex-col justify-between"
+              className="focus:outline-none relative w-8 h-8 flex flex-col justify-center items-center group"
             >
-              {/* Hamburger/X Lines */}
+              <div className="absolute inset-0 bg-gray-500/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
               <span
-                className={`block h-0.5 w-full bg-white transform transition-all duration-300 ${
-                  isOpen ? "rotate-45 translate-y-2.5" : ""
+                className={`block h-0.5 w-6 bg-white transform transition-all duration-300 ${
+                  isOpen ? "rotate-45 translate-y-2" : "-translate-y-2"
                 }`}
               ></span>
               <span
-                className={`block h-0.5 w-full bg-white transition-all duration-300 ${
-                  isOpen ? "opacity-0" : ""
+                className={`block h-0.5 w-6 bg-white transition-all duration-300 ${
+                  isOpen ? "opacity-0" : "opacity-100"
                 }`}
               ></span>
               <span
-                className={`block h-0.5 w-full bg-white transform transition-all duration-300 ${
-                  isOpen ? "-rotate-45 -translate-y-2.5" : ""
+                className={`block h-0.5 w-6 bg-white transform transition-all duration-300 ${
+                  isOpen ? "-rotate-45 -translate-y-2" : "translate-y-2"
                 }`}
               ></span>
             </button>
@@ -58,31 +70,40 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Menu */}
       {isOpen && (
         <>
-          {/* Overlay คลิกปิด */}
-          <div className="fixed inset-0 z-40" onClick={handleClose}></div>
-
-          {/* Mobile Menu */}
           <div
-            className={`fixed top-16 left-0 w-full md:hidden bg-gray-800 px-4 pt-2 pb-4 space-y-2 z-50 rounded-b-2xl ${
-              closing ? "animate-fadeOut-Navbar" : "animate-fadeInUp-Navbar"
-            }`}
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
+            onClick={handleClose}
+          ></div>
+
+          <div
+            className={`fixed top-20 left-4 right-4 md:hidden 
+                        bg-gray-800/50 backdrop-blur-xl border border-gray-700/60 
+                        rounded-3xl shadow-xl z-50 overflow-hidden
+                        ${
+                          closing
+                            ? "animate-[slideUp_0.3s_ease-in-out_forwards]"
+                            : "animate-[slideDown_0.3s_ease-in-out_forwards]"
+                        }`}
           >
-            <Link
-              href="/"
-              className="block hover:text-blue-300"
-              onClick={handleClose}
-            >
-              Home
-            </Link>
-            <Link
-              href="/Exprience"
-              className="block hover:text-blue-300"
-              onClick={handleClose}
-            >
-              About My Exprience
-            </Link>
+            <div className="p-6 space-y-4">
+              <Link
+                href="/"
+                className="flex items-center justify-center py-4 text-lg text-white hover:text-gray-100 rounded-xl bg-gray-700/30 hover:bg-gray-700/20 transition-all duration-300 transform hover:scale-105"
+                onClick={handleClose}
+              >
+                Home
+              </Link>
+              <Link
+                href="/Experience"
+                className="flex items-center justify-center py-4 text-lg text-white hover:text-gray-100 rounded-xl bg-gray-700/30 hover:bg-gray-700/20 transition-all duration-300 transform hover:scale-105"
+                onClick={handleClose}
+              >
+                About My Experience
+              </Link>
+            </div>
           </div>
         </>
       )}
