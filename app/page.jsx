@@ -26,7 +26,7 @@ export default function Portfolio() {
               Dechthana <span className="block md:inline">Arunchaiya</span>
             </h1>
 
-            <ul className="list-disc list-inside mt-2 text-gray-600 text-center">
+            <ul className="list-disc list-inside mt-2 text-gray-600 text-left">
               {positions.map((pos, idx) => (
                 <li key={idx}>{pos}</li>
               ))}
