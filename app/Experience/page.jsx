@@ -62,17 +62,19 @@ const Page = () => {
 
   return (
     <div className="font-sans min-h-screen bg-gray-100 text-gray-900 px-5 pt-1 space-y-6 pb-12 min-w-sc">
-      <ExperienceList
-        Experience={Experience}
-        setLightbox={setLightbox}
-        setClosing={setClosing}
-      />
+      <div className="grid gap-8 mt-6">
+        <ExperienceList
+          Experience={Experience}
+          setLightbox={setLightbox}
+          setClosing={setClosing}
+        />
 
-      <Lightbox
-        lightbox={lightbox}
-        closing={closing}
-        closeLightbox={closeLightbox}
-      />
+        <Lightbox
+          lightbox={lightbox}
+          closing={closing}
+          closeLightbox={closeLightbox}
+        />
+      </div>
     </div>
   );
 };
