@@ -85,7 +85,7 @@ export default function Portfolio() {
             </ul>
           </div>
 
-          <div className="flex flex-row justify-evenly gap-6">
+          <div className="flex flex-col justify-evenly gap-6 md:flex-row">
             {/* Skills Section */}
             <div className="bg-white rounded-2xl shadow-lg p-6 w-full">
               <h2 className="text-xl font-bold text-center mb-4">
