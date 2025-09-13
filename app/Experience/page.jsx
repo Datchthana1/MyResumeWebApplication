@@ -66,7 +66,7 @@ const Page = () => {
             className="bg-white rounded-2xl shadow-lg p-8 mb-6 flex flex-col gap-4 animate-fadeInUp"
             style={{ animationDelay: `${index * 0.3}s` }}
           >
-            <h2 className="text-xl font-bold text-blue-600 text-center md:text-center">
+            <h2 className="text-xl font-bold text-black-600 text-center md:text-center">
               {title}
             </h2>
 
@@ -87,9 +87,10 @@ const Page = () => {
                 ))}
               </div>
             )}
-
-            <p className="text-gray-700">{details.description}</p>
-
+            <div>
+              <h3 className="font-semibold mt-2">Description:</h3>
+              <p className="text-gray-700">{details.description}</p>
+            </div>
             {details.Tools && (
               <div>
                 <h3 className="font-semibold mt-2">Tools:</h3>
