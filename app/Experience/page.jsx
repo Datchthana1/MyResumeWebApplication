@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import ExperienceList from "@/components/ExperienceList";
 import Lightbox from "@/components/LightBox";
 import GLS_Logo2 from "@/assets/GLS_Logo2.jpg";
+import GLS_Vibe from "@/assets/GLS_Vibe.jpg";
 
 const Page = () => {
   const [lightbox, setLightbox] = useState({ isOpen: false, src: null });
@@ -28,7 +29,7 @@ const Page = () => {
         "pytorch",
       ],
       link: {
-        INewGen:
+        I_NewGen:
           "https://www.wu.ac.th/index.php/th/news/25143/index.html?utm_source=chatgpt.com",
         Medium:
           "https://medium.com/@kaiza941/%E0%B8%AD%E0%B8%B8%E0%B8%9B%E0%B8%81%E0%B8%A3%E0%B8%93%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B9%80%E0%B8%88%E0%B9%87%E0%B8%9A%E0%B8%9B%E0%B8%A7%E0%B8%94-728d043f6af1",
@@ -39,7 +40,7 @@ const Page = () => {
       description:
         "ผลงานผมได้ฝึกงานกับบริษัท Greenline Synergy Co., Ltd. ในตำแหน่ง Data Engineer โดยมีหน้าที่หลักในการพัฒนาระบบประมวลผลทางการเงิน และระบบประมวลผลข้อมูลขนาดใหญ่ให้กับโรงพยาบาล เพื่อจัดการข้อมูลขนาดใหญ่จากแหล่งต่างๆ ให้เป็นระบบและพร้อมใช้งานสำหรับการวิเคราะห์ข้อมูล นอกจากนี้ ผมยังมีส่วนร่วมในการตรวจสอบและยืนยันความถูกต้องของข้อมูล (Data Validation) เพื่อให้มั่นใจว่าข้อมูลที่นำมาใช้มีคุณภาพสูง และได้พัฒนาระบบแชทบอทสำหรับช่วยเหลือทีมงานทางการแพทย์ในการทำงานด้านการเข้ารหัสข้อมูลทางการแพทย์ (Medical Coding) จาก Google Cloud Platform ซึ่งช่วยเพิ่มประสิทธิภาพในการทำงานและลดข้อผิดพลาดในการป้อนข้อมูล",
       Tools: ["SQL", "Google Cloud Platform", "DataForm", "VertexAI"],
-      picture: [GLS_Logo2],
+      picture: [GLS_Logo2, GLS_Vibe],
     },
   };
 
