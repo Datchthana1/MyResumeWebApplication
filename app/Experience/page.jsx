@@ -6,6 +6,7 @@ import VibeInContest from "@/assets/VibeInContest.jpg";
 import { useEffect, useState } from "react";
 import ExperienceList from "@/components/ExperienceList";
 import Lightbox from "@/components/LightBox";
+import GLS_Logo2 from "@/assets/GLS_Logo2.jpg";
 
 const Page = () => {
   const [lightbox, setLightbox] = useState({ isOpen: false, src: null });
@@ -38,13 +39,12 @@ const Page = () => {
       description:
         "ผลงานผมได้ฝึกงานกับบริษัท Greenline Synergy Co., Ltd. ในตำแหน่ง Data Engineer โดยมีหน้าที่หลักในการพัฒนาระบบประมวลผลทางการเงิน และระบบประมวลผลข้อมูลขนาดใหญ่ให้กับโรงพยาบาล เพื่อจัดการข้อมูลขนาดใหญ่จากแหล่งต่างๆ ให้เป็นระบบและพร้อมใช้งานสำหรับการวิเคราะห์ข้อมูล นอกจากนี้ ผมยังมีส่วนร่วมในการตรวจสอบและยืนยันความถูกต้องของข้อมูล (Data Validation) เพื่อให้มั่นใจว่าข้อมูลที่นำมาใช้มีคุณภาพสูง และได้พัฒนาระบบแชทบอทสำหรับช่วยเหลือทีมงานทางการแพทย์ในการทำงานด้านการเข้ารหัสข้อมูลทางการแพทย์ (Medical Coding) จาก Google Cloud Platform ซึ่งช่วยเพิ่มประสิทธิภาพในการทำงานและลดข้อผิดพลาดในการป้อนข้อมูล",
       Tools: ["SQL", "Google Cloud Platform", "DataForm", "VertexAI"],
+      picture: [GLS_Logo2],
     },
   };
 
   const closeLightbox = () => {
-    // เริ่ม fade-out
     setClosing(true);
-    // หลัง animation 300ms ปิดจริง
     setTimeout(() => {
       setLightbox({ isOpen: false, src: null });
       setClosing(false);

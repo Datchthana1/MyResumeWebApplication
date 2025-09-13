@@ -19,7 +19,7 @@ export default function ExperienceCard({
 
       {/* รูปภาพ */}
       {details.picture && (
-        <div className="flex flex-wrap md:flex-row gap-4">
+        <div className="flex flex-wrap md:flex-row gap-4 justify-center items-center">
           {details.picture.map((pic, idx) => (
             <Image
               key={idx}
