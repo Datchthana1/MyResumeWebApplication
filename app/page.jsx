@@ -8,7 +8,7 @@ export default function Portfolio() {
     "Chatbot Developer",
   ];
   return (
-    <div className="font-sans min-h-screen bg-gray-100 text-gray-900">
+    <div className="font-sans min-h-screen bg-gray-100 text-gray-900 pb-12">
       {/* Container */}
       <div className="max-w-5xl mx-auto px-6 py-6 animate-fadeInUp">
         {/* Header */}
@@ -66,7 +66,7 @@ export default function Portfolio() {
         </div>
 
         {/* Skills & Experience Section */}
-        <div className="grid md:grid-cols-[1fr_2fr] gap-8 mt-12">
+        <div className="grid md:grid-cols-[1fr_2fr] gap-8 mt-6">
           {/* Skills */}
           <div className="bg-white rounded-2xl shadow-lg p-6">
             <h2 className="text-xl font-bold mb-4">Programming Languages</h2>
@@ -108,7 +108,7 @@ export default function Portfolio() {
         </div>
 
         {/* Contact Section */}
-        <div className="bg-white rounded-2xl shadow-lg p-6 mt-12">
+        <div className="bg-white rounded-2xl shadow-lg p-6 mt-6">
           <h2 className="text-xl font-bold mb-4">Contact</h2>
           <p className="text-gray-700">
             Email (Formal):{" "}

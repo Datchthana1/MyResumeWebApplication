@@ -30,7 +30,7 @@ export default function Navbar() {
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
               <div className="font-bold text-2xl text-black/40 hover:text-black hover:scale-105 transition-all duration-300 cursor-pointer">
-                My Website
+                Dechthana Arunchaiya
               </div>
             </Link>
 
@@ -94,39 +94,51 @@ export default function Navbar() {
             <div className="mobile-menu-container">
               <div
                 className={`p-6 space-y-4 mt-5
-                bg-gradient-to-br from-white/20 via-white/10 to-white/5
-                backdrop-blur-3xl backdrop-saturate-150
-                border border-white/20 rounded-3xl shadow-2xl
-                before:absolute before:inset-0 before:rounded-3xl
-                before:bg-gradient-to-br before:from-white/30 before:via-transparent before:to-white/10
-                before:backdrop-blur-xl before:-z-10
-                relative overflow-hidden ${
-                  closing ? "slide-up" : "slide-down"
-                }`}
+                  bg-gradient-to-br from-white/25 via-white/15 to-white/5
+                  backdrop-blur-2xl backdrop-saturate-200
+                  border border-white/30 rounded-[2rem] shadow-2xl
+                  before:absolute before:inset-0 before:rounded-[2rem]
+                  before:bg-gradient-to-br before:from-white/40 before:via-white/20 before:to-transparent
+                  before:backdrop-blur-3xl before:-z-10
+                  after:absolute after:inset-0 after:rounded-[2rem]
+                  after:bg-gradient-to-t after:from-black/5 after:via-transparent after:to-white/10
+                  after:-z-10
+                  relative overflow-hidden
+                  ring-1 ring-white/20 ring-inset
+                  ${closing ? "slide-up" : "slide-down"}`}
                 style={{
-                  backdropFilter: "blur(40px) saturate(180%)",
-                  background: "rgba(255, 255, 255, 0.1)",
+                  backdropFilter: "blur(60px) saturate(180%)",
+                  background: `
+                    linear-gradient(135deg, 
+                      rgba(255, 255, 255, 0.25) 0%,
+                      rgba(255, 255, 255, 0.15) 25%,
+                      rgba(255, 255, 255, 0.08) 50%,
+                      rgba(255, 255, 255, 0.12) 75%,
+                      rgba(255, 255, 255, 0.05) 100%
+                    )
+                  `,
                   boxShadow: `
-                    0 8px 32px rgba(31, 38, 135, 0.37),
+                    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+                    0 0 0 1px rgba(255, 255, 255, 0.2),
                     inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                    inset 0 -1px 0 rgba(255, 255, 255, 0.1)
+                    inset 0 -1px 0 rgba(0, 0, 0, 0.1)
                   `,
                 }}
               >
                 <Link
                   href="/"
                   className={`flex items-center  justify-center py-4 text-lg text-black/90 font-bold
-                  bg-gradient-to-r from-white/15 via-white/10 to-white/15
+                  bg-gradient-to-r from-black/15 via-black/10 to-black/15
                   backdrop-blur-2xl backdrop-saturate-200
-                  border border-white/30 rounded-xl shadow-lg
-                  hover:bg-gradient-to-r hover:from-white/25 hover:via-white/20 hover:to-white/25
-                  hover:text-white hover:shadow-xl hover:border-white/40
+                  border border-black/30 rounded-xl shadow-lg
+                  hover:bg-gradient-to-r hover:from-black/25 hover:via-black/20 hover:to-black/25
+                  hover:text-black hover:shadow-xl hover:border-black/40
                   transition-all duration-500 transform hover:scale-105 hover:-translate-y-1
                   relative overflow-hidden ${
                     closing ? "slide-up" : "slide-down"
                   }
                   before:absolute before:inset-0 before:bg-gradient-to-r 
-                  before:from-transparent before:via-white/10 before:to-transparent
+                  before:from-transparent before:via-black/10 before:to-transparent
                   before:translate-x-[-100%] hover:before:translate-x-[100%]
                   before:transition-transform before:duration-700`}
                   onClick={handleClose}
@@ -141,17 +153,17 @@ export default function Navbar() {
                 <Link
                   href="/Experience"
                   className={`flex items-center justify-center py-4 text-lg text-black/90 font-bold
-                  bg-gradient-to-r from-white/15 via-white/10 to-white/15
+                  bg-gradient-to-r from-black/15 via-black/10 to-black/15
                   backdrop-blur-2xl backdrop-saturate-200
-                  border border-white/30 rounded-xl shadow-lg
-                  hover:bg-gradient-to-r hover:from-white/25 hover:via-white/20 hover:to-white/25
-                  hover:text-white hover:shadow-xl hover:border-white/40
+                  border border-black/30 rounded-xl shadow-lg
+                  hover:bg-gradient-to-r hover:from-black/25 hover:via-black/20 hover:to-black/25
+                  hover:text-black hover:shadow-xl hover:border-black/40
                   transition-all duration-500 transform hover:scale-105 hover:-translate-y-1
                   relative overflow-hidden ${
                     closing ? "slide-up" : "slide-down"
                   }
                   before:absolute before:inset-0 before:bg-gradient-to-r 
-                  before:from-transparent before:via-white/10 before:to-transparent
+                  before:from-transparent before:via-black/10 before:to-transparent
                   before:translate-x-[-100%] hover:before:translate-x-[100%]
                   before:transition-transform before:duration-700`}
                   onClick={handleClose}
