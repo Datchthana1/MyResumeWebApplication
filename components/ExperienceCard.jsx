@@ -63,7 +63,7 @@ export default function ExperienceCard({
       {details.link && (
         <div className="relative z-10">
           <h3 className="font-semibold mt-2 text-slate-900">Links:</h3>
-          <ul className="list-disc list-inside text-indigo-600 text-left flex flex-col md:flex-row flex-wrap gap-5">
+          <ul className="list-disc list-inside text-slate-900 text-left flex flex-col md:flex-row flex-wrap gap-5">
             {Object.entries(details.link).map(([label, url], idx) => (
               <li key={idx}>
                 <a href={url} target="_blank" rel="noopener noreferrer">

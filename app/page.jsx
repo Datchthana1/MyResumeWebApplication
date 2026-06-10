@@ -135,7 +135,7 @@ function Pill({ children }) {
 function SectionHeading({ eyebrow, title }) {
   return (
     <div className="mb-6">
-      <p className="text-sm font-mono uppercase tracking-[0.2em] text-indigo-500/90 mb-2">
+      <p className="text-sm font-mono uppercase tracking-[0.2em] text-slate-500 mb-2">
         {eyebrow}
       </p>
       <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
@@ -150,10 +150,10 @@ export default function Portfolio() {
     <div className="relative font-sans overflow-hidden">
       {/* Pastel light behind the glass */}
       <div className="fixed inset-0 -z-10">
-        <div className="blob blob-1 bg-indigo-300 w-[480px] h-[480px] top-[-120px] left-[-120px]" />
-        <div className="blob blob-2 bg-sky-300 w-[420px] h-[420px] top-[35%] right-[-100px]" />
-        <div className="blob blob-1 bg-purple-300 w-[380px] h-[380px] bottom-[-120px] left-[28%]" />
-        <div className="blob blob-2 bg-rose-200 w-[320px] h-[320px] top-[60%] left-[-80px]" />
+        <div className="blob blob-1 bg-slate-400 w-[480px] h-[480px] top-[-120px] left-[-120px]" />
+        <div className="blob blob-2 bg-slate-300 w-[420px] h-[420px] top-[35%] right-[-100px]" />
+        <div className="blob blob-1 bg-slate-500 w-[380px] h-[380px] bottom-[-120px] left-[28%]" />
+        <div className="blob blob-2 bg-slate-300 w-[320px] h-[320px] top-[60%] left-[-80px]" />
       </div>
 
       {/* ============================ HERO ============================ */}
@@ -163,7 +163,7 @@ export default function Portfolio() {
       >
         <div className="max-w-3xl mx-auto text-center animate-fadeInUp">
           <div className="relative inline-block mb-10">
-            <div className="absolute inset-0 rounded-full bg-linear-to-tr from-indigo-400 to-sky-300 blur-2xl opacity-70" />
+            <div className="absolute inset-0 rounded-full bg-linear-to-tr from-slate-300 to-slate-200 blur-2xl opacity-70" />
             <Image
               src={Dechthana}
               alt="Dechthana Arunchaiya"
@@ -174,7 +174,7 @@ export default function Portfolio() {
             />
           </div>
 
-          <p className="font-mono text-sm uppercase tracking-[0.3em] text-indigo-500/80 mb-5">
+          <p className="font-mono text-sm uppercase tracking-[0.3em] text-slate-500 mb-5">
             Hello, my name is
           </p>
           <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.05] text-slate-900">
@@ -193,7 +193,7 @@ export default function Portfolio() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="#experience"
-              className="px-6 py-3 rounded-full font-medium text-white bg-linear-to-r from-indigo-500 to-sky-500 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300"
+              className="px-6 py-3 rounded-full font-medium text-white bg-slate-900 shadow-lg shadow-slate-900/20 hover:bg-black hover:shadow-slate-900/30 hover:scale-105 transition-all duration-300"
             >
               View My Work
             </Link>
@@ -252,7 +252,7 @@ export default function Portfolio() {
 
           <Reveal className="md:col-span-2" delay={120}>
             <div className="glass glass-hover rounded-3xl p-8">
-              <h3 className="relative z-10 text-sm font-mono uppercase tracking-widest text-indigo-500/90 mb-4">
+              <h3 className="relative z-10 text-sm font-mono uppercase tracking-widest text-slate-500 mb-4">
                 Languages
               </h3>
               <ul className="relative z-10 space-y-3">
@@ -282,7 +282,7 @@ export default function Portfolio() {
           ].map((group, i) => (
             <Reveal key={group.title} delay={i * 120}>
               <div className="glass glass-hover ring-gradient rounded-3xl p-7 h-full">
-                <h3 className="relative z-10 text-sm font-mono uppercase tracking-widest text-indigo-500/90 mb-5">
+                <h3 className="relative z-10 text-sm font-mono uppercase tracking-widest text-slate-500 mb-5">
                   {group.title}
                 </h3>
                 <div className="relative z-10 flex flex-wrap gap-2.5">
@@ -334,7 +334,7 @@ export default function Portfolio() {
           <div className="mt-8 text-center">
             <Link
               href="/Experience"
-              className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-800 transition-colors"
+              className="inline-flex items-center gap-2 text-slate-900 hover:text-black transition-colors"
             >
               See detailed experience with photos
               <span aria-hidden>&rarr;</span>
@@ -373,7 +373,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ CONTACT ============================ */}
-      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-8">
+      <section id="contact" className="relative max-w-5xl mx-auto px-6 py-8">
         <Reveal>
           <SectionHeading eyebrow="05 / Contact" title="Let's Connect" />
         </Reveal>
@@ -385,35 +385,35 @@ export default function Portfolio() {
             </p>
             <div className="relative z-10 grid sm:grid-cols-2 gap-6">
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-indigo-500/80 mb-1">
+                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
                   Email (Formal)
                 </p>
                 <a
                   href="mailto:Dechthana.ar@mail.wu.ac.th"
-                  className="text-slate-800 hover:text-indigo-600 break-all transition-colors"
+                  className="text-slate-800 hover:text-black break-all transition-colors"
                 >
                   Dechthana.ar@mail.wu.ac.th
                 </a>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-indigo-500/80 mb-1">
+                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
                   Email (Personal)
                 </p>
                 <a
                   href="mailto:Kaiza941@gmail.com"
-                  className="text-slate-800 hover:text-indigo-600 break-all transition-colors"
+                  className="text-slate-800 hover:text-black break-all transition-colors"
                 >
                   Kaiza941@gmail.com
                 </a>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-indigo-500/80 mb-1">
+                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
                   Location
                 </p>
                 <p className="text-slate-800">Hatyai, Thailand</p>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-indigo-500/80 mb-1">
+                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
                   Find Me
                 </p>
                 <div className="flex gap-4">
@@ -423,7 +423,7 @@ export default function Portfolio() {
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-800 hover:text-indigo-600 underline-offset-4 hover:underline transition-colors"
+                      className="text-slate-800 hover:text-black underline-offset-4 hover:underline transition-colors"
                     >
                       {s.label}
                     </a>
