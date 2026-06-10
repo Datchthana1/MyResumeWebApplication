@@ -27,13 +27,42 @@ const dataTools = [
   "Matplotlib",
   "Seaborn",
 ];
-const platforms = ["Google Cloud Platform", "Vertex AI", "Dataform", "Next.js"];
+const aiTools = [
+  "LLM / RAG",
+  "Fine-tuning",
+  "AI Agents",
+  "Vector Search",
+  "Hugging Face",
+  "PyTorch",
+];
+const platforms = [
+  "Google Cloud Platform",
+  "Vertex AI",
+  "Apache Airflow",
+  "Dataform",
+  "Next.js",
+];
 const spoken = [
   { lang: "Thai", level: "Native" },
   { lang: "English", level: "B1 — Intermediate" },
 ];
 
 const experiences = [
+  {
+    role: "AI Agent Engineering",
+    org: "Applied LLM Projects",
+    period: "Ongoing",
+    summary:
+      "Designing and building AI agents that go beyond simple prompting. I develop Retrieval-Augmented Generation (RAG) systems that ground answers in real documents and knowledge bases, multi-tool / workflow agents that can call functions and chain steps to complete tasks autonomously, and fine-tuned domain-specific LLMs for specialised use cases. The focus is on making language models accurate, reliable and genuinely useful in production rather than just demos.",
+    tags: [
+      "RAG",
+      "Multi-tool Agents",
+      "Fine-tuning",
+      "LLM",
+      "Vertex AI",
+      "Vector Search",
+    ],
+  },
   {
     role: "Data Scientist",
     org: "Thesis Project — Walailak University",
@@ -49,6 +78,14 @@ const experiences = [
     summary:
       "Developed financial & large-scale data processing pipelines for hospitals, performed data validation to ensure quality, and built a chatbot on Google Cloud to assist medical coders — improving efficiency and reducing data-entry errors.",
     tags: ["ETL", "Data Validation", "GCP", "Chatbot"],
+  },
+  {
+    role: "Air Station Data Pipeline",
+    org: "Personal Data Engineering Project",
+    period: "Ongoing",
+    summary:
+      "An end-to-end data pipeline that collects air-quality data (such as PM2.5 and related metrics) from monitoring stations on a scheduled basis. The ingestion, cleaning and transformation steps are orchestrated with Apache Airflow as scheduled DAGs, and the processed results are loaded into a database / cloud storage so the data stays consistent, queryable and ready for analysis and visualisation.",
+    tags: ["Apache Airflow", "ETL", "Air Quality", "Python", "Cloud / DB"],
   },
   {
     role: "Web Developer",
@@ -212,9 +249,10 @@ export default function Portfolio() {
         <Reveal>
           <SectionHeading eyebrow="02 / Skills" title="Tech & Tools" />
         </Reveal>
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 gap-6">
           {[
             { title: "Languages", items: programming },
+            { title: "AI / LLM", items: aiTools },
             { title: "Data Science", items: dataTools },
             { title: "Platforms", items: platforms },
           ].map((group, i) => (
