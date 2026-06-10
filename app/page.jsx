@@ -378,7 +378,7 @@ export default function Portfolio() {
           <SectionHeading eyebrow="05 / Contact" title="Let's Connect" />
         </Reveal>
         <Reveal delay={100}>
-          <div className="glass ring-gradient rounded-3xl p-8 sm:p-10">
+          <div className="glass glass-hover ring-gradient rounded-3xl p-8 sm:p-10">
             <p className="relative z-10 text-slate-600 leading-relaxed mb-8">
               Have a project, opportunity, or just want to say hi? I&apos;d love
               to hear from you.
