@@ -61,21 +61,34 @@ const spoken = [
 
 const experiences = [
   {
-    role: "Data Engineer (AI Engineer)",
+    role: "Data Engineer",
     org: "Greenline Synergy Co., Ltd.",
     period: "Intern → Full-time · Apr 2025 – Present",
     summary:
-      "I started at Greenline Synergy as a Data Engineering intern and was converted to a full-time Data Engineer working on AI. I build large-scale financial and healthcare data processing pipelines for hospitals, with data validation to ensure quality. On the AI side I design and ship AI agents that go beyond simple prompting — Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders. The focus is on making these systems accurate, reliable and genuinely useful in production.",
+      "I started at Greenline Synergy as a Data Engineering intern and was converted to a full-time role. I build and maintain large-scale financial and healthcare data transformation pipelines for hospitals — designing ETL/ELT flows that ingest data from multiple sources, transforming it into clean, structured datasets, and performing data validation to guarantee quality and reliability for downstream analytics.",
     tags: [
-      "ETL",
+      "ETL / ELT",
+      "Data Transformation",
       "Data Validation",
+      "SQL",
+      "Dataform",
       "GCP",
-      "Vertex AI",
+    ],
+  },
+  {
+    role: "Data Engineer — AI Engineer",
+    org: "Greenline Synergy Co., Ltd.",
+    period: "Full-time · Apr 2025 – Present",
+    summary:
+      "Within the same Data Engineering role at Greenline Synergy, I also work as an AI Engineer building AI systems that go beyond simple prompting. I design and ship Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders — with a focus on making them accurate, reliable and genuinely useful in production.",
+    tags: [
       "RAG",
       "AI Agents",
       "n8n",
       "Fine-tuning",
       "LLM",
+      "Vertex AI",
+      "Vector Search",
     ],
   },
   {
