@@ -40,8 +40,19 @@ const platforms = [
   "Vertex AI",
   "Apache Airflow",
   "n8n",
+  "Supabase",
   "Dataform",
   "Next.js",
+];
+
+const education = [
+  {
+    degree: "B.Sc. in Innovation of Medical Informatics",
+    school: "Walailak University",
+    period: "2021 (B.E. 2564) – Present",
+    detail:
+      "Studying the intersection of healthcare, data and software — covering data science, data engineering and medical information systems.",
+  },
 ];
 const spoken = [
   { lang: "Thai", level: "Native" },
@@ -52,9 +63,9 @@ const experiences = [
   {
     role: "Data Engineer (AI Engineer)",
     org: "Greenline Synergy Co., Ltd.",
-    period: "Full-time",
+    period: "Intern → Full-time · Apr 2025 – Present",
     summary:
-      "As a full-time Data Engineer working on AI, I build large-scale financial and healthcare data processing pipelines for hospitals, with data validation to ensure quality. On the AI side I design and ship AI agents that go beyond simple prompting — Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders. The focus is on making these systems accurate, reliable and genuinely useful in production.",
+      "I started at Greenline Synergy as a Data Engineering intern and was converted to a full-time Data Engineer working on AI. I build large-scale financial and healthcare data processing pipelines for hospitals, with data validation to ensure quality. On the AI side I design and ship AI agents that go beyond simple prompting — Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders. The focus is on making these systems accurate, reliable and genuinely useful in production.",
     tags: [
       "ETL",
       "Data Validation",
@@ -68,11 +79,11 @@ const experiences = [
     ],
   },
   {
-    role: "Data Scientist",
-    org: "Thesis Project — Walailak University",
-    period: "Final-year research",
+    role: "Data Scientist — Thesis Project",
+    org: "Walailak University",
+    period: "2024 – 2025 (3rd year)",
     summary:
-      "Built ML models to predict pain levels from physiological signals (HR, EDA, HRV, Skin Temperature) using Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM and CatBoost. Best model reached 83.2% accuracy with XGBoost.",
+      "My thesis project: built ML models to predict pain levels from physiological signals (HR, EDA, HRV, Skin Temperature) using Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM and CatBoost. The best model reached 83.2% accuracy with XGBoost, showing the approach can be applied effectively in medical research.",
     tags: ["Machine Learning", "XGBoost", "Signal Processing", "Research"],
   },
   {
@@ -80,8 +91,15 @@ const experiences = [
     org: "Personal Data Engineering Project",
     period: "Ongoing",
     summary:
-      "An end-to-end data pipeline that collects air-quality data (such as PM2.5 and related metrics) from monitoring stations on a scheduled basis. The ingestion, cleaning and transformation steps are orchestrated with Apache Airflow as scheduled DAGs, and the processed results are loaded into a database / cloud storage so the data stays consistent, queryable and ready for analysis and visualisation.",
-    tags: ["Apache Airflow", "ETL", "Air Quality", "Python", "Cloud / DB"],
+      "An end-to-end data pipeline that collects air-quality data (such as PM2.5 and related metrics) from the OpenWeather and Air4Thai APIs. The ingestion, cleaning and transformation steps are orchestrated with Apache Airflow as scheduled DAGs that run on a daily basis, and the processed results are stored in Supabase so the data stays consistent, queryable and ready for analysis and visualisation.",
+    tags: [
+      "Apache Airflow",
+      "Supabase",
+      "OpenWeather",
+      "Air4Thai",
+      "ETL",
+      "Python",
+    ],
   },
   {
     role: "Web Developer",
@@ -206,14 +224,14 @@ export default function Portfolio() {
           <Reveal className="md:col-span-3">
             <div className="glass glass-hover ring-gradient rounded-3xl p-8">
               <p className="relative z-10 text-slate-600 leading-relaxed">
-                I&apos;m a student at{" "}
+                I&apos;m a{" "}
                 <span className="text-slate-900 font-medium">
-                  Walailak University
-                </span>
-                , majoring in Innovation of Medical Informatics. I have a strong
-                passion for data science, data engineering, and web development.
-                I love learning new technologies and applying them to solve
-                real-world problems.
+                  Data Engineer working on AI
+                </span>{" "}
+                at Greenline Synergy, and a student of Innovation of Medical
+                Informatics at Walailak University. I have a strong passion for
+                data science, data engineering, and building AI systems that are
+                genuinely useful in production.
               </p>
               <p className="relative z-10 text-slate-600 leading-relaxed mt-4">
                 My goal is to become a proficient data scientist and researcher,
@@ -315,10 +333,39 @@ export default function Portfolio() {
         </Reveal>
       </section>
 
+      {/* ============================ EDUCATION ============================ */}
+      <section id="education" className="relative max-w-5xl mx-auto px-6 py-24">
+        <Reveal>
+          <SectionHeading eyebrow="04 / Education" title="Education" />
+        </Reveal>
+        <div className="space-y-6">
+          {education.map((edu, i) => (
+            <Reveal key={edu.degree} delay={i * 100}>
+              <article className="glass glass-hover ring-gradient rounded-3xl p-7 sm:p-8">
+                <div className="relative z-10 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+                  <h3 className="text-xl font-semibold text-slate-900">
+                    {edu.degree}
+                  </h3>
+                  <span className="text-sm font-mono text-indigo-500/80">
+                    {edu.period}
+                  </span>
+                </div>
+                <p className="relative z-10 text-slate-500 text-sm mb-4">
+                  {edu.school}
+                </p>
+                <p className="relative z-10 text-slate-600 leading-relaxed">
+                  {edu.detail}
+                </p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* ============================ CONTACT ============================ */}
       <section id="contact" className="relative max-w-3xl mx-auto px-6 py-24">
         <Reveal>
-          <SectionHeading eyebrow="04 / Contact" title="Let's Connect" />
+          <SectionHeading eyebrow="05 / Contact" title="Let's Connect" />
         </Reveal>
         <Reveal delay={100}>
           <div className="glass ring-gradient rounded-3xl p-8 sm:p-10">
