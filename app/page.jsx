@@ -134,7 +134,7 @@ function Pill({ children }) {
 
 function SectionHeading({ eyebrow, title }) {
   return (
-    <div className="mb-10">
+    <div className="mb-6">
       <p className="text-sm font-mono uppercase tracking-[0.2em] text-indigo-500/90 mb-2">
         {eyebrow}
       </p>
@@ -162,38 +162,35 @@ export default function Portfolio() {
         className="relative min-h-screen flex items-center justify-center px-6 pt-20"
       >
         <div className="max-w-3xl mx-auto text-center animate-fadeInUp">
-          <div className="relative inline-block mb-8">
-            <div className="absolute inset-0 rounded-full bg-linear-to-tr from-indigo-400 to-sky-300 blur-xl opacity-70" />
+          <div className="relative inline-block mb-10">
+            <div className="absolute inset-0 rounded-full bg-linear-to-tr from-indigo-400 to-sky-300 blur-2xl opacity-70" />
             <Image
               src={Dechthana}
               alt="Dechthana Arunchaiya"
-              width={140}
-              height={140}
+              width={150}
+              height={150}
               priority
-              className="relative rounded-full ring-2 ring-white/80 shadow-xl object-cover w-[140px] h-[140px]"
+              className="relative rounded-full ring-2 ring-white/80 shadow-xl object-cover w-[150px] h-[150px]"
             />
           </div>
 
-          <p className="font-mono text-sm text-slate-500 mb-4">Hi, I&apos;m</p>
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight text-slate-900">
+          <p className="font-mono text-sm uppercase tracking-[0.3em] text-indigo-500/80 mb-5">
+            Hello, my name is
+          </p>
+          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.05] text-slate-900">
             Dechthana <span className="text-gradient-animated">Arunchaiya</span>
           </h1>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 text-slate-600">
-            {positions.map((p, i) => (
-              <span key={p} className="flex items-center gap-3">
-                {i > 0 && <span className="text-indigo-400/70">&middot;</span>}
-                {p}
-              </span>
-            ))}
-          </div>
+          <p className="mt-6 text-lg sm:text-2xl font-medium text-slate-600">
+            {positions.join("  ·  ")}
+          </p>
 
-          <p className="mt-6 max-w-xl mx-auto text-slate-500 leading-relaxed">
+          <p className="mt-5 max-w-xl mx-auto text-slate-500 leading-relaxed">
             Turning data into insight and ideas into products — passionate about
             data science, engineering, and building things for the web.
           </p>
 
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="#experience"
               className="px-6 py-3 rounded-full font-medium text-white bg-linear-to-r from-indigo-500 to-sky-500 shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300"
@@ -229,7 +226,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ ABOUT ============================ */}
-      <section id="about" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="about" className="relative max-w-5xl mx-auto px-6 py-8">
         <Reveal>
           <SectionHeading eyebrow="01 / About" title="About Me" />
         </Reveal>
@@ -272,7 +269,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ SKILLS ============================ */}
-      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-8">
         <Reveal>
           <SectionHeading eyebrow="02 / Skills" title="Tech & Tools" />
         </Reveal>
@@ -300,7 +297,7 @@ export default function Portfolio() {
       </section>
 
       {/* ========================= EXPERIENCE ========================= */}
-      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-8">
         <Reveal>
           <SectionHeading eyebrow="03 / Experience" title="What I've Done" />
         </Reveal>
@@ -347,7 +344,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ EDUCATION ============================ */}
-      <section id="education" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="education" className="relative max-w-5xl mx-auto px-6 py-8">
         <Reveal>
           <SectionHeading eyebrow="04 / Education" title="Education" />
         </Reveal>
@@ -376,7 +373,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ CONTACT ============================ */}
-      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-12">
+      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-8">
         <Reveal>
           <SectionHeading eyebrow="05 / Contact" title="Let's Connect" />
         </Reveal>
@@ -438,7 +435,7 @@ export default function Portfolio() {
         </Reveal>
       </section>
 
-      <div className="h-16" />
+      <div className="h-8" />
     </div>
   );
 }
