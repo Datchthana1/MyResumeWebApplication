@@ -58,7 +58,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-[#050510]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
+          ? "bg-white/55 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/60 shadow-[0_8px_30px_-8px_rgba(31,38,90,0.18)]"
           : "bg-transparent border-b border-transparent"
       }`}
     >
@@ -66,7 +66,7 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/#home" className="shrink-0 group">
-            <span className="font-bold text-lg sm:text-xl tracking-tight text-white/90 group-hover:text-white transition-colors">
+            <span className="font-bold text-lg sm:text-xl tracking-tight text-slate-800 group-hover:text-slate-950 transition-colors">
               Dechthana
               <span className="text-gradient">.</span>
             </span>
@@ -80,13 +80,13 @@ export default function Navbar() {
                 href={`/#${link.id}`}
                 className={`relative px-4 py-2 text-sm rounded-full transition-colors duration-300 ${
                   active === link.id
-                    ? "text-white"
-                    : "text-white/55 hover:text-white"
+                    ? "text-slate-900"
+                    : "text-slate-500 hover:text-slate-900"
                 }`}
               >
                 <span className="relative z-10">{link.label}</span>
                 {active === link.id && (
-                  <span className="absolute inset-0 rounded-full bg-white/10 ring-1 ring-white/15" />
+                  <span className="absolute inset-0 rounded-full glass-thin" />
                 )}
               </Link>
             ))}
@@ -99,17 +99,17 @@ export default function Navbar() {
             className="md:hidden relative w-9 h-9 flex flex-col justify-center items-center"
           >
             <span
-              className={`block h-0.5 w-6 bg-white rounded-full transition-all duration-300 ${
+              className={`block h-0.5 w-6 bg-slate-700 rounded-full transition-all duration-300 ${
                 isOpen ? "rotate-45 translate-y-0.75" : "-translate-y-1"
               }`}
             />
             <span
-              className={`block h-0.5 w-6 bg-white rounded-full transition-all duration-300 my-1 ${
+              className={`block h-0.5 w-6 bg-slate-700 rounded-full transition-all duration-300 my-1 ${
                 isOpen ? "opacity-0" : "opacity-100"
               }`}
             />
             <span
-              className={`block h-0.5 w-6 bg-white rounded-full transition-all duration-300 ${
+              className={`block h-0.5 w-6 bg-slate-700 rounded-full transition-all duration-300 ${
                 isOpen ? "-rotate-45 -translate-y-1.75" : "translate-y-1"
               }`}
             />
@@ -121,7 +121,7 @@ export default function Navbar() {
       {isOpen && (
         <>
           <div
-            className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 ${
+            className={`fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 ${
               closing ? "fade-out" : "fade-in"
             }`}
             onClick={handleClose}
@@ -139,8 +139,8 @@ export default function Navbar() {
                   onClick={handleClose}
                   className={`flex items-center justify-center py-3 rounded-xl text-base font-medium transition-all duration-300 ${
                     active === link.id
-                      ? "bg-white/10 text-white ring-1 ring-white/15"
-                      : "text-white/70 hover:bg-white/5 hover:text-white"
+                      ? "glass-thin text-slate-900"
+                      : "text-slate-600 hover:bg-white/40 hover:text-slate-900"
                   }`}
                 >
                   {link.label}

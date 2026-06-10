@@ -61,8 +61,15 @@ const Page = () => {
   }, [lightbox.isOpen]);
 
   return (
-    <div className="font-sans min-h-screen bg-gray-100 text-gray-900 px-5 pt-1 space-y-6 pb-12 min-w-sc">
-      <div className="grid gap-8 mt-6">
+    <div className="relative font-sans min-h-screen text-slate-900 px-5 pt-24 space-y-6 pb-16 overflow-hidden">
+      {/* Pastel light behind the glass */}
+      <div className="fixed inset-0 -z-10">
+        <div className="blob blob-1 bg-indigo-300 w-[480px] h-[480px] top-[-120px] left-[-120px]" />
+        <div className="blob blob-2 bg-sky-300 w-[420px] h-[420px] top-[40%] right-[-100px]" />
+        <div className="blob blob-1 bg-purple-300 w-[380px] h-[380px] bottom-[-120px] left-[28%]" />
+      </div>
+
+      <div className="grid gap-8">
         <ExperienceList
           Experience={Experience}
           setLightbox={setLightbox}

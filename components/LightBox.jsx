@@ -24,8 +24,9 @@ export default function Lightbox({ lightbox, closing, closeLightbox }) {
           className="rounded-3xl object-contain"
         />
         <button
-          className="absolute top-2 right-2 text-white text-3xl cursor-pointer"
+          className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center rounded-full glass text-slate-800 text-2xl leading-none cursor-pointer hover:scale-110 transition-transform"
           onClick={closeLightbox}
+          aria-label="Close"
         >
           &times;
         </button>

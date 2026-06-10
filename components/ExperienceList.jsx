@@ -7,7 +7,7 @@ export default function ExperienceList({
   setClosing,
 }) {
   return (
-    <div className="font-sans min-h-screen bg-gray-100 text-gray-900 pt-5 space-y-6 min-w-sc">
+    <div className="font-sans text-slate-900 space-y-6">
       <div className="max-w-5xl mx-auto animate-fadeInUp">
         {Object.entries(Experience).map(([title, details], index) => (
           <ExperienceCard

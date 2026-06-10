@@ -10,16 +10,16 @@ export default function ExperienceCard({
 }) {
   return (
     <div
-      className="bg-white rounded-2xl shadow-lg p-8 mb-6 flex flex-col gap-4 animate-fadeInUp"
+      className="glass glass-hover ring-gradient rounded-3xl p-8 mb-6 flex flex-col gap-4 animate-fadeInUp"
       style={{ animationDelay: `${index * 0.3}s` }}
     >
-      <h2 className="text-xl font-bold text-black-600 text-center md:text-center">
+      <h2 className="relative z-10 text-xl font-bold text-slate-900 text-center">
         {title}
       </h2>
 
       {/* รูปภาพ */}
       {details.picture && (
-        <div className="flex flex-wrap md:flex-row gap-4 justify-center items-center">
+        <div className="relative z-10 flex flex-wrap md:flex-row gap-4 justify-center items-center">
           {details.picture.map((pic, idx) => (
             <Image
               key={idx}
@@ -37,20 +37,20 @@ export default function ExperienceCard({
       )}
 
       {/* คำอธิบาย */}
-      <div>
-        <h3 className="font-semibold mt-2">Description:</h3>
-        <p className="text-gray-700">{details.description}</p>
+      <div className="relative z-10">
+        <h3 className="font-semibold mt-2 text-slate-900">Description:</h3>
+        <p className="text-slate-600">{details.description}</p>
       </div>
 
       {/* Tools */}
       {details.Tools && (
-        <div>
-          <h3 className="font-semibold mt-2">Tools:</h3>
-          <ul className="flex flex-row flex-wrap gap-2 text-gray-600 justify-start">
+        <div className="relative z-10">
+          <h3 className="font-semibold mt-2 text-slate-900">Tools:</h3>
+          <ul className="flex flex-row flex-wrap gap-2 justify-start mt-2">
             {details.Tools.map((tool, i) => (
               <li
                 key={i}
-                className="list-none bg-gray-200 px-2 py-1 rounded-md w-fit"
+                className="list-none glass-thin text-slate-700 px-3 py-1 rounded-full w-fit text-sm"
               >
                 {tool}
               </li>
@@ -61,9 +61,9 @@ export default function ExperienceCard({
 
       {/* Links */}
       {details.link && (
-        <div>
-          <h3 className="font-semibold mt-2">Links:</h3>
-          <ul className="list-disc list-inside text-blue-500 text-left flex flex-col md:flex-row flex-wrap gap-5">
+        <div className="relative z-10">
+          <h3 className="font-semibold mt-2 text-slate-900">Links:</h3>
+          <ul className="list-disc list-inside text-indigo-600 text-left flex flex-col md:flex-row flex-wrap gap-5">
             {Object.entries(details.link).map(([label, url], idx) => (
               <li key={idx}>
                 <a href={url} target="_blank" rel="noopener noreferrer">
