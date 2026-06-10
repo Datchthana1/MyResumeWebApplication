@@ -49,9 +49,9 @@ const education = [
   {
     degree: "B.Sc. in Innovation of Medical Informatics",
     school: "Walailak University",
-    period: "2021 (B.E. 2564) – Present",
+    period: "2021 – 2025",
     detail:
-      "Studying the intersection of healthcare, data and software — covering data science, data engineering and medical information systems.",
+      "Graduated in 2025. Studied the intersection of healthcare, data and software — covering data science, data engineering and medical information systems.",
   },
 ];
 const spoken = [
@@ -229,7 +229,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ ABOUT ============================ */}
-      <section id="about" className="relative max-w-5xl mx-auto px-6 py-24">
+      <section id="about" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow="01 / About" title="About Me" />
         </Reveal>
@@ -241,10 +241,10 @@ export default function Portfolio() {
                 <span className="text-slate-900 font-medium">
                   Data Engineer working on AI
                 </span>{" "}
-                at Greenline Synergy, and a student of Innovation of Medical
-                Informatics at Walailak University. I have a strong passion for
-                data science, data engineering, and building AI systems that are
-                genuinely useful in production.
+                at Greenline Synergy, and a 2025 graduate in Innovation of
+                Medical Informatics from Walailak University. I have a strong
+                passion for data science, data engineering, and building AI
+                systems that are genuinely useful in production.
               </p>
               <p className="relative z-10 text-slate-600 leading-relaxed mt-4">
                 My goal is to become a proficient data scientist and researcher,
@@ -272,7 +272,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ SKILLS ============================ */}
-      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-24">
+      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow="02 / Skills" title="Tech & Tools" />
         </Reveal>
@@ -300,7 +300,7 @@ export default function Portfolio() {
       </section>
 
       {/* ========================= EXPERIENCE ========================= */}
-      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-24">
+      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow="03 / Experience" title="What I've Done" />
         </Reveal>
@@ -313,7 +313,7 @@ export default function Portfolio() {
                   <h3 className="text-xl font-semibold text-slate-900">
                     {exp.role}
                   </h3>
-                  <span className="text-sm font-mono text-indigo-500/80">
+                  <span className="text-sm font-mono text-slate-900">
                     {exp.period}
                   </span>
                 </div>
@@ -347,7 +347,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ EDUCATION ============================ */}
-      <section id="education" className="relative max-w-5xl mx-auto px-6 py-24">
+      <section id="education" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow="04 / Education" title="Education" />
         </Reveal>
@@ -359,7 +359,7 @@ export default function Portfolio() {
                   <h3 className="text-xl font-semibold text-slate-900">
                     {edu.degree}
                   </h3>
-                  <span className="text-sm font-mono text-indigo-500/80">
+                  <span className="text-sm font-mono text-slate-900">
                     {edu.period}
                   </span>
                 </div>
@@ -376,7 +376,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ CONTACT ============================ */}
-      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-24">
+      <section id="contact" className="relative max-w-3xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow="05 / Contact" title="Let's Connect" />
         </Reveal>
