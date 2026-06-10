@@ -56,7 +56,7 @@ const education = [
 ];
 const spoken = [
   { lang: "Thai", level: "Native" },
-  { lang: "English", level: "B1 — CUTEP Certified" },
+  { lang: "English", level: "B1 (CUTEP, Certificate · 2026)" },
 ];
 
 const experiences = [
