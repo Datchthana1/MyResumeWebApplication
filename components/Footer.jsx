@@ -1,28 +1,18 @@
-// app/components/Footer.jsx
-"use client";
-
+// components/Footer.jsx
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer
-      className="
-        fixed bottom-0 left-0 w-full
-        bg-gradient-to-br from-white/20 via-white/10 to-white/5
-        backdrop-blur-lg backdrop-saturate-150
-        border-t border-white/20
-        shadow-[0_-4px_20px_rgba(0,0,0,0.25)]
-        z-50
-        text-center py-4
-      "
-      style={{
-        backdropFilter: "blur(5px)",
-        background: "rgba(255, 255, 255, 0.1)",
-      }}
-    >
-      <p className="text-sm font-medium tracking-wide text-black/80 hover:text-black transition-colors duration-300">
-        © {currentYear} Dechthana
-      </p>
+    <footer className="relative border-t border-white/10 bg-[#050510]/80 backdrop-blur-lg">
+      <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p className="text-sm text-white/55">
+          &copy; {currentYear}{" "}
+          <span className="text-white/80 font-medium">Dechthana Arunchaiya</span>
+        </p>
+        <p className="text-xs font-mono text-white/40">
+          Built with Next.js &amp; Tailwind CSS
+        </p>
+      </div>
     </footer>
   );
 }

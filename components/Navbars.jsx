@@ -1,185 +1,155 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+
+const LINKS = [
+  { id: "home", label: "Home" },
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "experience", label: "Experience" },
+  { id: "contact", label: "Contact" },
+];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("home");
+
+  // Shrink / solidify navbar after scrolling a bit
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Highlight the section currently in view
+  useEffect(() => {
+    const sections = LINKS.map((l) => document.getElementById(l.id)).filter(
+      Boolean
+    );
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
   const handleClose = () => {
     setClosing(true);
     setTimeout(() => {
       setIsOpen(false);
       setClosing(false);
-    }, 300);
+    }, 250);
   };
 
-  const handleToggle = () => {
-    if (isOpen) {
-      handleClose();
-    } else {
-      setIsOpen(true);
-    }
-  };
+  const handleToggle = () => (isOpen ? handleClose() : setIsOpen(true));
 
   return (
-    <>
-      <nav className="fixed top-0 left-0 w-full bg-gray-800/20 backdrop-blur-lg border-b border-gray-700/30 shadow-xl z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <div className="font-bold text-2xl text-black/40 hover:text-black hover:scale-105 transition-all duration-300 cursor-pointer">
-                Dechthana Arunchaiya
-              </div>
-            </Link>
+    <nav
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+        scrolled
+          ? "bg-[#050510]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.5)]"
+          : "bg-transparent border-b border-transparent"
+      }`}
+    >
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link href="/#home" className="shrink-0 group">
+            <span className="font-bold text-lg sm:text-xl tracking-tight text-white/90 group-hover:text-white transition-colors">
+              Dechthana
+              <span className="text-gradient">.</span>
+            </span>
+          </Link>
 
-            {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-6">
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-1">
+            {LINKS.map((link) => (
               <Link
-                href="/"
-                className="relative text-black/60 hover:text-black px-4 py-2 rounded-xl transition-all duration-300 group"
+                key={link.id}
+                href={`/#${link.id}`}
+                className={`relative px-4 py-2 text-sm rounded-full transition-colors duration-300 ${
+                  active === link.id
+                    ? "text-white"
+                    : "text-white/55 hover:text-white"
+                }`}
               >
-                <span className="relative z-10">Home</span>
-                <div className="absolute inset-0 bg-gray-500/20 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+                <span className="relative z-10">{link.label}</span>
+                {active === link.id && (
+                  <span className="absolute inset-0 rounded-full bg-white/10 ring-1 ring-white/15" />
+                )}
               </Link>
-              <Link
-                href="/Experience"
-                className="relative text-black/60 hover:text-black px-4 py-2 rounded-xl transition-all duration-300 group"
-              >
-                <span className="relative z-10">About My Experience</span>
-                <div className="absolute inset-0 bg-gray-500/20 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-              </Link>
-            </div>
+            ))}
+          </div>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={handleToggle}
-                className="focus:outline-none relative w-8 h-8 flex flex-col justify-center items-center group"
-              >
-                <div className="absolute inset-0 bg-gray-500/20 rounded-full scale-0 group-hover:scale-100 transition-transform duration-300"></div>
-                <span
-                  className={`block h-0.5 w-6 bg-white transform transition-all duration-300 ${
-                    isOpen ? "rotate-45 translate-y-2" : "-translate-y-2"
+          {/* Mobile button */}
+          <button
+            onClick={handleToggle}
+            aria-label="Toggle menu"
+            className="md:hidden relative w-9 h-9 flex flex-col justify-center items-center"
+          >
+            <span
+              className={`block h-0.5 w-6 bg-white rounded-full transition-all duration-300 ${
+                isOpen ? "rotate-45 translate-y-0.75" : "-translate-y-1"
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-6 bg-white rounded-full transition-all duration-300 my-1 ${
+                isOpen ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`block h-0.5 w-6 bg-white rounded-full transition-all duration-300 ${
+                isOpen ? "-rotate-45 -translate-y-1.75" : "translate-y-1"
+              }`}
+            />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <>
+          <div
+            className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 ${
+              closing ? "fade-out" : "fade-in"
+            }`}
+            onClick={handleClose}
+          />
+          <div className="mobile-menu-container">
+            <div
+              className={`glass rounded-3xl p-4 space-y-2 shadow-2xl ${
+                closing ? "slide-up" : "slide-down"
+              }`}
+            >
+              {LINKS.map((link) => (
+                <Link
+                  key={link.id}
+                  href={`/#${link.id}`}
+                  onClick={handleClose}
+                  className={`flex items-center justify-center py-3 rounded-xl text-base font-medium transition-all duration-300 ${
+                    active === link.id
+                      ? "bg-white/10 text-white ring-1 ring-white/15"
+                      : "text-white/70 hover:bg-white/5 hover:text-white"
                   }`}
-                ></span>
-                <span
-                  className={`block h-0.5 w-6 bg-white transition-all duration-300 ${
-                    isOpen ? "opacity-0" : "opacity-100"
-                  }`}
-                ></span>
-                <span
-                  className={`block h-0.5 w-6 bg-white transform transition-all duration-300 ${
-                    isOpen ? "-rotate-45 -translate-y-2" : "translate-y-2"
-                  }`}
-                ></span>
-              </button>
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isOpen && (
-          <>
-            {/* Overlay */}
-            <div
-              className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-                closing ? "fade-out" : "fade-in"
-              }`}
-              onClick={handleClose}
-            ></div>
-
-            {/* Mobile Menu Container */}
-            <div className="mobile-menu-container">
-              <div
-                className={`p-6 space-y-4 mt-5
-                  bg-gradient-to-br from-white/25 via-white/15 to-white/5
-                  backdrop-blur-2xl backdrop-saturate-200
-                  border border-white/30 rounded-[2rem] shadow-2xl
-                  before:absolute before:inset-0 before:rounded-[2rem]
-                  before:bg-gradient-to-br before:from-white/40 before:via-white/20 before:to-transparent
-                  before:backdrop-blur-3xl before:-z-10
-                  after:absolute after:inset-0 after:rounded-[2rem]
-                  after:bg-gradient-to-t after:from-black/5 after:via-transparent after:to-white/10
-                  after:-z-10
-                  relative overflow-hidden
-                  ring-1 ring-white/20 ring-inset
-                  ${closing ? "slide-up" : "slide-down"}`}
-                style={{
-                  backdropFilter: "blur(60px) saturate(180%)",
-                  background: `
-                    linear-gradient(135deg, 
-                      rgba(255, 255, 255, 0.25) 0%,
-                      rgba(255, 255, 255, 0.15) 25%,
-                      rgba(255, 255, 255, 0.08) 50%,
-                      rgba(255, 255, 255, 0.12) 75%,
-                      rgba(255, 255, 255, 0.05) 100%
-                    )
-                  `,
-                  boxShadow: `
-                    0 25px 50px -12px rgba(0, 0, 0, 0.25),
-                    0 0 0 1px rgba(255, 255, 255, 0.2),
-                    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                    inset 0 -1px 0 rgba(0, 0, 0, 0.1)
-                  `,
-                }}
-              >
-                <Link
-                  href="/"
-                  className={`flex items-center  justify-center py-4 text-lg text-black/90 font-bold
-                  bg-gradient-to-r from-black/15 via-black/10 to-black/15
-                  backdrop-blur-2xl backdrop-saturate-200
-                  border border-black/30 rounded-xl shadow-lg
-                  hover:bg-gradient-to-r hover:from-black/25 hover:via-black/20 hover:to-black/25
-                  hover:text-black hover:shadow-xl hover:border-black/40
-                  transition-all duration-500 transform hover:scale-105 hover:-translate-y-1
-                  relative overflow-hidden ${
-                    closing ? "slide-up" : "slide-down"
-                  }
-                  before:absolute before:inset-0 before:bg-gradient-to-r 
-                  before:from-transparent before:via-black/10 before:to-transparent
-                  before:translate-x-[-100%] hover:before:translate-x-[100%]
-                  before:transition-transform before:duration-700`}
-                  onClick={handleClose}
-                  style={{
-                    backdropFilter: "blur(20px) saturate(180%)",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.3)",
-                    animationDelay: closing ? "0s" : "0.1s",
-                  }}
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/Experience"
-                  className={`flex items-center justify-center py-4 text-lg text-black/90 font-bold
-                  bg-gradient-to-r from-black/15 via-black/10 to-black/15
-                  backdrop-blur-2xl backdrop-saturate-200
-                  border border-black/30 rounded-xl shadow-lg
-                  hover:bg-gradient-to-r hover:from-black/25 hover:via-black/20 hover:to-black/25
-                  hover:text-black hover:shadow-xl hover:border-black/40
-                  transition-all duration-500 transform hover:scale-105 hover:-translate-y-1
-                  relative overflow-hidden ${
-                    closing ? "slide-up" : "slide-down"
-                  }
-                  before:absolute before:inset-0 before:bg-gradient-to-r 
-                  before:from-transparent before:via-black/10 before:to-transparent
-                  before:translate-x-[-100%] hover:before:translate-x-[100%]
-                  before:transition-transform before:duration-700`}
-                  onClick={handleClose}
-                  style={{
-                    backdropFilter: "blur(20px) saturate(180%)",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.3)",
-                    animationDelay: closing ? "0s" : "0.2s",
-                  }}
-                >
-                  About My Experience
-                </Link>
-              </div>
-            </div>
-          </>
-        )}
-      </nav>
-    </>
+        </>
+      )}
+    </nav>
   );
 }
