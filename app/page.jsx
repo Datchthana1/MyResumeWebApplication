@@ -4,9 +4,9 @@ import Dechthana from "@/assets/Dechthana.jpg";
 import Reveal from "@/components/Reveal";
 
 const positions = [
-  "Data Scientist / Engineer",
+  "Data Engineer (AI Engineer)",
+  "Data Scientist",
   "Web Developer",
-  "Chatbot Developer",
 ];
 
 const socials = [
@@ -31,14 +31,15 @@ const aiTools = [
   "LLM / RAG",
   "Fine-tuning",
   "AI Agents",
+  "n8n",
   "Vector Search",
   "Hugging Face",
-  "PyTorch",
 ];
 const platforms = [
   "Google Cloud Platform",
   "Vertex AI",
   "Apache Airflow",
+  "n8n",
   "Dataform",
   "Next.js",
 ];
@@ -49,18 +50,21 @@ const spoken = [
 
 const experiences = [
   {
-    role: "AI Agent Engineering",
-    org: "Applied LLM Projects",
-    period: "Ongoing",
+    role: "Data Engineer (AI Engineer)",
+    org: "Greenline Synergy Co., Ltd.",
+    period: "Full-time",
     summary:
-      "Designing and building AI agents that go beyond simple prompting. I develop Retrieval-Augmented Generation (RAG) systems that ground answers in real documents and knowledge bases, multi-tool / workflow agents that can call functions and chain steps to complete tasks autonomously, and fine-tuned domain-specific LLMs for specialised use cases. The focus is on making language models accurate, reliable and genuinely useful in production rather than just demos.",
+      "As a full-time Data Engineer working on AI, I build large-scale financial and healthcare data processing pipelines for hospitals, with data validation to ensure quality. On the AI side I design and ship AI agents that go beyond simple prompting — Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders. The focus is on making these systems accurate, reliable and genuinely useful in production.",
     tags: [
+      "ETL",
+      "Data Validation",
+      "GCP",
+      "Vertex AI",
       "RAG",
-      "Multi-tool Agents",
+      "AI Agents",
+      "n8n",
       "Fine-tuning",
       "LLM",
-      "Vertex AI",
-      "Vector Search",
     ],
   },
   {
@@ -70,14 +74,6 @@ const experiences = [
     summary:
       "Built ML models to predict pain levels from physiological signals (HR, EDA, HRV, Skin Temperature) using Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM and CatBoost. Best model reached 83.2% accuracy with XGBoost.",
     tags: ["Machine Learning", "XGBoost", "Signal Processing", "Research"],
-  },
-  {
-    role: "Data Engineer (Intern)",
-    org: "Greenline Synergy Co., Ltd.",
-    period: "Internship",
-    summary:
-      "Developed financial & large-scale data processing pipelines for hospitals, performed data validation to ensure quality, and built a chatbot on Google Cloud to assist medical coders — improving efficiency and reducing data-entry errors.",
-    tags: ["ETL", "Data Validation", "GCP", "Chatbot"],
   },
   {
     role: "Air Station Data Pipeline",
