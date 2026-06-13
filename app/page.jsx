@@ -100,7 +100,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ ABOUT ============================ */}
-      <section id="about" className="relative max-w-5xl mx-auto px-6 py-20">
+      <section id="about" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow={t.about.eyebrow} title={t.about.title} />
         </Reveal>
@@ -137,7 +137,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ SKILLS ============================ */}
-      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-20">
+      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow={t.skills.eyebrow} title={t.skills.title} />
         </Reveal>
@@ -160,7 +160,7 @@ export default function Portfolio() {
       </section>
 
       {/* ========================= EXPERIENCE ========================= */}
-      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-20">
+      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading
             eyebrow={t.experience.eyebrow}
@@ -206,7 +206,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ EDUCATION ============================ */}
-      <section id="education" className="relative max-w-5xl mx-auto px-6 py-20">
+      <section id="education" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading
             eyebrow={t.education.eyebrow}
@@ -234,7 +234,7 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ CONTACT ============================ */}
-      <section id="contact" className="relative max-w-5xl mx-auto px-6 py-20">
+      <section id="contact" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
           <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} />
         </Reveal>
