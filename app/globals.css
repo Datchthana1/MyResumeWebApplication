@@ -188,18 +188,6 @@ body {
   animation: slideUp 0.25s ease-in forwards;
 }
 
-@keyframes bounceDown {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(8px);
-  }
-}
-.animate-bounceDown {
-  animation: bounceDown 2s ease-in-out infinite;
-}
 
 /* Lightbox overlay + image transitions */
 @keyframes fadeInOverlay {
