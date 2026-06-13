@@ -54,6 +54,7 @@ export default function Navbar() {
   const handleToggle = () => (isOpen ? handleClose() : setIsOpen(true));
 
   return (
+    <>
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
@@ -119,8 +120,10 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+    </nav>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — rendered outside <nav> so its backdrop-blur isn't
+          neutralised by the nav's own backdrop-filter when scrolled */}
       {isOpen && (
         <>
           <div
@@ -153,6 +156,6 @@ export default function Navbar() {
           </div>
         </>
       )}
-    </nav>
+    </>
   );
 }
