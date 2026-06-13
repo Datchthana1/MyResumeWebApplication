@@ -193,7 +193,7 @@ export const content = {
     hero: {
       greeting: "สวัสดีครับ ผมชื่อ",
       firstName: "เดชธนา",
-      lastName: "อรุณชัยยะ",
+      lastName: "อรัญชัยยะ",
       positions: ["Data Engineer (AI Engineer)", "Data Scientist", "Web Developer"],
       tagline:
         "เปลี่ยนข้อมูลให้เป็นข้อมูลเชิงลึก และเปลี่ยนไอเดียให้เป็นผลิตภัณฑ์ — หลงใหลในงานด้าน Data Science, Data Engineering และการสร้างสรรค์งานบนเว็บ",
