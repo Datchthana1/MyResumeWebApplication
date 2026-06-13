@@ -9,6 +9,7 @@ export default function Reveal({
   children,
   delay = 0,
   className = "",
+  variant = "",
   as: Tag = "div",
 }) {
   const ref = useRef(null);
@@ -35,7 +36,7 @@ export default function Reveal({
   return (
     <Tag
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
+      className={`reveal ${variant} ${visible ? "is-visible" : ""} ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}

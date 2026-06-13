@@ -13,12 +13,9 @@ function Pill({ children }) {
   );
 }
 
-function SectionHeading({ eyebrow, title }) {
+function SectionHeading({ title }) {
   return (
     <div className="mb-8">
-      <p className="text-xs font-mono uppercase tracking-[0.25em] text-neutral-400 mb-3">
-        {eyebrow}
-      </p>
       <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
         {title}
       </h2>
@@ -51,12 +48,13 @@ export default function Portfolio() {
           <p className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-400 mb-5">
             {t.hero.greeting}
           </p>
-          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.05] text-neutral-950">
-            {t.hero.firstName}{" "}
+          <h1 className="text-6xl sm:text-8xl font-extrabold tracking-tighter leading-[0.95] text-neutral-950">
+            {t.hero.firstName}
+            <br />
             <span className="text-gradient-animated">{t.hero.lastName}</span>
           </h1>
 
-          <p className="mt-6 text-lg sm:text-2xl font-medium text-neutral-500">
+          <p className="mt-7 text-lg sm:text-2xl font-medium text-neutral-500">
             {t.hero.positions.join("  ·  ")}
           </p>
 
@@ -102,15 +100,15 @@ export default function Portfolio() {
       {/* ============================ ABOUT ============================ */}
       <section id="about" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
-          <SectionHeading eyebrow={t.about.eyebrow} title={t.about.title} />
+          <SectionHeading title={t.about.title} />
         </Reveal>
-        <div className="grid md:grid-cols-5 gap-6 items-start">
-          <Reveal className="md:col-span-3">
-            <div className="card card-hover rounded-3xl p-8 h-full">
+        <div className="grid md:grid-cols-5 gap-5 items-stretch">
+          <Reveal className="md:col-span-3" variant="reveal-glow">
+            <div className="card card-hover rounded-3xl p-7 h-full">
               {t.about.paragraphs.map((p, i) => (
                 <p
                   key={i}
-                  className={`text-neutral-600 leading-relaxed ${i > 0 ? "mt-4" : ""}`}
+                  className={`text-neutral-600 leading-relaxed ${i > 0 ? "mt-3" : ""}`}
                 >
                   {p}
                 </p>
@@ -118,8 +116,8 @@ export default function Portfolio() {
             </div>
           </Reveal>
 
-          <Reveal className="md:col-span-2" delay={120}>
-            <div className="card card-hover rounded-3xl p-8 h-full">
+          <Reveal className="md:col-span-2" delay={120} variant="reveal-glow">
+            <div className="card card-hover rounded-3xl p-7 h-full">
               <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-4">
                 {t.about.languagesLabel}
               </h3>
@@ -139,64 +137,63 @@ export default function Portfolio() {
       {/* ============================ SKILLS ============================ */}
       <section id="skills" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
-          <SectionHeading eyebrow={t.skills.eyebrow} title={t.skills.title} />
+          <SectionHeading title={t.skills.title} />
         </Reveal>
-        <div className="grid sm:grid-cols-2 gap-6">
-          {t.skills.groups.map((group, i) => (
-            <Reveal key={group.title} delay={i * 100}>
-              <div className="card card-hover rounded-3xl p-7 h-full">
-                <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-5">
+        <Reveal variant="reveal-glow">
+          <div className="card rounded-3xl p-7 sm:p-8 divide-y divide-black/5">
+            {t.skills.groups.map((group) => (
+              <div
+                key={group.title}
+                className="grid sm:grid-cols-[120px_1fr] gap-3 sm:gap-6 py-4 first:pt-0 last:pb-0"
+              >
+                <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 sm:pt-1.5">
                   {group.title}
                 </h3>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex flex-wrap gap-2">
                   {group.items.map((item) => (
                     <Pill key={item}>{item}</Pill>
                   ))}
                 </div>
               </div>
-            </Reveal>
-          ))}
-        </div>
+            ))}
+          </div>
+        </Reveal>
       </section>
 
       {/* ========================= EXPERIENCE ========================= */}
       <section id="experience" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
-          <SectionHeading
-            eyebrow={t.experience.eyebrow}
-            title={t.experience.title}
-          />
+          <SectionHeading title={t.experience.title} />
         </Reveal>
 
-        <div className="space-y-6">
+        {/* Compact timeline — full write-ups live on /Experience */}
+        <ol className="relative border-l border-black/10 ml-2 space-y-7">
           {t.experience.items.map((exp, i) => (
-            <Reveal key={`${exp.role}-${i}`} delay={i * 80}>
-              <article className="card card-hover rounded-3xl p-7 sm:p-8">
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
-                  <h3 className="text-xl font-semibold text-neutral-950">
-                    {exp.role}
-                  </h3>
-                  <span className="text-sm font-mono text-neutral-500">
-                    {exp.period}
-                  </span>
-                </div>
-                <p className="text-neutral-500 text-sm mb-4">{exp.org}</p>
-                <p className="text-neutral-600 leading-relaxed">{exp.summary}</p>
-                <div className="flex flex-wrap gap-2 mt-5">
-                  {exp.tags.map((tag) => (
-                    <Pill key={tag}>{tag}</Pill>
-                  ))}
-                </div>
-              </article>
+            <Reveal as="li" key={`${exp.role}-${i}`} delay={i * 70} className="relative pl-7">
+              <span className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-neutral-950 ring-4 ring-white" />
+              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
+                <h3 className="text-base sm:text-lg font-semibold text-neutral-950">
+                  {exp.role}
+                </h3>
+                <span className="text-xs font-mono text-neutral-400 shrink-0">
+                  {exp.period}
+                </span>
+              </div>
+              <p className="text-sm text-neutral-500 mb-2.5">{exp.org}</p>
+              <div className="flex flex-wrap gap-1.5">
+                {exp.tags.map((tag) => (
+                  <Pill key={tag}>{tag}</Pill>
+                ))}
+              </div>
             </Reveal>
           ))}
-        </div>
+        </ol>
 
-        <Reveal delay={120}>
-          <div className="mt-8 text-center">
+        <Reveal delay={80}>
+          <div className="mt-8">
             <Link
               href="/Experience"
-              className="inline-flex items-center gap-2 text-neutral-950 hover:text-black transition-colors"
+              className="inline-flex items-center gap-2 text-neutral-950 hover:text-black hover:gap-3 transition-all"
             >
               {t.ui.seeDetailedExperience}
               <span aria-hidden>&rarr;</span>
@@ -208,24 +205,21 @@ export default function Portfolio() {
       {/* ============================ EDUCATION ============================ */}
       <section id="education" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
-          <SectionHeading
-            eyebrow={t.education.eyebrow}
-            title={t.education.title}
-          />
+          <SectionHeading title={t.education.title} />
         </Reveal>
-        <div className="space-y-6">
+        <div className="space-y-5">
           {t.education.items.map((edu, i) => (
-            <Reveal key={`${edu.degree}-${i}`} delay={i * 80}>
-              <article className="card card-hover rounded-3xl p-7 sm:p-8">
+            <Reveal key={`${edu.degree}-${i}`} delay={i * 80} variant="reveal-glow">
+              <article className="card card-hover rounded-3xl p-7">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
-                  <h3 className="text-xl font-semibold text-neutral-950">
+                  <h3 className="text-lg font-semibold text-neutral-950">
                     {edu.degree}
                   </h3>
                   <span className="text-sm font-mono text-neutral-500">
                     {edu.period}
                   </span>
                 </div>
-                <p className="text-neutral-500 text-sm mb-4">{edu.school}</p>
+                <p className="text-neutral-500 text-sm mb-3">{edu.school}</p>
                 <p className="text-neutral-600 leading-relaxed">{edu.detail}</p>
               </article>
             </Reveal>
@@ -236,14 +230,14 @@ export default function Portfolio() {
       {/* ============================ CONTACT ============================ */}
       <section id="contact" className="relative max-w-5xl mx-auto px-6 py-12">
         <Reveal>
-          <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} />
+          <SectionHeading title={t.contact.title} />
         </Reveal>
-        <Reveal delay={100}>
-          <div className="card card-hover rounded-3xl p-8 sm:p-10">
-            <p className="text-neutral-600 leading-relaxed mb-8">
+        <Reveal delay={100} variant="reveal-glow">
+          <div className="card card-hover rounded-3xl p-7 sm:p-8">
+            <p className="text-neutral-600 leading-relaxed mb-6">
               {t.contact.intro}
             </p>
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-5">
               <div>
                 <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
                   {t.contact.emailFormalLabel}

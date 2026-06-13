@@ -64,9 +64,6 @@ const Page = () => {
   return (
     <div className="relative font-sans min-h-screen text-neutral-900 px-5 pt-28 pb-16">
       <div className="max-w-5xl mx-auto mb-8">
-        <p className="text-xs font-mono uppercase tracking-[0.25em] text-neutral-400 mb-3">
-          {t.experienceDetail.eyebrow}
-        </p>
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
           {t.experienceDetail.title}
         </h1>

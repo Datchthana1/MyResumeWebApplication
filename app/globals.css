@@ -99,18 +99,34 @@ body {
 }
 
 /* ----------------------------------------------------------------
-   Scroll reveal
+   Scroll reveal — Apple-style "settle into place"
+   fade in + lift up + a subtle zoom (scale 0.96 → 1)
 ----------------------------------------------------------------- */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(32px) scale(0.96);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+}
+
+/* Stronger zoom variant for feature elements */
+.reveal-zoom {
+  transform: translateY(40px) scale(0.9);
+}
+.reveal-zoom.is-visible {
+  transform: translateY(0) scale(1);
+}
+
+/* Soft glow that fades in as the element settles */
+.reveal-glow.is-visible {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
+    0 24px 60px -24px rgba(0, 0, 0, 0.25);
 }
 
 /* ----------------------------------------------------------------
