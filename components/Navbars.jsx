@@ -1,23 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useLang } from "@/components/LanguageProvider";
+import LangToggle from "@/components/LangToggle";
 
-const LINKS = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "experience", label: "Experience" },
-  { id: "education", label: "Education" },
-  { id: "contact", label: "Contact" },
-];
+const SECTIONS = ["home", "about", "skills", "experience", "education", "contact"];
 
 export default function Navbar() {
+  const { t } = useLang();
   const [isOpen, setIsOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
 
-  // Shrink / solidify navbar after scrolling a bit
+  const links = SECTIONS.map((id) => ({ id, label: t.nav[id] }));
+
+  // Solidify navbar after scrolling a bit
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
@@ -27,7 +25,7 @@ export default function Navbar() {
 
   // Highlight the section currently in view
   useEffect(() => {
-    const sections = LINKS.map((l) => document.getElementById(l.id)).filter(
+    const sections = SECTIONS.map((id) => document.getElementById(id)).filter(
       Boolean
     );
     if (!sections.length) return;
@@ -59,7 +57,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/55 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/60 shadow-[0_8px_30px_-8px_rgba(31,38,90,0.18)]"
+          ? "bg-white/75 backdrop-blur-xl border-b border-black/8 shadow-[0_1px_20px_-12px_rgba(0,0,0,0.25)]"
           : "bg-transparent border-b border-transparent"
       }`}
     >
@@ -67,54 +65,58 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/#home" className="shrink-0 group">
-            <span className="font-bold text-lg sm:text-xl tracking-tight text-slate-800 group-hover:text-slate-950 transition-colors">
+            <span className="font-bold text-lg sm:text-xl tracking-tight text-neutral-800 group-hover:text-neutral-950 transition-colors">
               Dechthana
-              <span className="text-gradient">.</span>
+              <span className="text-neutral-400">.</span>
             </span>
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-1">
-            {LINKS.map((link) => (
+            {links.map((link) => (
               <Link
                 key={link.id}
                 href={`/#${link.id}`}
                 className={`relative px-4 py-2 text-sm rounded-full transition-colors duration-300 ${
                   active === link.id
-                    ? "text-slate-900"
-                    : "text-slate-500 hover:text-slate-900"
+                    ? "text-neutral-950"
+                    : "text-neutral-500 hover:text-neutral-950"
                 }`}
               >
                 <span className="relative z-10">{link.label}</span>
                 {active === link.id && (
-                  <span className="absolute inset-0 rounded-full glass-thin" />
+                  <span className="absolute inset-0 rounded-full bg-black/5" />
                 )}
               </Link>
             ))}
+            <LangToggle className="ml-2" />
           </div>
 
-          {/* Mobile button */}
-          <button
-            onClick={handleToggle}
-            aria-label="Toggle menu"
-            className="md:hidden relative w-9 h-9 flex flex-col justify-center items-center"
-          >
-            <span
-              className={`block h-0.5 w-6 bg-slate-700 rounded-full transition-all duration-300 ${
-                isOpen ? "rotate-45 translate-y-0.75" : "-translate-y-1"
-              }`}
-            />
-            <span
-              className={`block h-0.5 w-6 bg-slate-700 rounded-full transition-all duration-300 my-1 ${
-                isOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`block h-0.5 w-6 bg-slate-700 rounded-full transition-all duration-300 ${
-                isOpen ? "-rotate-45 -translate-y-1.75" : "translate-y-1"
-              }`}
-            />
-          </button>
+          {/* Mobile: toggle + menu button */}
+          <div className="md:hidden flex items-center gap-2">
+            <LangToggle />
+            <button
+              onClick={handleToggle}
+              aria-label="Toggle menu"
+              className="relative w-9 h-9 flex flex-col justify-center items-center"
+            >
+              <span
+                className={`block h-0.5 w-6 bg-neutral-800 rounded-full transition-all duration-300 ${
+                  isOpen ? "rotate-45 translate-y-0.75" : "-translate-y-1"
+                }`}
+              />
+              <span
+                className={`block h-0.5 w-6 bg-neutral-800 rounded-full transition-all duration-300 my-1 ${
+                  isOpen ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`block h-0.5 w-6 bg-neutral-800 rounded-full transition-all duration-300 ${
+                  isOpen ? "-rotate-45 -translate-y-1.75" : "translate-y-1"
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -122,26 +124,26 @@ export default function Navbar() {
       {isOpen && (
         <>
           <div
-            className={`fixed inset-0 bg-slate-900/20 backdrop-blur-sm z-40 ${
+            className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 ${
               closing ? "fade-out" : "fade-in"
             }`}
             onClick={handleClose}
           />
           <div className="mobile-menu-container">
             <div
-              className={`glass rounded-3xl p-4 space-y-2 shadow-2xl ${
+              className={`card rounded-3xl p-4 space-y-2 shadow-2xl ${
                 closing ? "slide-up" : "slide-down"
               }`}
             >
-              {LINKS.map((link) => (
+              {links.map((link) => (
                 <Link
                   key={link.id}
                   href={`/#${link.id}`}
                   onClick={handleClose}
                   className={`flex items-center justify-center py-3 rounded-xl text-base font-medium transition-all duration-300 ${
                     active === link.id
-                      ? "glass-thin text-slate-900"
-                      : "text-slate-600 hover:bg-white/40 hover:text-slate-900"
+                      ? "bg-black/5 text-neutral-950"
+                      : "text-neutral-600 hover:bg-black/5 hover:text-neutral-950"
                   }`}
                 >
                   {link.label}

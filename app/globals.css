@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f5fb;
-  --foreground: #1a1c2e;
-  --accent-from: #1a1c2e; /* near-black */
-  --accent-via: #475569; /* slate-600 */
-  --accent-to: #0f172a; /* slate-900 */
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  /* Grayscale accent — used sparingly (hero name only) */
+  --accent-from: #0a0a0a;
+  --accent-via: #525252;
+  --accent-to: #0a0a0a;
 }
 
 @theme inline {
@@ -28,7 +29,7 @@ body {
 }
 
 /* ----------------------------------------------------------------
-   Gradient text
+   Gradient text — reserved for the hero name
 ----------------------------------------------------------------- */
 .text-gradient {
   background-image: linear-gradient(
@@ -56,7 +57,7 @@ body {
   background-clip: text;
   color: transparent;
   background-size: 200% auto;
-  animation: shimmerText 6s linear infinite;
+  animation: shimmerText 8s linear infinite;
 }
 
 @keyframes shimmerText {
@@ -66,126 +67,35 @@ body {
 }
 
 /* ----------------------------------------------------------------
-   Liquid Glass surface (Apple-style, light)
-   - frosted translucent white
-   - top specular highlight + soft inner sheen
-   - soft outer shadow for depth
+   Card surface (Apple-style minimal B&W)
+   - near-opaque white, hairline border, soft shadow
 ----------------------------------------------------------------- */
-.glass {
+.card {
   position: relative;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  box-shadow: 0 8px 32px -8px rgba(31, 38, 90, 0.18),
-    inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.3);
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -16px rgba(0, 0, 0, 0.18);
 }
 
-/* Specular highlight sweeping across the top edge */
-.glass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(255, 255, 255, 0.08) 24%,
-    transparent 55%
-  );
-  pointer-events: none;
+/* Lighter variant for chips / nav */
+.card-thin {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
-/* A more transparent variant for chips/nav */
-.glass-thin {
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
+.card-hover {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.4s ease, box-shadow 0.4s ease;
 }
-
-.glass-hover {
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.5s ease, box-shadow 0.5s ease, background 0.5s ease;
-}
-.glass-hover:hover {
-  transform: translateY(-6px);
-  border-color: rgba(255, 255, 255, 0.9);
-  background: rgba(255, 255, 255, 0.68);
-  box-shadow: 0 24px 60px -16px rgba(15, 23, 42, 0.28),
-    inset 0 1px 1px rgba(255, 255, 255, 1);
-}
-
-/* Gradient ring glow on hover (the "liquid edge") */
-.ring-gradient::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: linear-gradient(
-    135deg,
-    rgba(15, 23, 42, 0.55),
-    rgba(100, 116, 139, 0.25),
-    rgba(15, 23, 42, 0.55)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 1;
-}
-.ring-gradient:hover::before {
-  opacity: 1;
-}
-
-/* ----------------------------------------------------------------
-   Animated pastel background blobs (the light behind the glass)
------------------------------------------------------------------ */
-.blob {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(90px);
-  opacity: 0.55;
-  pointer-events: none;
-  will-change: transform;
-  mix-blend-mode: multiply;
-}
-
-@keyframes blobFloat1 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(50px, -70px) scale(1.12);
-  }
-  66% {
-    transform: translate(-40px, 40px) scale(0.95);
-  }
-}
-@keyframes blobFloat2 {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  33% {
-    transform: translate(-60px, 50px) scale(1.08);
-  }
-  66% {
-    transform: translate(40px, -50px) scale(1.12);
-  }
-}
-.blob-1 {
-  animation: blobFloat1 20s ease-in-out infinite;
-}
-.blob-2 {
-  animation: blobFloat2 24s ease-in-out infinite;
+.card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 0, 0, 0.14);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
+    0 18px 40px -20px rgba(0, 0, 0, 0.28);
 }
 
 /* ----------------------------------------------------------------
@@ -193,7 +103,7 @@ body {
 ----------------------------------------------------------------- */
 .reveal {
   opacity: 0;
-  transform: translateY(32px);
+  transform: translateY(28px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
@@ -328,7 +238,7 @@ body {
   z-index: 45;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — neutral grayscale */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -336,9 +246,12 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(#94a3b8, #475569);
+  background: #d4d4d4;
   border-radius: 9999px;
   border: 2px solid var(--background);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3;
 }
 
 @media (prefers-reduced-motion: reduce) {

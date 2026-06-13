@@ -1,132 +1,13 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import Dechthana from "@/assets/Dechthana.jpg";
 import Reveal from "@/components/Reveal";
-
-const positions = [
-  "Data Engineer (AI Engineer)",
-  "Data Scientist",
-  "Web Developer",
-];
-
-const socials = [
-  { label: "GitHub", href: "https://github.com/Datchthana1" },
-  { label: "Facebook", href: "https://www.facebook.com/datchtana.arunchaiya/" },
-  { label: "Medium", href: "https://medium.com/@kaiza941" },
-];
-
-const programming = ["Python", "JavaScript", "SQL"];
-const dataTools = [
-  "pandas",
-  "NumPy",
-  "scikit-learn",
-  "XGBoost",
-  "LightGBM",
-  "CatBoost",
-  "PyTorch",
-  "Matplotlib",
-  "Seaborn",
-];
-const aiTools = [
-  "LLM / RAG",
-  "Fine-tuning",
-  "AI Agents",
-  "n8n",
-  "Vector Search",
-  "Hugging Face",
-];
-const platforms = [
-  "Google Cloud Platform",
-  "Vertex AI",
-  "Apache Airflow",
-  "n8n",
-  "Supabase",
-  "Dataform",
-  "Next.js",
-];
-
-const education = [
-  {
-    degree: "B.Sc. in Innovation of Medical Informatics",
-    school: "Walailak University",
-    period: "2021 – 2025",
-    detail:
-      "Graduated in 2025. Studied the intersection of healthcare, data and software — covering data science, data engineering and medical information systems.",
-  },
-];
-const spoken = [
-  { lang: "Thai", level: "Native" },
-  { lang: "English", level: "B1 (CUTEP, Certificate · 2026)" },
-];
-
-const experiences = [
-  {
-    role: "Data Engineer",
-    org: "Greenline Synergy Co., Ltd.",
-    period: "Intern (Apr–Dec 2025) → Full-time (Dec 2025 – Present)",
-    summary:
-      "I joined Greenline Synergy as a Data Engineering intern (Apr–Dec 2025) and was then converted to a full-time Data Engineer (Dec 2025 – Present). I build and maintain large-scale financial and healthcare data transformation pipelines for hospitals — designing ETL/ELT flows that ingest data from multiple sources, transforming it into clean, structured datasets, and performing data validation to guarantee quality and reliability for downstream analytics.",
-    tags: [
-      "ETL / ELT",
-      "Data Transformation",
-      "Data Validation",
-      "SQL",
-      "Dataform",
-      "GCP",
-    ],
-  },
-  {
-    role: "Data Engineer — AI Engineer",
-    org: "Greenline Synergy Co., Ltd.",
-    period: "Full-time · Dec 2025 – Present",
-    summary:
-      "Within the same Data Engineering role at Greenline Synergy, I also work as an AI Engineer building AI systems that go beyond simple prompting. I design and ship Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders — with a focus on making them accurate, reliable and genuinely useful in production.",
-    tags: [
-      "RAG",
-      "AI Agents",
-      "n8n",
-      "Fine-tuning",
-      "LLM",
-      "Vertex AI",
-      "Vector Search",
-    ],
-  },
-  {
-    role: "Data Scientist — Thesis Project",
-    org: "Walailak University",
-    period: "2024 – 2025 (3rd year)",
-    summary:
-      "My thesis project: built ML models to predict pain levels from physiological signals (HR, EDA, HRV, Skin Temperature) using Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM and CatBoost. The best model reached 83.2% accuracy with XGBoost, showing the approach can be applied effectively in medical research.",
-    tags: ["Machine Learning", "XGBoost", "Signal Processing", "Research"],
-  },
-  {
-    role: "Air Station Data Pipeline",
-    org: "Personal Data Engineering Project",
-    period: "Ongoing",
-    summary:
-      "An end-to-end data pipeline that collects air-quality data (such as PM2.5 and related metrics) from the OpenWeather and Air4Thai APIs. The ingestion, cleaning and transformation steps are orchestrated with Apache Airflow as scheduled DAGs that run on a daily basis, and the processed results are stored in Supabase so the data stays consistent, queryable and ready for analysis and visualisation.",
-    tags: [
-      "Apache Airflow",
-      "Supabase",
-      "OpenWeather",
-      "Air4Thai",
-      "ETL",
-      "Python",
-    ],
-  },
-  {
-    role: "Web Developer",
-    org: "Personal Projects",
-    period: "Ongoing",
-    summary:
-      "Designing and building personal web projects (including this portfolio) with Next.js and React to sharpen front-end and full-stack engineering skills.",
-    tags: ["Next.js", "React", "Tailwind CSS"],
-  },
-];
+import { useLang } from "@/components/LanguageProvider";
 
 function Pill({ children }) {
   return (
-    <span className="px-3 py-1.5 rounded-full text-sm glass-thin text-slate-700 hover:text-slate-900 transition-colors">
+    <span className="px-3 py-1.5 rounded-full text-sm card-thin text-neutral-700 hover:text-neutral-950 hover:border-black/20 transition-colors">
       {children}
     </span>
   );
@@ -134,11 +15,11 @@ function Pill({ children }) {
 
 function SectionHeading({ eyebrow, title }) {
   return (
-    <div className="mb-6">
-      <p className="text-sm font-mono uppercase tracking-[0.2em] text-slate-500 mb-2">
+    <div className="mb-8">
+      <p className="text-xs font-mono uppercase tracking-[0.25em] text-neutral-400 mb-3">
         {eyebrow}
       </p>
-      <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900">
+      <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
         {title}
       </h2>
     </div>
@@ -146,16 +27,10 @@ function SectionHeading({ eyebrow, title }) {
 }
 
 export default function Portfolio() {
-  return (
-    <div className="relative font-sans overflow-hidden">
-      {/* Pastel light behind the glass */}
-      <div className="fixed inset-0 -z-10">
-        <div className="blob blob-1 bg-slate-400 w-[480px] h-[480px] top-[-120px] left-[-120px]" />
-        <div className="blob blob-2 bg-slate-300 w-[420px] h-[420px] top-[35%] right-[-100px]" />
-        <div className="blob blob-1 bg-slate-500 w-[380px] h-[380px] bottom-[-120px] left-[28%]" />
-        <div className="blob blob-2 bg-slate-300 w-[320px] h-[320px] top-[60%] left-[-80px]" />
-      </div>
+  const { t } = useLang();
 
+  return (
+    <div className="relative font-sans">
       {/* ============================ HERO ============================ */}
       <section
         id="home"
@@ -163,56 +38,55 @@ export default function Portfolio() {
       >
         <div className="max-w-3xl mx-auto text-center animate-fadeInUp">
           <div className="relative inline-block mb-10">
-            <div className="absolute inset-0 rounded-full bg-linear-to-tr from-slate-300 to-slate-200 blur-2xl opacity-70" />
             <Image
               src={Dechthana}
-              alt="Dechthana Arunchaiya"
-              width={150}
-              height={150}
+              alt={`${t.hero.firstName} ${t.hero.lastName}`}
+              width={144}
+              height={144}
               priority
-              className="relative rounded-full ring-2 ring-white/80 shadow-xl object-cover w-[150px] h-[150px]"
+              className="relative rounded-full ring-1 ring-black/10 shadow-lg object-cover w-[144px] h-[144px]"
             />
           </div>
 
-          <p className="font-mono text-sm uppercase tracking-[0.3em] text-slate-500 mb-5">
-            Hello, my name is
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-400 mb-5">
+            {t.hero.greeting}
           </p>
-          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.05] text-slate-900">
-            Dechthana <span className="text-gradient-animated">Arunchaiya</span>
+          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight leading-[1.05] text-neutral-950">
+            {t.hero.firstName}{" "}
+            <span className="text-gradient-animated">{t.hero.lastName}</span>
           </h1>
 
-          <p className="mt-6 text-lg sm:text-2xl font-medium text-slate-600">
-            {positions.join("  ·  ")}
+          <p className="mt-6 text-lg sm:text-2xl font-medium text-neutral-500">
+            {t.hero.positions.join("  ·  ")}
           </p>
 
-          <p className="mt-5 max-w-xl mx-auto text-slate-500 leading-relaxed">
-            Turning data into insight and ideas into products — passionate about
-            data science, engineering, and building things for the web.
+          <p className="mt-5 max-w-xl mx-auto text-neutral-500 leading-relaxed">
+            {t.hero.tagline}
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <Link
               href="#experience"
-              className="px-6 py-3 rounded-full font-medium text-white bg-slate-900 shadow-lg shadow-slate-900/20 hover:bg-black hover:shadow-slate-900/30 hover:scale-105 transition-all duration-300"
+              className="px-6 py-3 rounded-full font-medium text-white bg-neutral-950 hover:bg-black hover:scale-105 transition-all duration-300"
             >
-              View My Work
+              {t.ui.viewWork}
             </Link>
             <Link
               href="#contact"
-              className="px-6 py-3 rounded-full font-medium text-slate-800 glass glass-hover"
+              className="px-6 py-3 rounded-full font-medium text-neutral-800 border border-black/15 hover:border-black/40 hover:text-black transition-all duration-300"
             >
-              Get in Touch
+              {t.ui.getInTouch}
             </Link>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-5 text-sm">
-            {socials.map((s) => (
+          <div className="mt-7 flex items-center justify-center gap-5 text-sm">
+            {t.socials.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-500 hover:text-slate-900 transition-colors"
+                className="text-neutral-400 hover:text-neutral-950 transition-colors"
               >
                 {s.label}
               </a>
@@ -220,46 +94,40 @@ export default function Portfolio() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-400 animate-bounceDown">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-neutral-300 animate-bounceDown">
           <span className="text-2xl">&#8595;</span>
         </div>
       </section>
 
       {/* ============================ ABOUT ============================ */}
-      <section id="about" className="relative max-w-5xl mx-auto px-6 py-8">
+      <section id="about" className="relative max-w-5xl mx-auto px-6 py-20">
         <Reveal>
-          <SectionHeading eyebrow="01 / About" title="About Me" />
+          <SectionHeading eyebrow={t.about.eyebrow} title={t.about.title} />
         </Reveal>
-        <div className="grid md:grid-cols-5 gap-8 items-start">
+        <div className="grid md:grid-cols-5 gap-6 items-start">
           <Reveal className="md:col-span-3">
-            <div className="glass glass-hover ring-gradient rounded-3xl p-8">
-              <p className="relative z-10 text-slate-600 leading-relaxed">
-                I&apos;m a{" "}
-                <span className="text-slate-900 font-medium">
-                  Data Engineer working on AI
-                </span>{" "}
-                at Greenline Synergy, and a 2025 graduate in Innovation of
-                Medical Informatics from Walailak University. I have a strong
-                passion for data science, data engineering, and building AI
-                systems that are genuinely useful in production.
-              </p>
-              <p className="relative z-10 text-slate-600 leading-relaxed mt-4">
-                My goal is to become a proficient data scientist and researcher,
-                and to contribute to impactful projects that make a difference.
-              </p>
+            <div className="card card-hover rounded-3xl p-8 h-full">
+              {t.about.paragraphs.map((p, i) => (
+                <p
+                  key={i}
+                  className={`text-neutral-600 leading-relaxed ${i > 0 ? "mt-4" : ""}`}
+                >
+                  {p}
+                </p>
+              ))}
             </div>
           </Reveal>
 
           <Reveal className="md:col-span-2" delay={120}>
-            <div className="glass glass-hover rounded-3xl p-8">
-              <h3 className="relative z-10 text-sm font-mono uppercase tracking-widest text-slate-500 mb-4">
-                Languages
+            <div className="card card-hover rounded-3xl p-8 h-full">
+              <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-4">
+                {t.about.languagesLabel}
               </h3>
-              <ul className="relative z-10 space-y-3">
-                {spoken.map((s) => (
+              <ul className="space-y-3">
+                {t.about.spoken.map((s) => (
                   <li key={s.lang} className="flex items-center justify-between">
-                    <span className="text-slate-800">{s.lang}</span>
-                    <span className="text-sm text-slate-500">{s.level}</span>
+                    <span className="text-neutral-800">{s.lang}</span>
+                    <span className="text-sm text-neutral-500">{s.level}</span>
                   </li>
                 ))}
               </ul>
@@ -269,23 +137,18 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ SKILLS ============================ */}
-      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-8">
+      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-20">
         <Reveal>
-          <SectionHeading eyebrow="02 / Skills" title="Tech & Tools" />
+          <SectionHeading eyebrow={t.skills.eyebrow} title={t.skills.title} />
         </Reveal>
         <div className="grid sm:grid-cols-2 gap-6">
-          {[
-            { title: "Languages", items: programming },
-            { title: "AI / LLM", items: aiTools },
-            { title: "Data Science", items: dataTools },
-            { title: "Platforms", items: platforms },
-          ].map((group, i) => (
-            <Reveal key={group.title} delay={i * 120}>
-              <div className="glass glass-hover ring-gradient rounded-3xl p-7 h-full">
-                <h3 className="relative z-10 text-sm font-mono uppercase tracking-widest text-slate-500 mb-5">
+          {t.skills.groups.map((group, i) => (
+            <Reveal key={group.title} delay={i * 100}>
+              <div className="card card-hover rounded-3xl p-7 h-full">
+                <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-5">
                   {group.title}
                 </h3>
-                <div className="relative z-10 flex flex-wrap gap-2.5">
+                <div className="flex flex-wrap gap-2.5">
                   {group.items.map((item) => (
                     <Pill key={item}>{item}</Pill>
                   ))}
@@ -297,32 +160,31 @@ export default function Portfolio() {
       </section>
 
       {/* ========================= EXPERIENCE ========================= */}
-      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-8">
+      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-20">
         <Reveal>
-          <SectionHeading eyebrow="03 / Experience" title="What I've Done" />
+          <SectionHeading
+            eyebrow={t.experience.eyebrow}
+            title={t.experience.title}
+          />
         </Reveal>
 
-        <div className="relative space-y-6">
-          {experiences.map((exp, i) => (
-            <Reveal key={exp.role} delay={i * 100}>
-              <article className="glass glass-hover ring-gradient rounded-3xl p-7 sm:p-8">
-                <div className="relative z-10 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
-                  <h3 className="text-xl font-semibold text-slate-900">
+        <div className="space-y-6">
+          {t.experience.items.map((exp, i) => (
+            <Reveal key={`${exp.role}-${i}`} delay={i * 80}>
+              <article className="card card-hover rounded-3xl p-7 sm:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+                  <h3 className="text-xl font-semibold text-neutral-950">
                     {exp.role}
                   </h3>
-                  <span className="text-sm font-mono text-slate-900">
+                  <span className="text-sm font-mono text-neutral-500">
                     {exp.period}
                   </span>
                 </div>
-                <p className="relative z-10 text-slate-500 text-sm mb-4">
-                  {exp.org}
-                </p>
-                <p className="relative z-10 text-slate-600 leading-relaxed">
-                  {exp.summary}
-                </p>
-                <div className="relative z-10 flex flex-wrap gap-2 mt-5">
-                  {exp.tags.map((t) => (
-                    <Pill key={t}>{t}</Pill>
+                <p className="text-neutral-500 text-sm mb-4">{exp.org}</p>
+                <p className="text-neutral-600 leading-relaxed">{exp.summary}</p>
+                <div className="flex flex-wrap gap-2 mt-5">
+                  {exp.tags.map((tag) => (
+                    <Pill key={tag}>{tag}</Pill>
                   ))}
                 </div>
               </article>
@@ -334,9 +196,9 @@ export default function Portfolio() {
           <div className="mt-8 text-center">
             <Link
               href="/Experience"
-              className="inline-flex items-center gap-2 text-slate-900 hover:text-black transition-colors"
+              className="inline-flex items-center gap-2 text-neutral-950 hover:text-black transition-colors"
             >
-              See detailed experience with photos
+              {t.ui.seeDetailedExperience}
               <span aria-hidden>&rarr;</span>
             </Link>
           </div>
@@ -344,28 +206,27 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ EDUCATION ============================ */}
-      <section id="education" className="relative max-w-5xl mx-auto px-6 py-8">
+      <section id="education" className="relative max-w-5xl mx-auto px-6 py-20">
         <Reveal>
-          <SectionHeading eyebrow="04 / Education" title="Education" />
+          <SectionHeading
+            eyebrow={t.education.eyebrow}
+            title={t.education.title}
+          />
         </Reveal>
         <div className="space-y-6">
-          {education.map((edu, i) => (
-            <Reveal key={edu.degree} delay={i * 100}>
-              <article className="glass glass-hover ring-gradient rounded-3xl p-7 sm:p-8">
-                <div className="relative z-10 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
-                  <h3 className="text-xl font-semibold text-slate-900">
+          {t.education.items.map((edu, i) => (
+            <Reveal key={`${edu.degree}-${i}`} delay={i * 80}>
+              <article className="card card-hover rounded-3xl p-7 sm:p-8">
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+                  <h3 className="text-xl font-semibold text-neutral-950">
                     {edu.degree}
                   </h3>
-                  <span className="text-sm font-mono text-slate-900">
+                  <span className="text-sm font-mono text-neutral-500">
                     {edu.period}
                   </span>
                 </div>
-                <p className="relative z-10 text-slate-500 text-sm mb-4">
-                  {edu.school}
-                </p>
-                <p className="relative z-10 text-slate-600 leading-relaxed">
-                  {edu.detail}
-                </p>
+                <p className="text-neutral-500 text-sm mb-4">{edu.school}</p>
+                <p className="text-neutral-600 leading-relaxed">{edu.detail}</p>
               </article>
             </Reveal>
           ))}
@@ -373,57 +234,56 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ CONTACT ============================ */}
-      <section id="contact" className="relative max-w-5xl mx-auto px-6 py-8">
+      <section id="contact" className="relative max-w-5xl mx-auto px-6 py-20">
         <Reveal>
-          <SectionHeading eyebrow="05 / Contact" title="Let's Connect" />
+          <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} />
         </Reveal>
         <Reveal delay={100}>
-          <div className="glass glass-hover ring-gradient rounded-3xl p-8 sm:p-10">
-            <p className="relative z-10 text-slate-600 leading-relaxed mb-8">
-              Have a project, opportunity, or just want to say hi? I&apos;d love
-              to hear from you.
+          <div className="card card-hover rounded-3xl p-8 sm:p-10">
+            <p className="text-neutral-600 leading-relaxed mb-8">
+              {t.contact.intro}
             </p>
-            <div className="relative z-10 grid sm:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-6">
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
-                  Email (Formal)
+                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
+                  {t.contact.emailFormalLabel}
                 </p>
                 <a
                   href="mailto:Dechthana.ar@mail.wu.ac.th"
-                  className="text-slate-800 hover:text-black break-all transition-colors"
+                  className="text-neutral-800 hover:text-black break-all transition-colors"
                 >
                   Dechthana.ar@mail.wu.ac.th
                 </a>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
-                  Email (Personal)
+                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
+                  {t.contact.emailPersonalLabel}
                 </p>
                 <a
                   href="mailto:Kaiza941@gmail.com"
-                  className="text-slate-800 hover:text-black break-all transition-colors"
+                  className="text-neutral-800 hover:text-black break-all transition-colors"
                 >
                   Kaiza941@gmail.com
                 </a>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
-                  Location
+                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
+                  {t.contact.locationLabel}
                 </p>
-                <p className="text-slate-800">Hatyai, Thailand</p>
+                <p className="text-neutral-800">{t.contact.location}</p>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-slate-500 mb-1">
-                  Find Me
+                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
+                  {t.contact.findMeLabel}
                 </p>
                 <div className="flex gap-4">
-                  {socials.map((s) => (
+                  {t.socials.map((s) => (
                     <a
                       key={s.label}
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-800 hover:text-black underline-offset-4 hover:underline transition-colors"
+                      className="text-neutral-800 hover:text-black underline-offset-4 hover:underline transition-colors"
                     >
                       {s.label}
                     </a>

@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Link from "next/link";
 import CompetitionContest from "@/assets/CompetitionContest.jpg";
 import ProcedureOfDemostration from "@/assets/ProcedureOfDemostration.webp";
 import VibeInContest from "@/assets/VibeInContest.jpg";
@@ -8,25 +8,27 @@ import ExperienceList from "@/components/ExperienceList";
 import Lightbox from "@/components/LightBox";
 import GLS_Logo2 from "@/assets/GLS_Logo2.jpg";
 import GLS_Vibe from "@/assets/GLS_Vibe.jpg";
+import { useLang } from "@/components/LanguageProvider";
 
 const Page = () => {
+  const { t } = useLang();
   const [lightbox, setLightbox] = useState({ isOpen: false, src: null });
   const [closing, setClosing] = useState(false);
 
-  let Experience = {
+  // Visuals/links are language-agnostic; descriptions come from `t`.
+  const Experience = {
     "Data Scientist": {
-      description:
-        "ผมได้ทำโปรเจ็คจบที่เกี่ยวกับการใช้ Machine Learning สำหรับการทำนายความเจ็บปวดจากสัญญาณชีวภาพ (Physiological Signal) ได้แก่ อัตราการเต้นของหัวใจ (HeartRate:HR), ความต้านไฟฟ้าที่ผิวหนัง (Electrodermal Activity:EDA), อัตราการแปรผันของอัตราการเต้นของหัวใจ (Heart Rate Variability:HRV), และอุณหภูมิที่ผิวหนัง (Skin Temerature:ST) โดยใช้เทคนิคต่างๆ เช่น Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM และ CatBoost เพื่อสร้างโมเดลที่มีประสิทธิภาพสูงสุดในการทำนายความเจ็บปวด ซึ่งโมเดลสามารถทำนายระดับความเจ็บปวดได้ที่ 83.2% โดยใช้ XGBoosting ผลลัพธ์ดังกล่าวเป็นที่น่าพอใจและสามารถนำไปประยุกต์ใช้ในงานวิจัยทางการแพทย์ได้อย่างมีประสิทธิภาพ",
+      description: t.experienceDetail.items["Data Scientist"],
       Tools: [
         "pandas",
-        "numpy",
+        "NumPy",
         "scikit-learn",
-        "xgboost",
-        "lightgbm",
-        "catboost",
-        "matplotlib",
-        "seaborn",
-        "pytorch",
+        "XGBoost",
+        "LightGBM",
+        "CatBoost",
+        "Matplotlib",
+        "Seaborn",
+        "PyTorch",
       ],
       link: {
         I_NewGen:
@@ -37,9 +39,8 @@ const Page = () => {
       picture: [VibeInContest, CompetitionContest, ProcedureOfDemostration],
     },
     "Data Engineer": {
-      description:
-        "ผลงานผมได้ฝึกงานกับบริษัท Greenline Synergy Co., Ltd. ในตำแหน่ง Data Engineer โดยมีหน้าที่หลักในการพัฒนาระบบประมวลผลทางการเงิน และระบบประมวลผลข้อมูลขนาดใหญ่ให้กับโรงพยาบาล เพื่อจัดการข้อมูลขนาดใหญ่จากแหล่งต่างๆ ให้เป็นระบบและพร้อมใช้งานสำหรับการวิเคราะห์ข้อมูล นอกจากนี้ ผมยังมีส่วนร่วมในการตรวจสอบและยืนยันความถูกต้องของข้อมูล (Data Validation) เพื่อให้มั่นใจว่าข้อมูลที่นำมาใช้มีคุณภาพสูง และได้พัฒนาระบบแชทบอทสำหรับช่วยเหลือทีมงานทางการแพทย์ในการทำงานด้านการเข้ารหัสข้อมูลทางการแพทย์ (Medical Coding) จาก Google Cloud Platform ซึ่งช่วยเพิ่มประสิทธิภาพในการทำงานและลดข้อผิดพลาดในการป้อนข้อมูล",
-      Tools: ["SQL", "Google Cloud Platform", "DataForm", "VertexAI"],
+      description: t.experienceDetail.items["Data Engineer"],
+      Tools: ["SQL", "Google Cloud Platform", "Dataform", "Vertex AI"],
       picture: [GLS_Logo2, GLS_Vibe],
     },
   };
@@ -61,17 +62,27 @@ const Page = () => {
   }, [lightbox.isOpen]);
 
   return (
-    <div className="relative font-sans min-h-screen text-slate-900 px-5 pt-24 space-y-6 pb-16 overflow-hidden">
-      {/* Pastel light behind the glass */}
-      <div className="fixed inset-0 -z-10">
-        <div className="blob blob-1 bg-slate-400 w-[480px] h-[480px] top-[-120px] left-[-120px]" />
-        <div className="blob blob-2 bg-slate-300 w-[420px] h-[420px] top-[40%] right-[-100px]" />
-        <div className="blob blob-1 bg-slate-500 w-[380px] h-[380px] bottom-[-120px] left-[28%]" />
+    <div className="relative font-sans min-h-screen text-neutral-900 px-5 pt-28 pb-16">
+      <div className="max-w-5xl mx-auto mb-8">
+        <p className="text-xs font-mono uppercase tracking-[0.25em] text-neutral-400 mb-3">
+          {t.experienceDetail.eyebrow}
+        </p>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
+          {t.experienceDetail.title}
+        </h1>
+        <Link
+          href="/#experience"
+          className="inline-flex items-center gap-2 mt-4 text-sm text-neutral-500 hover:text-neutral-950 transition-colors"
+        >
+          <span aria-hidden>&larr;</span>
+          {t.ui.backToHome}
+        </Link>
       </div>
 
       <div className="grid gap-8">
         <ExperienceList
           Experience={Experience}
+          labels={t.experienceDetail}
           setLightbox={setLightbox}
           setClosing={setClosing}
         />
