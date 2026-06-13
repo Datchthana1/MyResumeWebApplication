@@ -19,6 +19,8 @@
 html {
   scroll-behavior: smooth;
   background: var(--background);
+  /* Offset anchor jumps so the fixed 64px navbar doesn't cover headings */
+  scroll-padding-top: 88px;
 }
 
 body {
