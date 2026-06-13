@@ -99,7 +99,7 @@ export default function Portfolio() {
           <SectionHeading title={t.about.title} />
         </Reveal>
         <div className="grid md:grid-cols-5 gap-5 items-stretch">
-          <Reveal className="md:col-span-3" variant="reveal-glow">
+          <Reveal className="md:col-span-3">
             <div className="card card-hover rounded-3xl p-7 h-full">
               {t.about.paragraphs.map((p, i) => (
                 <p
@@ -112,7 +112,7 @@ export default function Portfolio() {
             </div>
           </Reveal>
 
-          <Reveal className="md:col-span-2" delay={120} variant="reveal-glow">
+          <Reveal className="md:col-span-2" delay={120}>
             <div className="card card-hover rounded-3xl p-7 h-full">
               <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-4">
                 {t.about.languagesLabel}
@@ -135,7 +135,7 @@ export default function Portfolio() {
         <Reveal>
           <SectionHeading title={t.skills.title} />
         </Reveal>
-        <Reveal variant="reveal-glow">
+        <Reveal>
           <div className="card rounded-3xl p-7 sm:p-8 divide-y divide-black/5">
             {t.skills.groups.map((group) => (
               <div
@@ -205,7 +205,7 @@ export default function Portfolio() {
         </Reveal>
         <div className="space-y-5">
           {t.education.items.map((edu, i) => (
-            <Reveal key={`${edu.degree}-${i}`} delay={i * 80} variant="reveal-glow">
+            <Reveal key={`${edu.degree}-${i}`} delay={i * 80}>
               <article className="card card-hover rounded-3xl p-7">
                 <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
                   <h3 className="text-lg font-semibold text-neutral-950">
@@ -228,7 +228,7 @@ export default function Portfolio() {
         <Reveal>
           <SectionHeading title={t.contact.title} />
         </Reveal>
-        <Reveal delay={100} variant="reveal-glow">
+        <Reveal delay={100}>
           <div className="card card-hover rounded-3xl p-7 sm:p-8">
             <p className="text-neutral-600 leading-relaxed mb-6">
               {t.contact.intro}

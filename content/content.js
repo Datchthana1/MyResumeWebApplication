@@ -66,7 +66,7 @@ export const content = {
       eyebrow: "01 / About",
       title: "About Me",
       paragraphs: [
-        "I'm a Data Engineer working on AI at Greenline Synergy, and a 2025 graduate in Innovation of Medical Informatics from Walailak University. I have a strong passion for data science, data engineering, and building AI systems that are genuinely useful in production.",
+        "I'm a Data Engineer working on AI at Greenline Synergy, and a 2025 graduate in Innovation of Medical Informatics from Walailak University. I have a strong passion for data science, data engineering, and building AI systems that are accurate, reliable and genuinely useful.",
         "My goal is to become a proficient data scientist and researcher, and to contribute to impactful projects that make a difference.",
       ],
       highlight: "Data Engineer working on AI",
@@ -103,7 +103,7 @@ export const content = {
           org: "Greenline Synergy Co., Ltd.",
           period: "Full-time · Dec 2025 – Present",
           summary:
-            "Within the same Data Engineering role at Greenline Synergy, I also work as an AI Engineer building AI systems that go beyond simple prompting. I design and ship Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders — with a focus on making them accurate, reliable and genuinely useful in production.",
+            "Within the same Data Engineering role at Greenline Synergy, I also work as an AI Engineer building AI systems that go beyond simple prompting. I build Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders — built as prototypes and proofs of concept to pitch the AI capability.",
           tags: ["RAG", "AI Agents", "n8n", "Fine-tuning", "LLM", "Vertex AI", "Vector Search"],
         },
         {
@@ -167,16 +167,16 @@ export const content = {
           org: "Greenline Synergy Co., Ltd. · Intern (Apr–Dec 2025) → Full-time (Dec 2025 – Present)",
           paragraphs: [
             "I started at Greenline Synergy as a Data Engineering intern and was later brought on full-time as a Data Engineer. My core responsibility is building and maintaining large-scale financial and healthcare data pipelines for hospitals.",
-            "Day to day, I design ETL/ELT flows that ingest data from many different source systems, transform it into clean and well-structured datasets, and model it for downstream analytics. I rely heavily on SQL and Dataform on Google Cloud Platform to keep transformations modular, version-controlled and testable.",
+            "Day to day, I design ETL/ELT flows that ingest data from many different source systems and transform it into clean, well-structured datasets ready for downstream analytics. I rely heavily on SQL and Dataform on Google Cloud Platform to keep transformations modular, version-controlled and testable.",
             "A big part of the role is data validation — writing checks and assertions that guarantee the data is accurate, consistent and reliable before it reaches reporting and analytics, since this is financial and clinical data where mistakes are costly.",
           ],
         },
         "AI Engineer @ Greenline Synergy": {
           org: "Greenline Synergy Co., Ltd. · Full-time · Dec 2025 – Present",
           paragraphs: [
-            "Within the same role at Greenline Synergy, I also work as an AI Engineer, building AI systems that go well beyond simple prompting and are meant to run reliably in production.",
+            "Within the same role at Greenline Synergy, I also work as an AI Engineer, building AI systems that go well beyond simple prompting. So far these have been prototypes — proofs of concept that show what's possible rather than fully deployed products.",
             "I design and ship Retrieval-Augmented Generation (RAG) systems that are grounded in the company's real documents and knowledge bases, so answers are based on actual sources rather than the model guessing. I also build multi-tool / workflow agents that call functions and chain steps together to complete tasks autonomously — including automation pipelines built with n8n.",
-            "On top of that, I fine-tune domain-specific LLMs for medical use cases, such as assisting medical coders with Medical Coding. The focus across all of this is accuracy, reliability and real usefulness — AI that genuinely helps the team, not just demos.",
+            "On top of that, I fine-tune domain-specific LLMs for medical use cases, such as assisting medical coders with Medical Coding. These are built as demos and prototypes that we use to pitch and sell the AI capability — focusing on accuracy and reliability so they clearly show the value before any full deployment.",
           ],
         },
         "Data Scientist — Thesis Project": {
@@ -221,7 +221,7 @@ export const content = {
       eyebrow: "01 / เกี่ยวกับ",
       title: "เกี่ยวกับผม",
       paragraphs: [
-        "ผมเป็น Data Engineer ที่ทำงานด้าน AI ที่ Greenline Synergy และเป็นบัณฑิตปี 2025 สาขานวัตกรรมสารสนเทศการแพทย์ จากมหาวิทยาลัยวลัยลักษณ์ ผมมีความหลงใหลอย่างมากในงานด้าน Data Science, Data Engineering และการสร้างระบบ AI ที่ใช้งานได้จริงในระดับ Production",
+        "ผมเป็น Data Engineer ที่ทำงานด้าน AI ที่ Greenline Synergy และเป็นบัณฑิตปี 2025 สาขานวัตกรรมสารสนเทศการแพทย์ จากมหาวิทยาลัยวลัยลักษณ์ ผมมีความหลงใหลอย่างมากในงานด้าน Data Science, Data Engineering และการสร้างระบบ AI ที่แม่นยำ น่าเชื่อถือ และใช้งานได้จริง",
         "เป้าหมายของผมคือการเป็น Data Scientist และนักวิจัยที่เชี่ยวชาญ และได้มีส่วนร่วมในโปรเจกต์ที่สร้างผลกระทบและความเปลี่ยนแปลงที่ดี",
       ],
       highlight: "Data Engineer ที่ทำงานด้าน AI",
@@ -258,7 +258,7 @@ export const content = {
           org: "บริษัท Greenline Synergy จำกัด",
           period: "พนักงานประจำ · ธ.ค. 2025 – ปัจจุบัน",
           summary:
-            "ในตำแหน่ง Data Engineer ที่ Greenline Synergy ผมยังทำงานเป็น AI Engineer สร้างระบบ AI ที่ไปไกลกว่าการ Prompt ธรรมดา ผมออกแบบและส่งมอบระบบ Retrieval-Augmented Generation (RAG) ที่อ้างอิงจากเอกสารและฐานความรู้จริง, Agent ที่เรียกใช้เครื่องมือและเชื่อมต่อขั้นตอนต่าง ๆ เพื่อทำงานได้เองอัตโนมัติ (รวมถึงระบบอัตโนมัติที่สร้างด้วย n8n) และ LLM ที่ Fine-tune เฉพาะทางสำหรับงานการแพทย์ เช่น ช่วยงาน Medical Coding — โดยเน้นให้แม่นยำ เชื่อถือได้ และใช้งานได้จริงในระดับ Production",
+            "ในตำแหน่ง Data Engineer ที่ Greenline Synergy ผมยังทำงานเป็น AI Engineer สร้างระบบ AI ที่ไปไกลกว่าการ Prompt ธรรมดา ผมสร้างระบบ Retrieval-Augmented Generation (RAG) ที่อ้างอิงจากเอกสารและฐานความรู้จริง, Agent ที่เรียกใช้เครื่องมือและเชื่อมต่อขั้นตอนต่าง ๆ เพื่อทำงานได้เองอัตโนมัติ (รวมถึงระบบอัตโนมัติที่สร้างด้วย n8n) และ LLM ที่ Fine-tune เฉพาะทางสำหรับงานการแพทย์ เช่น ช่วยงาน Medical Coding — โดยสร้างเป็น Prototype และ Proof of Concept เพื่อนำไปนำเสนอความสามารถของ AI",
           tags: ["RAG", "AI Agents", "n8n", "Fine-tuning", "LLM", "Vertex AI", "Vector Search"],
         },
         {
@@ -322,16 +322,16 @@ export const content = {
           org: "บริษัท Greenline Synergy จำกัด · ฝึกงาน (เม.ย.–ธ.ค. 2025) → พนักงานประจำ (ธ.ค. 2025 – ปัจจุบัน)",
           paragraphs: [
             "ผมเริ่มที่ Greenline Synergy ในฐานะนักศึกษาฝึกงานด้าน Data Engineering ก่อนได้รับการบรรจุเป็น Data Engineer เต็มเวลา หน้าที่หลักของผมคือพัฒนาและดูแลระบบ Data Pipeline สำหรับข้อมูลทางการเงินและข้อมูลสุขภาพขนาดใหญ่ให้กับโรงพยาบาล",
-            "งานประจำวันคือออกแบบกระบวนการ ETL/ELT ที่ดึงข้อมูลจากระบบต้นทางหลายแหล่ง แปลงให้เป็นชุดข้อมูลที่สะอาดและมีโครงสร้างที่ดี และทำ Data Modeling เพื่อรองรับการวิเคราะห์ปลายทาง โดยใช้ SQL และ Dataform บน Google Cloud Platform เป็นหลัก เพื่อให้การแปลงข้อมูลเป็นโมดูล จัดเวอร์ชันได้ และทดสอบได้",
+            "งานประจำวันคือออกแบบกระบวนการ ETL/ELT ที่ดึงข้อมูลจากระบบต้นทางหลายแหล่ง และแปลง (Transformation) ให้เป็นชุดข้อมูลที่สะอาดและมีโครงสร้างที่ดี พร้อมสำหรับการวิเคราะห์ปลายทาง โดยใช้ SQL และ Dataform บน Google Cloud Platform เป็นหลัก เพื่อให้การแปลงข้อมูลเป็นโมดูล จัดเวอร์ชันได้ และทดสอบได้",
             "อีกส่วนที่สำคัญคือการทำ Data Validation — เขียน checks และ assertions เพื่อรับประกันว่าข้อมูลถูกต้อง สม่ำเสมอ และเชื่อถือได้ก่อนส่งต่อไปยังรายงานและงานวิเคราะห์ เพราะเป็นข้อมูลทางการเงินและทางคลินิกที่ความผิดพลาดมีต้นทุนสูง",
           ],
         },
         "AI Engineer @ Greenline Synergy": {
           org: "บริษัท Greenline Synergy จำกัด · พนักงานประจำ · ธ.ค. 2025 – ปัจจุบัน",
           paragraphs: [
-            "ในตำแหน่งเดียวกันที่ Greenline Synergy ผมยังทำงานเป็น AI Engineer สร้างระบบ AI ที่ไปไกลกว่าการ Prompt ธรรมดา และออกแบบมาให้ทำงานได้จริงอย่างเสถียรในระดับ Production",
+            "ในตำแหน่งเดียวกันที่ Greenline Synergy ผมยังทำงานเป็น AI Engineer สร้างระบบ AI ที่ไปไกลกว่าการ Prompt ธรรมดา โดยที่ผ่านมาเป็นการสร้างในระดับ Prototype — เป็น Proof of Concept ที่แสดงให้เห็นว่าทำอะไรได้บ้าง มากกว่าจะเป็นผลิตภัณฑ์ที่ Deploy ใช้งานจริงเต็มรูปแบบ",
             "ผมออกแบบและส่งมอบระบบ Retrieval-Augmented Generation (RAG) ที่อ้างอิงจากเอกสารและฐานความรู้จริงของบริษัท เพื่อให้คำตอบมาจากแหล่งข้อมูลจริงไม่ใช่การเดาของโมเดล รวมถึงสร้าง Agent แบบ multi-tool / workflow ที่เรียกใช้ฟังก์ชันและเชื่อมต่อขั้นตอนต่าง ๆ เพื่อทำงานได้เองอัตโนมัติ — รวมถึงระบบอัตโนมัติที่สร้างด้วย n8n",
-            "นอกจากนี้ผมยัง Fine-tune LLM เฉพาะทางสำหรับงานการแพทย์ เช่น ช่วยทีม Medical Coding ในการเข้ารหัสข้อมูล โดยทุกอย่างเน้นที่ความแม่นยำ ความน่าเชื่อถือ และการใช้งานได้จริง — เป็น AI ที่ช่วยทีมงานได้จริง ไม่ใช่แค่เดโม",
+            "นอกจากนี้ผมยัง Fine-tune LLM เฉพาะทางสำหรับงานการแพทย์ เช่น ช่วยทีม Medical Coding ในการเข้ารหัสข้อมูล โดยงานเหล่านี้สร้างขึ้นเป็น Demo และ Prototype เพื่อนำไปนำเสนอและขายความสามารถของ AI — เน้นที่ความแม่นยำและความน่าเชื่อถือ เพื่อให้เห็นคุณค่าได้ชัดเจนก่อนนำไป Deploy ใช้งานจริงเต็มรูปแบบ",
           ],
         },
         "Data Scientist — Thesis Project": {
