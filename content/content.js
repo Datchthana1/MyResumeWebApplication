@@ -163,10 +163,29 @@ export const content = {
       toolsLabel: "Tools",
       linksLabel: "Links",
       items: {
-        "Data Scientist":
-          "My senior thesis applied Machine Learning to predict pain levels from physiological signals — Heart Rate (HR), Electrodermal Activity (EDA), Heart Rate Variability (HRV) and Skin Temperature (ST). I trained and compared Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM and CatBoost to find the most accurate model. The best result reached 83.2% accuracy with XGBoost — a promising outcome that can be applied effectively in medical research.",
-        "Data Engineer":
-          "I interned at Greenline Synergy Co., Ltd. as a Data Engineer, where my main work was developing financial processing systems and large-scale data pipelines for hospitals — organizing big data from many sources into clean, analysis-ready datasets. I also took part in data validation to ensure high data quality, and built a chatbot on Google Cloud Platform to help the medical team with Medical Coding, improving efficiency and reducing data-entry errors.",
+        "Data Engineer @ Greenline Synergy": {
+          org: "Greenline Synergy Co., Ltd. · Intern (Apr–Dec 2025) → Full-time (Dec 2025 – Present)",
+          paragraphs: [
+            "I started at Greenline Synergy as a Data Engineering intern and was later brought on full-time as a Data Engineer. My core responsibility is building and maintaining large-scale financial and healthcare data pipelines for hospitals.",
+            "Day to day, I design ETL/ELT flows that ingest data from many different source systems, transform it into clean and well-structured datasets, and model it for downstream analytics. I rely heavily on SQL and Dataform on Google Cloud Platform to keep transformations modular, version-controlled and testable.",
+            "A big part of the role is data validation — writing checks and assertions that guarantee the data is accurate, consistent and reliable before it reaches reporting and analytics, since this is financial and clinical data where mistakes are costly.",
+          ],
+        },
+        "AI Engineer @ Greenline Synergy": {
+          org: "Greenline Synergy Co., Ltd. · Full-time · Dec 2025 – Present",
+          paragraphs: [
+            "Within the same role at Greenline Synergy, I also work as an AI Engineer, building AI systems that go well beyond simple prompting and are meant to run reliably in production.",
+            "I design and ship Retrieval-Augmented Generation (RAG) systems that are grounded in the company's real documents and knowledge bases, so answers are based on actual sources rather than the model guessing. I also build multi-tool / workflow agents that call functions and chain steps together to complete tasks autonomously — including automation pipelines built with n8n.",
+            "On top of that, I fine-tune domain-specific LLMs for medical use cases, such as assisting medical coders with Medical Coding. The focus across all of this is accuracy, reliability and real usefulness — AI that genuinely helps the team, not just demos.",
+          ],
+        },
+        "Data Scientist — Thesis Project": {
+          org: "Walailak University · 2024 – 2025",
+          paragraphs: [
+            "For my senior thesis I applied Machine Learning to predict pain levels from physiological signals — Heart Rate (HR), Electrodermal Activity (EDA), Heart Rate Variability (HRV) and Skin Temperature (ST).",
+            "I trained and compared a range of models — Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM and CatBoost — to find the most accurate approach. The best model reached 83.2% accuracy with XGBoost, a promising result showing the method can be applied effectively in medical research.",
+          ],
+        },
       },
     },
     footer: {
@@ -299,10 +318,29 @@ export const content = {
       toolsLabel: "เครื่องมือ",
       linksLabel: "ลิงก์",
       items: {
-        "Data Scientist":
-          "ผมได้ทำโปรเจกต์จบที่เกี่ยวกับการใช้ Machine Learning สำหรับการทำนายความเจ็บปวดจากสัญญาณชีวภาพ (Physiological Signal) ได้แก่ อัตราการเต้นของหัวใจ (Heart Rate: HR), ความต้านไฟฟ้าที่ผิวหนัง (Electrodermal Activity: EDA), อัตราการแปรผันของอัตราการเต้นของหัวใจ (Heart Rate Variability: HRV) และอุณหภูมิที่ผิวหนัง (Skin Temperature: ST) โดยใช้เทคนิคต่าง ๆ เช่น Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM และ CatBoost เพื่อสร้างโมเดลที่มีประสิทธิภาพสูงสุด ซึ่งโมเดลทำนายระดับความเจ็บปวดได้ที่ 83.2% ด้วย XGBoost ผลลัพธ์น่าพอใจและสามารถนำไปประยุกต์ใช้ในงานวิจัยทางการแพทย์ได้อย่างมีประสิทธิภาพ",
-        "Data Engineer":
-          "ผมได้ฝึกงานกับบริษัท Greenline Synergy Co., Ltd. ในตำแหน่ง Data Engineer โดยมีหน้าที่หลักในการพัฒนาระบบประมวลผลทางการเงินและระบบประมวลผลข้อมูลขนาดใหญ่ให้กับโรงพยาบาล เพื่อจัดการข้อมูลขนาดใหญ่จากแหล่งต่าง ๆ ให้เป็นระบบและพร้อมใช้งานสำหรับการวิเคราะห์ นอกจากนี้ผมยังมีส่วนร่วมในการตรวจสอบและยืนยันความถูกต้องของข้อมูล (Data Validation) เพื่อให้มั่นใจว่าข้อมูลมีคุณภาพสูง และได้พัฒนาระบบแชทบอทบน Google Cloud Platform สำหรับช่วยทีมงานทางการแพทย์ในการเข้ารหัสข้อมูลทางการแพทย์ (Medical Coding) ซึ่งช่วยเพิ่มประสิทธิภาพและลดข้อผิดพลาดในการป้อนข้อมูล",
+        "Data Engineer @ Greenline Synergy": {
+          org: "บริษัท Greenline Synergy จำกัด · ฝึกงาน (เม.ย.–ธ.ค. 2025) → พนักงานประจำ (ธ.ค. 2025 – ปัจจุบัน)",
+          paragraphs: [
+            "ผมเริ่มที่ Greenline Synergy ในฐานะนักศึกษาฝึกงานด้าน Data Engineering ก่อนได้รับการบรรจุเป็น Data Engineer เต็มเวลา หน้าที่หลักของผมคือพัฒนาและดูแลระบบ Data Pipeline สำหรับข้อมูลทางการเงินและข้อมูลสุขภาพขนาดใหญ่ให้กับโรงพยาบาล",
+            "งานประจำวันคือออกแบบกระบวนการ ETL/ELT ที่ดึงข้อมูลจากระบบต้นทางหลายแหล่ง แปลงให้เป็นชุดข้อมูลที่สะอาดและมีโครงสร้างที่ดี และทำ Data Modeling เพื่อรองรับการวิเคราะห์ปลายทาง โดยใช้ SQL และ Dataform บน Google Cloud Platform เป็นหลัก เพื่อให้การแปลงข้อมูลเป็นโมดูล จัดเวอร์ชันได้ และทดสอบได้",
+            "อีกส่วนที่สำคัญคือการทำ Data Validation — เขียน checks และ assertions เพื่อรับประกันว่าข้อมูลถูกต้อง สม่ำเสมอ และเชื่อถือได้ก่อนส่งต่อไปยังรายงานและงานวิเคราะห์ เพราะเป็นข้อมูลทางการเงินและทางคลินิกที่ความผิดพลาดมีต้นทุนสูง",
+          ],
+        },
+        "AI Engineer @ Greenline Synergy": {
+          org: "บริษัท Greenline Synergy จำกัด · พนักงานประจำ · ธ.ค. 2025 – ปัจจุบัน",
+          paragraphs: [
+            "ในตำแหน่งเดียวกันที่ Greenline Synergy ผมยังทำงานเป็น AI Engineer สร้างระบบ AI ที่ไปไกลกว่าการ Prompt ธรรมดา และออกแบบมาให้ทำงานได้จริงอย่างเสถียรในระดับ Production",
+            "ผมออกแบบและส่งมอบระบบ Retrieval-Augmented Generation (RAG) ที่อ้างอิงจากเอกสารและฐานความรู้จริงของบริษัท เพื่อให้คำตอบมาจากแหล่งข้อมูลจริงไม่ใช่การเดาของโมเดล รวมถึงสร้าง Agent แบบ multi-tool / workflow ที่เรียกใช้ฟังก์ชันและเชื่อมต่อขั้นตอนต่าง ๆ เพื่อทำงานได้เองอัตโนมัติ — รวมถึงระบบอัตโนมัติที่สร้างด้วย n8n",
+            "นอกจากนี้ผมยัง Fine-tune LLM เฉพาะทางสำหรับงานการแพทย์ เช่น ช่วยทีม Medical Coding ในการเข้ารหัสข้อมูล โดยทุกอย่างเน้นที่ความแม่นยำ ความน่าเชื่อถือ และการใช้งานได้จริง — เป็น AI ที่ช่วยทีมงานได้จริง ไม่ใช่แค่เดโม",
+          ],
+        },
+        "Data Scientist — Thesis Project": {
+          org: "มหาวิทยาลัยวลัยลักษณ์ · 2024 – 2025",
+          paragraphs: [
+            "โปรเจกต์จบของผมคือการใช้ Machine Learning ทำนายระดับความเจ็บปวดจากสัญญาณชีวภาพ (Physiological Signal) ได้แก่ อัตราการเต้นของหัวใจ (HR), ความต้านไฟฟ้าที่ผิวหนัง (EDA), อัตราการแปรผันของการเต้นของหัวใจ (HRV) และอุณหภูมิผิวหนัง (ST)",
+            "ผมเทรนและเปรียบเทียบหลายโมเดล — Decision Tree, Random Forest, Gradient Boosting, XGBoost, LightGBM และ CatBoost — เพื่อหาแนวทางที่แม่นยำที่สุด โมเดลที่ดีที่สุดทำความแม่นยำได้ 83.2% ด้วย XGBoost เป็นผลลัพธ์ที่น่าพอใจและแสดงให้เห็นว่าวิธีนี้นำไปประยุกต์ใช้ในงานวิจัยทางการแพทย์ได้อย่างมีประสิทธิภาพ",
+          ],
+        },
       },
     },
     footer: {

@@ -15,10 +15,26 @@ const Page = () => {
   const [lightbox, setLightbox] = useState({ isOpen: false, src: null });
   const [closing, setClosing] = useState(false);
 
-  // Visuals/links are language-agnostic; descriptions come from `t`.
-  const Experience = {
-    "Data Scientist": {
-      description: t.experienceDetail.items["Data Scientist"],
+  // Visuals/tools/links are language-agnostic; copy (org + paragraphs) comes
+  // from `t`. Each key matches an entry in t.experienceDetail.items.
+  const items = t.experienceDetail.items;
+  const visuals = {
+    "Data Engineer @ Greenline Synergy": {
+      Tools: ["SQL", "Google Cloud Platform", "Dataform", "BigQuery"],
+      picture: [GLS_Logo2, GLS_Vibe],
+    },
+    "AI Engineer @ Greenline Synergy": {
+      Tools: [
+        "RAG",
+        "AI Agents",
+        "n8n",
+        "Fine-tuning",
+        "LLM",
+        "Vertex AI",
+        "Vector Search",
+      ],
+    },
+    "Data Scientist — Thesis Project": {
       Tools: [
         "pandas",
         "NumPy",
@@ -38,12 +54,18 @@ const Page = () => {
       },
       picture: [VibeInContest, CompetitionContest, ProcedureOfDemostration],
     },
-    "Data Engineer": {
-      description: t.experienceDetail.items["Data Engineer"],
-      Tools: ["SQL", "Google Cloud Platform", "Dataform", "Vertex AI"],
-      picture: [GLS_Logo2, GLS_Vibe],
-    },
   };
+
+  const Experience = Object.fromEntries(
+    Object.keys(visuals).map((key) => [
+      key,
+      {
+        org: items[key]?.org,
+        paragraphs: items[key]?.paragraphs ?? [],
+        ...visuals[key],
+      },
+    ])
+  );
 
   const closeLightbox = () => {
     setClosing(true);

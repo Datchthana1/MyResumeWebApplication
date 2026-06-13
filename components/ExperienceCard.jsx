@@ -14,7 +14,12 @@ export default function ExperienceCard({
       className="card card-hover rounded-3xl p-8 mb-6 flex flex-col gap-4 animate-fadeInUp"
       style={{ animationDelay: `${index * 0.2}s` }}
     >
-      <h2 className="text-xl font-bold text-neutral-950 text-center">{title}</h2>
+      <div>
+        <h2 className="text-xl font-bold text-neutral-950">{title}</h2>
+        {details.org && (
+          <p className="text-sm text-neutral-500 mt-1">{details.org}</p>
+        )}
+      </div>
 
       {/* Photos */}
       {details.picture && (
@@ -36,14 +41,20 @@ export default function ExperienceCard({
       )}
 
       {/* Description */}
-      <div>
-        <h3 className="font-semibold mt-2 text-neutral-950">
-          {labels.descriptionLabel}
-        </h3>
-        <p className="text-neutral-600 leading-relaxed mt-1">
-          {details.description}
-        </p>
-      </div>
+      {details.paragraphs?.length > 0 && (
+        <div>
+          <h3 className="font-semibold text-neutral-950">
+            {labels.descriptionLabel}
+          </h3>
+          <div className="mt-1 space-y-3">
+            {details.paragraphs.map((p, i) => (
+              <p key={i} className="text-neutral-600 leading-relaxed">
+                {p}
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Tools */}
       {details.Tools && (
