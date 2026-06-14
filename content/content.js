@@ -181,6 +181,11 @@ export const content = {
       colLastSeen: "Last ingested",
       statusReported: "Reported",
       statusMissing: "Missing",
+      // map
+      mapTitle: "Station Map",
+      mapHint: "Each dot is a station, placed by its lat/lon. Click a dot for details.",
+      legendReported: "Reported",
+      legendMissing: "Missing",
       howItWorks:
         "A station counts as “Reported” when it appears in the most-recent ingestion snapshot (created_at = latest). Missing stations didn't make the latest round and are listed first.",
     },
@@ -388,6 +393,11 @@ export const content = {
       colLastSeen: "ดูดล่าสุด",
       statusReported: "ส่งแล้ว",
       statusMissing: "ยังไม่ส่ง",
+      // แผนที่
+      mapTitle: "แผนที่สถานี",
+      mapHint: "แต่ละจุดคือสถานี วางตำแหน่งตามพิกัด lat/lon คลิกที่จุดเพื่อดูรายละเอียด",
+      legendReported: "ส่งแล้ว",
+      legendMissing: "ยังไม่ส่ง",
       howItWorks:
         "สถานีจะนับว่า “ส่งแล้ว” เมื่อปรากฏใน snapshot การดูดข้อมูลล่าสุด (created_at = ล่าสุด) ส่วนสถานีที่ยังไม่ส่งในรอบล่าสุดจะถูกแสดงไว้ด้านบนสุด",
     },

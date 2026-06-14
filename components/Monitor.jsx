@@ -1,8 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useLang } from "@/components/LanguageProvider";
+
+// Leaflet touches `window`, so load the map only on the client.
+const StationMap = dynamic(() => import("@/components/StationMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-[460px] w-full items-center justify-center rounded-3xl bg-black/[0.03] text-sm text-neutral-400">
+      …
+    </div>
+  ),
+});
 
 // FastAPI backend (Render). Falls back to localhost for dev.
 const API_BASE =
@@ -343,6 +354,29 @@ export function MonitorBoard() {
           {!loading && data && (
             <div className="mt-5">
               <HealthBar reported={data.reported_count} total={data.total} />
+            </div>
+          )}
+
+          {/* Map */}
+          {!loading && data && (
+            <div className="mt-8">
+              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                <h2 className="text-lg font-semibold text-neutral-950">{m.mapTitle}</h2>
+                <div className="flex items-center gap-4 text-xs text-neutral-500">
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+                    {m.legendReported}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-rose-500" />
+                    {m.legendMissing}
+                  </span>
+                </div>
+              </div>
+              <div className="card overflow-hidden rounded-3xl p-1.5">
+                <StationMap stations={data.stations} lang={lang} m={m} />
+              </div>
+              <p className="mt-2 text-xs text-neutral-400">{m.mapHint}</p>
             </div>
           )}
 
