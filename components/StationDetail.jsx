@@ -130,7 +130,7 @@ export default function StationDetail({ station, lang = "en", m, onClose }) {
       onClick={onClose}
     >
       <div
-        className="card my-auto w-full max-w-5xl rounded-3xl p-6 shadow-2xl sm:p-8"
+        className="card my-auto w-full max-w-6xl rounded-3xl p-6 shadow-2xl sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
@@ -248,7 +248,9 @@ export default function StationDetail({ station, lang = "en", m, onClose }) {
                           {fmtCell(p.aqi)}
                         </td>
                         <td className="px-3 py-2.5">
-                          <span className={`rounded-full px-2 py-0.5 text-[11px] font-medium ${band.cls}`}>
+                          <span
+                            className={`inline-block whitespace-nowrap rounded-full px-2 py-0.5 text-[11px] font-medium ${band.cls}`}
+                          >
                             {band.label}
                           </span>
                         </td>
