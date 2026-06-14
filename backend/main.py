@@ -36,6 +36,11 @@ ALLOWED_ORIGINS = [
     if o.strip()
 ]
 
+# The pipeline ingests hourly at minute :45, so the freshest snapshot is at most
+# ~1h old. If the latest snapshot is older than this, a whole cycle was missed
+# and we treat the pipeline as "down" (data not arriving).
+STALE_THRESHOLD_MIN = int(os.getenv("STALE_THRESHOLD_MINUTES", "90"))
+
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise RuntimeError("SUPABASE_URL and SUPABASE_KEY environment variables are required")
 
@@ -58,6 +63,17 @@ def _to_float(value):
         return float(value)
     except (TypeError, ValueError):
         return None
+
+
+def _snapshot_age_minutes(snapshot_at, now):
+    """Whole minutes between the latest snapshot and `now` (both BKK)."""
+    if not snapshot_at:
+        return None
+    try:
+        dt = BKK.localize(datetime.strptime(snapshot_at, "%Y-%m-%d %H:%M:%S"))
+    except ValueError:
+        return None
+    return max(0, int((now - dt).total_seconds() // 60))
 
 
 @app.get("/")
@@ -113,10 +129,18 @@ def monitor_status():
     total = len(stations)
     reported_count = sum(1 for s in stations if s["reported"])
 
+    now = datetime.now(BKK)
+    age = _snapshot_age_minutes(snapshot_at, now)
+    # "down" = no data at all, or the latest snapshot is older than one cycle.
+    is_stale = age is None or age > STALE_THRESHOLD_MIN
+
     return {
         "snapshot_at": snapshot_at,                # latest ingestion run (BKK), or None if empty
-        "checked_at": datetime.now(BKK).strftime("%Y-%m-%d %H:%M:%S"),
+        "checked_at": now.strftime("%Y-%m-%d %H:%M:%S"),
         "timezone": "Asia/Bangkok",
+        "snapshot_age_minutes": age,               # how old the latest snapshot is
+        "stale_threshold_minutes": STALE_THRESHOLD_MIN,
+        "is_stale": is_stale,                       # True => pipeline likely down
         "total": total,
         "reported_count": reported_count,
         "missing_count": total - reported_count,

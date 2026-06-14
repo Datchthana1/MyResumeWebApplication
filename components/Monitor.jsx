@@ -111,19 +111,36 @@ function HealthBar({ reported, total }) {
   );
 }
 
-function StatusDot({ ok }) {
+const DOT_COLORS = { good: "bg-emerald-500", warn: "bg-amber-500", bad: "bg-rose-500" };
+
+function StatusDot({ tone = "good" }) {
   return (
     <span className="relative inline-flex h-2.5 w-2.5">
-      {ok && (
+      {tone === "good" && (
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
       )}
       <span
-        className={`relative inline-flex h-2.5 w-2.5 rounded-full ${
-          ok ? "bg-emerald-500" : "bg-rose-500"
-        }`}
+        className={`relative inline-flex h-2.5 w-2.5 rounded-full ${DOT_COLORS[tone]}`}
       />
     </span>
   );
+}
+
+// minutes -> "2h 15m" / "45m" using localized units.
+function formatAge(mins, m) {
+  if (mins == null) return "—";
+  const h = Math.floor(mins / 60);
+  const rem = mins % 60;
+  return h > 0 ? `${h}${m.unitHour} ${rem}${m.unitMin}` : `${rem}${m.unitMin}`;
+}
+
+// Resolve overall status into a tone + label, shared by summary and board.
+function deriveStatus(data, error, loading, m) {
+  if (error) return { tone: "bad", label: m.statusOffline };
+  if (loading || !data) return { tone: "warn", label: m.loading };
+  if (data.is_stale) return { tone: "bad", label: m.statusStale };
+  if (data.missing_count === 0) return { tone: "good", label: m.allReported };
+  return { tone: "warn", label: m.someMissing };
 }
 
 /* ------------------------------- compact -------------------------------- */
@@ -135,26 +152,31 @@ export function MonitorSummary() {
   const { t } = useLang();
   const m = t.monitor;
   const { data, loading, error, refresh } = useMonitorData();
+  const status = deriveStatus(data, error, loading, m);
 
   return (
     <div className="card rounded-3xl p-7 sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <StatusDot ok={!!data && !error && data.missing_count === 0} />
-          <span className="text-sm font-medium text-neutral-700">
-            {error
-              ? m.statusOffline
-              : loading
-                ? m.loading
-                : data && data.missing_count === 0
-                  ? m.allReported
-                  : m.someMissing}
-          </span>
+          <StatusDot tone={status.tone} />
+          <span className="text-sm font-medium text-neutral-700">{status.label}</span>
         </div>
         <span className="font-mono text-xs text-neutral-400">
           {m.snapshotLabel}: {data?.snapshot_at ?? "—"}
         </span>
       </div>
+
+      {!error && data?.is_stale && (
+        <div className="mt-5 flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3">
+          <span className="mt-0.5 text-rose-500">⚠</span>
+          <div className="text-sm">
+            <p className="font-medium text-rose-700">{m.staleTitle}</p>
+            <p className="mt-0.5 text-rose-600/80">
+              {m.staleSince} {formatAge(data.snapshot_age_minutes, m)}
+            </p>
+          </div>
+        </div>
+      )}
 
       {error ? (
         <div className="mt-6 text-sm text-neutral-500">
@@ -206,6 +228,7 @@ export function MonitorBoard() {
   const { lang, t } = useLang();
   const m = t.monitor;
   const { data, loading, error, lastFetched, refresh } = useMonitorData();
+  const status = deriveStatus(data, error, loading, m);
 
   const [filter, setFilter] = useState("all"); // all | reported | missing
   const [query, setQuery] = useState("");
@@ -260,8 +283,8 @@ export function MonitorBoard() {
       {/* Meta line */}
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-xs text-neutral-400">
         <span className="inline-flex items-center gap-2">
-          <StatusDot ok={!!data && !error && data.missing_count === 0} />
-          {error ? m.statusOffline : data && data.missing_count === 0 ? m.allReported : data ? m.someMissing : "…"}
+          <StatusDot tone={status.tone} />
+          {status.label}
         </span>
         <span>
           {m.snapshotLabel}: {data?.snapshot_at ?? "—"}
@@ -269,7 +292,27 @@ export function MonitorBoard() {
         <span>
           {m.checkedLabel}: {lastFetched ? lastFetched.toLocaleTimeString() : "—"}
         </span>
+        {data?.snapshot_age_minutes != null && (
+          <span>
+            {m.ageLabel}: {formatAge(data.snapshot_age_minutes, m)}
+          </span>
+        )}
       </div>
+
+      {/* Pipeline-down banner */}
+      {!error && data?.is_stale && (
+        <div className="mt-6 flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4">
+          <span className="mt-0.5 text-lg text-rose-500">⚠</span>
+          <div className="text-sm">
+            <p className="font-semibold text-rose-700">{m.staleTitle}</p>
+            <p className="mt-1 text-rose-600/80">
+              {m.staleDetail
+                .replace("{age}", formatAge(data.snapshot_age_minutes, m))
+                .replace("{snapshot}", data.snapshot_at ?? "—")}
+            </p>
+          </div>
+        </div>
+      )}
 
       {error ? (
         <div className="card mt-8 rounded-3xl p-10 text-center">

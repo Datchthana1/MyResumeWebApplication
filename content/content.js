@@ -143,6 +143,15 @@ export const content = {
       allReported: "All stations reporting",
       someMissing: "Some stations missing",
       statusOffline: "Monitor offline",
+      statusStale: "Pipeline down — no new data",
+      // pipeline-down (stale) banner
+      staleTitle: "Data isn't arriving in Supabase",
+      staleSince: "No new snapshot for",
+      staleDetail:
+        "The latest snapshot is {age} old (at {snapshot}). The hourly ingestion should land a fresh batch every hour — a gap this large means the pipeline likely stopped sending.",
+      ageLabel: "Data age",
+      unitHour: "h",
+      unitMin: "m",
       // stat labels
       total: "Stations",
       reported: "Reported",
@@ -341,6 +350,15 @@ export const content = {
       allReported: "ทุกสถานีส่งข้อมูลครบ",
       someMissing: "มีบางสถานียังไม่ส่ง",
       statusOffline: "เชื่อมต่อมอนิเตอร์ไม่ได้",
+      statusStale: "ระบบหยุดส่ง — ไม่มีข้อมูลใหม่",
+      // แบนเนอร์เตือนเมื่อ pipeline หยุดส่ง (ข้อมูลค้าง)
+      staleTitle: "ข้อมูลไม่ถูกส่งเข้า Supabase",
+      staleSince: "ไม่มี snapshot ใหม่มาแล้ว",
+      staleDetail:
+        "snapshot ล่าสุดเก่าไปแล้ว {age} (เมื่อ {snapshot}) ปกติระบบดูดข้อมูลควรส่งชุดใหม่เข้ามาทุกชั่วโมง — ช่องว่างที่นานขนาดนี้แปลว่า pipeline น่าจะหยุดส่งข้อมูลแล้ว",
+      ageLabel: "อายุข้อมูล",
+      unitHour: " ชม.",
+      unitMin: " นาที",
       // stat labels
       total: "สถานีทั้งหมด",
       reported: "ส่งแล้ว",
