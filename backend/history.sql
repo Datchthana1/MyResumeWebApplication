@@ -3,11 +3,10 @@
 -- Run this ONCE in the Supabase SQL Editor (same project as air_stations),
 -- in addition to monitor.sql.
 --
--- Source is the raw `air_stations` table. recorded_at is a fixed-format text
--- timestamp ("YYYY-MM-DD HH:MM:SS"); air4thai encodes "no reading" as -1, so
--- those negatives are nulled before averaging. OpenWeather (ow_*) fields are
--- always populated per row and can be negative (temperature), so they are
--- averaged as-is.
+-- Source is the raw `air_stations` table. recorded_at is a `timestamp` column;
+-- air4thai encodes "no reading" as -1, so those negatives are nulled before
+-- averaging. OpenWeather (ow_*) fields are always populated per row and can be
+-- negative (temperature), so they are averaged as-is.
 -- ===========================================================================
 
 create or replace function get_station_history(
@@ -48,7 +47,8 @@ as $$
   with clean as (
     select
       recorded_at::timestamp as ts,
-      nullif(nullif(aqi, '')::numeric, -1) as aqi,
+      -- cast via text first so it works whether the column is text or numeric
+      nullif(nullif(aqi::text, '')::numeric, -1) as aqi,
       nullif(pm25_value::numeric, -1)      as pm25,
       nullif(pm10_value::numeric, -1)      as pm10,
       nullif(co_value::numeric,   -1)      as co,
@@ -71,7 +71,7 @@ as $$
       ow_clouds::numeric     as ow_clouds
     from air_stations
     where station_id = p_station_id
-      and recorded_at ~ '^\d{4}-\d{2}-\d{2} ([01][0-9]|2[0-3]):'
+      and recorded_at is not null
   ),
   bucketed as (
     select
