@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Dechthana from "@/assets/Dechthana.jpg";
 import Reveal from "@/components/Reveal";
+import { MonitorSummary } from "@/components/Monitor";
 import { useLang } from "@/components/LanguageProvider";
 
 function Pill({ children }) {
@@ -195,6 +196,21 @@ export default function Portfolio() {
               <span aria-hidden>&rarr;</span>
             </Link>
           </div>
+        </Reveal>
+      </section>
+
+      {/* ============================ MONITOR ============================ */}
+      <section id="monitor" className="relative max-w-5xl mx-auto px-6 py-12">
+        <Reveal>
+          <SectionHeading title={t.monitor.title} />
+        </Reveal>
+        <Reveal>
+          <p className="-mt-4 mb-8 max-w-2xl text-neutral-500 leading-relaxed">
+            {t.monitor.subtitle}
+          </p>
+        </Reveal>
+        <Reveal delay={100}>
+          <MonitorSummary />
         </Reveal>
       </section>
 

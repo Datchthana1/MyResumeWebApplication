@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLang } from "@/components/LanguageProvider";
 import LangToggle from "@/components/LangToggle";
 
-const SECTIONS = ["home", "about", "skills", "experience", "education", "contact"];
+const SECTIONS = ["home", "about", "skills", "experience", "monitor", "education", "contact"];
 
 export default function Navbar() {
   const { t } = useLang();

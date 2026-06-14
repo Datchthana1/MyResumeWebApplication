@@ -45,6 +45,7 @@ export const content = {
       about: "About",
       skills: "Skills",
       experience: "Experience",
+      monitor: "Monitor",
       education: "Education",
       contact: "Contact",
     },
@@ -132,6 +133,48 @@ export const content = {
         },
       ],
     },
+    monitor: {
+      eyebrow: "Live / Station Monitor",
+      title: "Air Station Monitor",
+      subtitle:
+        "A live health check on my Air Station data pipeline: which monitoring stations reported into Supabase in the latest hourly ingestion, and which are missing. The pipeline ingests at minute :45, so the page polls at the top of each hour — the 4 PM round is verified around 5 PM.",
+      // statuses
+      loading: "Loading…",
+      allReported: "All stations reporting",
+      someMissing: "Some stations missing",
+      statusOffline: "Monitor offline",
+      // stat labels
+      total: "Stations",
+      reported: "Reported",
+      missing: "Missing",
+      // meta
+      snapshotLabel: "Latest snapshot",
+      checkedLabel: "Checked",
+      autoHourly: "Auto-refreshes hourly",
+      viewAll: "Open full monitor",
+      refresh: "Refresh",
+      retry: "Retry",
+      error: "Couldn't reach the monitor API.",
+      timeoutHint:
+        "The backend may be waking from sleep (Render free tier). Try again in a moment.",
+      // filters / search
+      filterAll: "All",
+      filterReported: "Reported",
+      filterMissing: "Missing",
+      searchPlaceholder: "Search station or area…",
+      noResults: "No stations match.",
+      // table columns
+      colStatus: "Status",
+      colStation: "Station ID",
+      colArea: "Area",
+      colType: "Type",
+      colAqi: "AQI",
+      colLastSeen: "Last ingested",
+      statusReported: "Reported",
+      statusMissing: "Missing",
+      howItWorks:
+        "A station counts as “Reported” when it appears in the most-recent ingestion snapshot (created_at = latest). Missing stations didn't make the latest round and are listed first.",
+    },
     education: {
       eyebrow: "04 / Education",
       title: "Education",
@@ -200,6 +243,7 @@ export const content = {
       about: "เกี่ยวกับ",
       skills: "ทักษะ",
       experience: "ประสบการณ์",
+      monitor: "มอนิเตอร์",
       education: "การศึกษา",
       contact: "ติดต่อ",
     },
@@ -286,6 +330,48 @@ export const content = {
           tags: ["Next.js", "React", "Tailwind CSS"],
         },
       ],
+    },
+    monitor: {
+      eyebrow: "Live / มอนิเตอร์สถานี",
+      title: "ระบบมอนิเตอร์สถานีตรวจวัดอากาศ",
+      subtitle:
+        "ตรวจสุขภาพ Data Pipeline วัดคุณภาพอากาศของผมแบบเรียลไทม์ ว่ามีสถานีไหนส่งข้อมูลเข้า Supabase ในรอบการดูดข้อมูลล่าสุดบ้าง และสถานีไหนที่ยังไม่ส่ง ตัว Pipeline ดูดข้อมูลทุกชั่วโมงที่นาทีที่ :45 หน้านี้จึงดึงข้อมูลทุกต้นชั่วโมง — รอบ 4 โมงเย็นจะถูกตรวจสอบราว 5 โมงเย็น",
+      // statuses
+      loading: "กำลังโหลด…",
+      allReported: "ทุกสถานีส่งข้อมูลครบ",
+      someMissing: "มีบางสถานียังไม่ส่ง",
+      statusOffline: "เชื่อมต่อมอนิเตอร์ไม่ได้",
+      // stat labels
+      total: "สถานีทั้งหมด",
+      reported: "ส่งแล้ว",
+      missing: "ยังไม่ส่ง",
+      // meta
+      snapshotLabel: "Snapshot ล่าสุด",
+      checkedLabel: "ตรวจเมื่อ",
+      autoHourly: "รีเฟรชอัตโนมัติทุกชั่วโมง",
+      viewAll: "เปิดมอนิเตอร์แบบเต็ม",
+      refresh: "รีเฟรช",
+      retry: "ลองใหม่",
+      error: "เชื่อมต่อ API ของมอนิเตอร์ไม่ได้",
+      timeoutHint:
+        "Backend อาจกำลังตื่นจากโหมดพัก (Render free tier) ลองใหม่อีกครั้งในอีกสักครู่",
+      // filters / search
+      filterAll: "ทั้งหมด",
+      filterReported: "ส่งแล้ว",
+      filterMissing: "ยังไม่ส่ง",
+      searchPlaceholder: "ค้นหาสถานีหรือพื้นที่…",
+      noResults: "ไม่พบสถานีที่ตรงกับเงื่อนไข",
+      // table columns
+      colStatus: "สถานะ",
+      colStation: "รหัสสถานี",
+      colArea: "พื้นที่",
+      colType: "ประเภท",
+      colAqi: "AQI",
+      colLastSeen: "ดูดล่าสุด",
+      statusReported: "ส่งแล้ว",
+      statusMissing: "ยังไม่ส่ง",
+      howItWorks:
+        "สถานีจะนับว่า “ส่งแล้ว” เมื่อปรากฏใน snapshot การดูดข้อมูลล่าสุด (created_at = ล่าสุด) ส่วนสถานีที่ยังไม่ส่งในรอบล่าสุดจะถูกแสดงไว้ด้านบนสุด",
     },
     education: {
       eyebrow: "04 / การศึกษา",

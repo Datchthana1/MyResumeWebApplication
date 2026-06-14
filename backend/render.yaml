@@ -1,0 +1,21 @@
+# Render Blueprint for the Air Station Monitor API.
+# In Render: New + -> Blueprint, point it at this repo. Set the root directory
+# to `backend` (or keep this file and Render will use rootDir below).
+services:
+  - type: web
+    name: air-station-monitor-api
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: PYTHON_VERSION
+        value: 3.12.7

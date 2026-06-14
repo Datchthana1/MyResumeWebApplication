@@ -1,0 +1,2 @@
+# The FastAPI monitor backend is deployed separately on Render, not Vercel.
+backend/
