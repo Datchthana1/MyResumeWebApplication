@@ -28,8 +28,12 @@ SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 # Comma-separated list of allowed origins, e.g.
 #   "https://your-site.vercel.app,http://localhost:3000"
 # Defaults to "*" so local development works out of the box.
+# Trailing slashes are stripped — a browser Origin header never has one, so
+# "https://site.app/" would otherwise silently fail to match.
 ALLOWED_ORIGINS = [
-    o.strip() for o in os.getenv("ALLOWED_ORIGINS", "*").split(",") if o.strip()
+    o.strip().rstrip("/")
+    for o in os.getenv("ALLOWED_ORIGINS", "*").split(",")
+    if o.strip()
 ]
 
 if not SUPABASE_URL or not SUPABASE_KEY:
