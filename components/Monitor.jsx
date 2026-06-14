@@ -4,6 +4,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useLang } from "@/components/LanguageProvider";
+import { API_BASE } from "@/components/monitorApi";
+import StationDetail from "@/components/StationDetail";
 
 // Leaflet touches `window`, so load the map only on the client.
 const StationMap = dynamic(() => import("@/components/StationMap"), {
@@ -14,10 +16,6 @@ const StationMap = dynamic(() => import("@/components/StationMap"), {
     </div>
   ),
 });
-
-// FastAPI backend (Render). Falls back to localhost for dev.
-const API_BASE =
-  process.env.NEXT_PUBLIC_MONITOR_API_URL || "http://localhost:8000";
 
 // Render free tier can cold-start for ~30–60s, so give the request room.
 const FETCH_TIMEOUT_MS = 75_000;
@@ -86,14 +84,29 @@ export function useMonitorData() {
 
 /* --------------------------------- bits --------------------------------- */
 
+// Per-station status palette. "ok" = reported + reading fresh, "stale" =
+// reported but the reading is old, "missing" = not in the latest snapshot.
+const STATUS = {
+  ok: { tone: "good", dot: "bg-emerald-500", badge: "bg-emerald-50 text-emerald-700", row: "" },
+  stale: { tone: "warn", dot: "bg-amber-500", badge: "bg-amber-50 text-amber-700", row: "bg-amber-50/40" },
+  missing: { tone: "bad", dot: "bg-rose-500", badge: "bg-rose-50 text-rose-700", row: "bg-rose-50/40" },
+};
+
+function statusLabel(status, m) {
+  if (status === "ok") return m.statusOk;
+  if (status === "stale") return m.statusStaleData;
+  return m.statusMissing;
+}
+
 function StatCard({ value, label, tone = "neutral" }) {
   const tones = {
     neutral: "text-neutral-950",
     good: "text-emerald-600",
+    warn: "text-amber-600",
     bad: "text-rose-600",
   };
   return (
-    <div className="card-thin rounded-2xl px-5 py-4 text-center">
+    <div className="card-thin rounded-2xl px-4 py-4 text-center sm:px-5">
       <div className={`text-3xl font-bold tabular-nums ${tones[tone]}`}>{value}</div>
       <div className="mt-1 text-xs font-mono uppercase tracking-widest text-neutral-400">
         {label}
@@ -102,14 +115,14 @@ function StatCard({ value, label, tone = "neutral" }) {
   );
 }
 
-function HealthBar({ reported, total }) {
-  const pct = total > 0 ? Math.round((reported / total) * 100) : 0;
+function HealthBar({ ok, total }) {
+  const pct = total > 0 ? Math.round((ok / total) * 100) : 0;
   return (
     <div className="space-y-1.5">
       <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
         <span>{pct}%</span>
         <span className="tabular-nums">
-          {reported} / {total}
+          {ok} / {total}
         </span>
       </div>
       <div className="h-2 w-full overflow-hidden rounded-full bg-black/8">
@@ -130,9 +143,7 @@ function StatusDot({ tone = "good" }) {
       {tone === "good" && (
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
       )}
-      <span
-        className={`relative inline-flex h-2.5 w-2.5 rounded-full ${DOT_COLORS[tone]}`}
-      />
+      <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${DOT_COLORS[tone]}`} />
     </span>
   );
 }
@@ -145,13 +156,14 @@ function formatAge(mins, m) {
   return h > 0 ? `${h}${m.unitHour} ${rem}${m.unitMin}` : `${rem}${m.unitMin}`;
 }
 
-// Resolve overall status into a tone + label, shared by summary and board.
+// Resolve the overall banner status into a tone + label.
 function deriveStatus(data, error, loading, m) {
   if (error) return { tone: "bad", label: m.statusOffline };
   if (loading || !data) return { tone: "warn", label: m.loading };
   if (data.is_stale) return { tone: "bad", label: m.statusStale };
-  if (data.missing_count === 0) return { tone: "good", label: m.allReported };
-  return { tone: "warn", label: m.someMissing };
+  if (data.missing_count > 0) return { tone: "bad", label: m.someMissing };
+  if (data.stale_count > 0) return { tone: "warn", label: m.someStaleData };
+  return { tone: "good", label: m.allReported };
 }
 
 /* ------------------------------- compact -------------------------------- */
@@ -199,18 +211,22 @@ export function MonitorSummary() {
       ) : (
         <>
           <div className="mt-6 grid grid-cols-3 gap-3">
-            <StatCard value={loading ? "…" : data.total} label={m.total} />
-            <StatCard value={loading ? "…" : data.reported_count} label={m.reported} tone="good" />
+            <StatCard value={loading ? "…" : data.ok_count} label={m.statusOk} tone="good" />
+            <StatCard
+              value={loading ? "…" : data.stale_count}
+              label={m.statusStaleData}
+              tone={data && data.stale_count > 0 ? "warn" : "neutral"}
+            />
             <StatCard
               value={loading ? "…" : data.missing_count}
-              label={m.missing}
+              label={m.statusMissing}
               tone={data && data.missing_count > 0 ? "bad" : "neutral"}
             />
           </div>
 
           {!loading && data && (
             <div className="mt-6">
-              <HealthBar reported={data.reported_count} total={data.total} />
+              <HealthBar ok={data.ok_count} total={data.total} />
             </div>
           )}
         </>
@@ -233,7 +249,8 @@ export function MonitorSummary() {
 /* -------------------------------- full ---------------------------------- */
 
 /**
- * Full dashboard with searchable / filterable per-station table (/monitor).
+ * Full dashboard with map, searchable / filterable per-station table, and a
+ * click-through detail view (/monitor).
  */
 export function MonitorBoard() {
   const { lang, t } = useLang();
@@ -241,16 +258,16 @@ export function MonitorBoard() {
   const { data, loading, error, lastFetched, refresh } = useMonitorData();
   const status = deriveStatus(data, error, loading, m);
 
-  const [filter, setFilter] = useState("all"); // all | reported | missing
+  const [filter, setFilter] = useState("all"); // all | ok | stale | missing
   const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState(null); // station for the detail view
 
   const stations = data?.stations ?? [];
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return stations.filter((s) => {
-      if (filter === "reported" && !s.reported) return false;
-      if (filter === "missing" && s.reported) return false;
+      if (filter !== "all" && s.status !== filter) return false;
       if (!q) return true;
       return (
         (s.station_id || "").toLowerCase().includes(q) ||
@@ -264,8 +281,9 @@ export function MonitorBoard() {
 
   const filters = [
     { id: "all", label: m.filterAll, count: data?.total },
-    { id: "missing", label: m.filterMissing, count: data?.missing_count },
-    { id: "reported", label: m.filterReported, count: data?.reported_count },
+    { id: "missing", label: m.statusMissing, count: data?.missing_count },
+    { id: "stale", label: m.statusStaleData, count: data?.stale_count },
+    { id: "ok", label: m.statusOk, count: data?.ok_count },
   ];
 
   return (
@@ -341,19 +359,24 @@ export function MonitorBoard() {
       ) : (
         <>
           {/* Stats */}
-          <div className="mt-8 grid grid-cols-3 gap-3 sm:gap-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
             <StatCard value={loading ? "…" : data.total} label={m.total} />
-            <StatCard value={loading ? "…" : data.reported_count} label={m.reported} tone="good" />
+            <StatCard value={loading ? "…" : data.ok_count} label={m.statusOk} tone="good" />
+            <StatCard
+              value={loading ? "…" : data.stale_count}
+              label={m.statusStaleData}
+              tone={data && data.stale_count > 0 ? "warn" : "neutral"}
+            />
             <StatCard
               value={loading ? "…" : data.missing_count}
-              label={m.missing}
+              label={m.statusMissing}
               tone={data && data.missing_count > 0 ? "bad" : "neutral"}
             />
           </div>
 
           {!loading && data && (
             <div className="mt-5">
-              <HealthBar reported={data.reported_count} total={data.total} />
+              <HealthBar ok={data.ok_count} total={data.total} />
             </div>
           )}
 
@@ -362,19 +385,23 @@ export function MonitorBoard() {
             <div className="mt-8">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                 <h2 className="text-lg font-semibold text-neutral-950">{m.mapTitle}</h2>
-                <div className="flex items-center gap-4 text-xs text-neutral-500">
+                <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-500">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
-                    {m.legendReported}
+                    {m.statusOk}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-amber-500" />
+                    {m.statusStaleData}
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-rose-500" />
-                    {m.legendMissing}
+                    {m.statusMissing}
                   </span>
                 </div>
               </div>
               <div className="card overflow-hidden rounded-3xl p-1.5">
-                <StationMap stations={data.stations} lang={lang} m={m} />
+                <StationMap stations={data.stations} lang={lang} m={m} onSelect={setSelected} />
               </div>
               <p className="mt-2 text-xs text-neutral-400">{m.mapHint}</p>
             </div>
@@ -409,7 +436,7 @@ export function MonitorBoard() {
             />
           </div>
 
-          {/* Table */}
+          {/* Table — click a row for the station's history */}
           <div className="card mt-5 overflow-hidden rounded-3xl">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
@@ -421,7 +448,7 @@ export function MonitorBoard() {
                     <th className="hidden px-5 py-3 font-medium md:table-cell">{m.colType}</th>
                     <th className="px-5 py-3 text-right font-medium">{m.colAqi}</th>
                     <th className="hidden px-5 py-3 text-right font-medium lg:table-cell">
-                      {m.colLastSeen}
+                      {m.colLastRecorded}
                     </th>
                   </tr>
                 </thead>
@@ -439,46 +466,40 @@ export function MonitorBoard() {
                       </td>
                     </tr>
                   ) : (
-                    filtered.map((s) => (
-                      <tr
-                        key={s.station_id}
-                        className={`transition-colors hover:bg-black/[0.02] ${
-                          s.reported ? "" : "bg-rose-50/40"
-                        }`}
-                      >
-                        <td className="px-5 py-3">
-                          <span
-                            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                              s.reported
-                                ? "bg-emerald-50 text-emerald-700"
-                                : "bg-rose-50 text-rose-700"
-                            }`}
-                          >
+                    filtered.map((s) => {
+                      const st = STATUS[s.status] || STATUS.missing;
+                      return (
+                        <tr
+                          key={s.station_id}
+                          onClick={() => setSelected(s)}
+                          className={`cursor-pointer transition-colors hover:bg-black/[0.03] ${st.row}`}
+                        >
+                          <td className="px-5 py-3">
                             <span
-                              className={`h-1.5 w-1.5 rounded-full ${
-                                s.reported ? "bg-emerald-500" : "bg-rose-500"
-                              }`}
-                            />
-                            {s.reported ? m.statusReported : m.statusMissing}
-                          </span>
-                        </td>
-                        <td className="px-5 py-3 font-mono text-xs text-neutral-600">
-                          {s.station_id}
-                        </td>
-                        <td className="hidden max-w-xs truncate px-5 py-3 text-neutral-700 sm:table-cell">
-                          {areaOf(s)}
-                        </td>
-                        <td className="hidden px-5 py-3 text-neutral-500 md:table-cell">
-                          {s.station_type || "—"}
-                        </td>
-                        <td className="px-5 py-3 text-right tabular-nums text-neutral-700">
-                          {s.last_aqi ?? "—"}
-                        </td>
-                        <td className="hidden px-5 py-3 text-right font-mono text-xs text-neutral-400 lg:table-cell">
-                          {s.last_created_at ?? "—"}
-                        </td>
-                      </tr>
-                    ))
+                              className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${st.badge}`}
+                            >
+                              <span className={`h-1.5 w-1.5 rounded-full ${st.dot}`} />
+                              {statusLabel(s.status, m)}
+                            </span>
+                          </td>
+                          <td className="px-5 py-3 font-mono text-xs text-neutral-600">
+                            {s.station_id}
+                          </td>
+                          <td className="hidden max-w-xs truncate px-5 py-3 text-neutral-700 sm:table-cell">
+                            {areaOf(s)}
+                          </td>
+                          <td className="hidden px-5 py-3 text-neutral-500 md:table-cell">
+                            {s.station_type || "—"}
+                          </td>
+                          <td className="px-5 py-3 text-right tabular-nums text-neutral-700">
+                            {s.last_aqi ?? "—"}
+                          </td>
+                          <td className="hidden px-5 py-3 text-right font-mono text-xs text-neutral-400 lg:table-cell">
+                            {s.last_recorded_at ?? "—"}
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>
@@ -487,6 +508,11 @@ export function MonitorBoard() {
 
           <p className="mt-4 text-xs text-neutral-400">{m.howItWorks}</p>
         </>
+      )}
+
+      {/* Detail modal */}
+      {selected && (
+        <StationDetail station={selected} lang={lang} m={m} onClose={() => setSelected(null)} />
       )}
     </div>
   );

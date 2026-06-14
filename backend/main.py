@@ -41,6 +41,12 @@ ALLOWED_ORIGINS = [
 # and we treat the pipeline as "down" (data not arriving).
 STALE_THRESHOLD_MIN = int(os.getenv("STALE_THRESHOLD_MINUTES", "90"))
 
+# A station can be re-written every hour (fresh created_at) while air4thai keeps
+# returning the SAME stale reading (recorded_at frozen). So a fresh created_at
+# alone doesn't mean fresh data. If a station's last *recorded_at* is older than
+# this, its actual measurement is stale even though the pipeline still touches it.
+RECORDED_STALE_MIN = int(os.getenv("RECORDED_STALE_MINUTES", "180"))
+
 if not SUPABASE_URL or not SUPABASE_KEY:
     raise RuntimeError("SUPABASE_URL and SUPABASE_KEY environment variables are required")
 
@@ -101,15 +107,33 @@ def monitor_status():
         raise HTTPException(status_code=502, detail=f"Supabase error: {exc}") from exc
 
     rows = res.data or []
+    now = datetime.now(BKK)
 
     stations = []
     snapshot_at = None  # = global MAX(created_at); shared by all reported rows
     for r in rows:
         reported = bool(r.get("reported"))
         last_created_at = r.get("last_created_at")
+        last_recorded_at = r.get("last_recorded_at")
         if reported and last_created_at:
             if snapshot_at is None or last_created_at > snapshot_at:
                 snapshot_at = last_created_at
+
+        # Freshness of the actual reading, independent of whether the pipeline
+        # re-wrote the row. recorded_at uses the same "YYYY-MM-DD HH:MM:SS" form.
+        recorded_age = _snapshot_age_minutes(last_recorded_at, now)
+        data_fresh = recorded_age is not None and recorded_age <= RECORDED_STALE_MIN
+
+        # Three-state status:
+        #   missing -> not in the latest ingestion snapshot at all
+        #   stale   -> re-written this cycle, but the reading itself is old
+        #   ok      -> in the latest snapshot AND the reading is fresh
+        if not reported:
+            status = "missing"
+        elif data_fresh:
+            status = "ok"
+        else:
+            status = "stale"
 
         stations.append(
             {
@@ -119,17 +143,21 @@ def monitor_status():
                 "station_type": r.get("station_type"),
                 "lat": _to_float(r.get("lat")),
                 "lon": _to_float(r.get("lon")),
-                "last_recorded_at": r.get("last_recorded_at"),
+                "last_recorded_at": last_recorded_at,
                 "last_created_at": last_created_at,
                 "last_aqi": r.get("last_aqi"),
-                "reported": reported,
+                "recorded_age_minutes": recorded_age,
+                "data_fresh": data_fresh,
+                "reported": reported,   # kept: present in latest snapshot
+                "status": status,
             }
         )
 
     total = len(stations)
-    reported_count = sum(1 for s in stations if s["reported"])
+    ok_count = sum(1 for s in stations if s["status"] == "ok")
+    stale_count = sum(1 for s in stations if s["status"] == "stale")
+    missing_count = sum(1 for s in stations if s["status"] == "missing")
 
-    now = datetime.now(BKK)
     age = _snapshot_age_minutes(snapshot_at, now)
     # "down" = no data at all, or the latest snapshot is older than one cycle.
     is_stale = age is None or age > STALE_THRESHOLD_MIN
@@ -140,9 +168,41 @@ def monitor_status():
         "timezone": "Asia/Bangkok",
         "snapshot_age_minutes": age,               # how old the latest snapshot is
         "stale_threshold_minutes": STALE_THRESHOLD_MIN,
+        "recorded_stale_minutes": RECORDED_STALE_MIN,
         "is_stale": is_stale,                       # True => pipeline likely down
         "total": total,
-        "reported_count": reported_count,
-        "missing_count": total - reported_count,
+        "ok_count": ok_count,                       # reported AND reading fresh
+        "stale_count": stale_count,                 # reported but reading stale
+        "missing_count": missing_count,             # not in latest snapshot
+        "reported_count": ok_count + stale_count,   # present in latest snapshot
         "stations": stations,
     }
+
+
+# Sensible default number of buckets per granularity.
+_DEFAULT_LIMIT = {"hour": 48, "day": 7, "month": 12}
+
+
+@app.get("/api/stations/{station_id}/history")
+def station_history(station_id: str, granularity: str = "day", limit: int | None = None):
+    """
+    Time series for one station, aggregated by hour / day / month.
+    Includes both Air4Thai pollutants and OpenWeather (ow_*) fields.
+    Points are returned oldest -> newest (chart-friendly).
+    """
+    if granularity not in ("hour", "day", "month"):
+        raise HTTPException(status_code=400, detail="granularity must be hour, day or month")
+
+    n = limit if limit is not None else _DEFAULT_LIMIT[granularity]
+    n = max(1, min(int(n), 366))
+
+    try:
+        res = supabase.rpc(
+            "get_station_history",
+            {"p_station_id": station_id, "p_granularity": granularity, "p_limit": n},
+        ).execute()
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail=f"Supabase error: {exc}") from exc
+
+    points = list(reversed(res.data or []))  # RPC returns newest-first
+    return {"station_id": station_id, "granularity": granularity, "points": points}
