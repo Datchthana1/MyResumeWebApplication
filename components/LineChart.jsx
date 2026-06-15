@@ -14,10 +14,13 @@ export default function LineChart({ points = [], color = "#10b981", unit = "", h
   const ref = useRef(null);
   const [hover, setHover] = useState(null);
 
-  const W = 820;
+  // W is tuned close to the real rendered width (chart sits in a max-w-6xl
+  // modal) so preserveAspectRatio="none" stretches by ~1× — keeps text and
+  // dots from distorting while letting the chart fill the full width.
+  const W = 1080;
   const H = height;
-  const padL = 46;
-  const padR = 18;
+  const padL = 40;
+  const padR = 14;
   const padT = 18;
   const padB = 40;
   const innerW = W - padL - padR;
@@ -85,7 +88,8 @@ export default function LineChart({ points = [], color = "#10b981", unit = "", h
       <svg
         ref={ref}
         viewBox={`0 0 ${W} ${H}`}
-        className="w-full"
+        preserveAspectRatio="none"
+        className="block w-full"
         style={{ height }}
         onMouseMove={onMove}
         onMouseLeave={() => setHover(null)}
