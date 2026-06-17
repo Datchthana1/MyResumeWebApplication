@@ -90,6 +90,13 @@ export default function Navbar() {
                 )}
               </Link>
             ))}
+            <Link
+              href="/chat"
+              className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-sm text-white transition-colors hover:bg-neutral-700"
+            >
+              <span aria-hidden>✨</span>
+              {t.ui.askAi}
+            </Link>
             <LangToggle className="ml-2" />
           </div>
 
@@ -152,6 +159,14 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/chat"
+                onClick={handleClose}
+                className="flex items-center justify-center gap-1.5 rounded-xl bg-neutral-900 py-3 text-base font-medium text-white transition-colors hover:bg-neutral-700"
+              >
+                <span aria-hidden>✨</span>
+                {t.ui.askAi}
+              </Link>
             </div>
           </div>
         </>

@@ -54,6 +54,18 @@ export const content = {
       getInTouch: "Get in Touch",
       seeDetailedExperience: "See detailed experience with photos",
       backToHome: "Back to home",
+      askAi: "Ask AI",
+    },
+    chat: {
+      title: "Ask me anything",
+      subtitle:
+        "An AI assistant that answers questions about Dechthana. This chat is not saved — it resets when you leave the page.",
+      empty: "Ask anything about my experience, skills, or projects.",
+      placeholder: "Type your question…",
+      send: "Send",
+      reset: "New chat",
+      notice: "Powered by Google Gemini · history is not stored.",
+      error: "Something went wrong. Please try again.",
     },
     hero: {
       greeting: "Hello, my name is",
@@ -284,6 +296,18 @@ export const content = {
       getInTouch: "ติดต่อผม",
       seeDetailedExperience: "ดูประสบการณ์แบบละเอียดพร้อมรูปภาพ",
       backToHome: "กลับหน้าแรก",
+      askAi: "ถาม AI",
+    },
+    chat: {
+      title: "ถามผมได้ทุกเรื่อง",
+      subtitle:
+        "ผู้ช่วย AI ที่ตอบคำถามเกี่ยวกับเดชธนา แชตนี้ไม่มีการบันทึก — จะรีเซ็ตใหม่ทุกครั้งที่ออกจากหน้านี้",
+      empty: "ถามอะไรก็ได้เกี่ยวกับประสบการณ์ ทักษะ หรือโปรเจกต์ของผม",
+      placeholder: "พิมพ์คำถามของคุณ…",
+      send: "ส่ง",
+      reset: "เริ่มแชตใหม่",
+      notice: "ขับเคลื่อนด้วย Google Gemini · ไม่มีการเก็บประวัติ",
+      error: "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
     },
     hero: {
       greeting: "สวัสดีครับ ผมชื่อ",
