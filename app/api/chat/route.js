@@ -117,24 +117,40 @@ export async function POST(req) {
 
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
 
+  // gemini-2.5-flash occasionally returns 503 (overloaded) or 429 (rate
+  // limited). Retry a few times with a short backoff so a transient spike on
+  // Google's side doesn't surface as an error to the user.
   let res;
-  try {
-    res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-  } catch {
-    return Response.json(
-      { error: "Could not reach the Gemini API." },
-      { status: 502 }
-    );
+  let data = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+    } catch {
+      return Response.json(
+        { error: "Could not reach the Gemini API." },
+        { status: 502 }
+      );
+    }
+
+    data = await res.json().catch(() => null);
+
+    if (res.ok) break;
+    if ((res.status === 503 || res.status === 429) && attempt < 2) {
+      await new Promise((r) => setTimeout(r, 800 * (attempt + 1)));
+      continue;
+    }
+    break;
   }
 
-  const data = await res.json().catch(() => null);
-
   if (!res.ok) {
-    const detail = data?.error?.message || "Gemini request failed.";
+    const detail =
+      res.status === 503
+        ? "The model is busy right now. Please try again in a moment."
+        : data?.error?.message || "Gemini request failed.";
     return Response.json({ error: detail }, { status: res.status });
   }
 
