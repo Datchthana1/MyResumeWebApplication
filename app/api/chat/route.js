@@ -124,7 +124,7 @@ If a question falls outside this scope (personal life, family, personality, rela
 `.trim();
 // ⬆⬆⬆  WRITE YOUR SYSTEM PROMPT HERE  ⬆⬆⬆
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
 
 export async function POST(req) {
   const apiKey = process.env.GEMINI_API_KEY;
