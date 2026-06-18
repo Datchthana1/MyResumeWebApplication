@@ -11,10 +11,10 @@
 -- is cast to timestamp for date_trunc bucketing. Output columns are unchanged
 -- so the API/frontend contract stays the same.
 --
--- NOTE: PL1 carries ow_no (OpenWeather nitric oxide) but drops ow_co
--- (OpenWeather carbon monoxide), so station_* has no ow_co column. The output
--- still exposes ow_co for contract compatibility, but it is always NULL here.
--- (The air4thai CO reading — `co` / co_value — is unaffected.)
+-- Both air4thai (aqi, pm25, pm10, co, o3, no2, so2) and OpenWeather (ow_*,
+-- including ow_co) readings are carried through PL1 into station_*, so the full
+-- history is available per station. Requires the updated PL1 transform
+-- (air-station-transform.sql / transform-all-stations.sql) that adds ow_co.
 -- ===========================================================================
 
 create or replace function get_station_history(
@@ -78,7 +78,7 @@ begin
         ow_o3,
         ow_no2,
         ow_so2,
-        null::numeric            as ow_co,   -- station_* keeps ow_no, not ow_co
+        ow_co,
         ow_nh3,
         ow_temp,
         ow_feels_like,
