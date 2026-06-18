@@ -1,3 +1,22 @@
+-- ===========================================================================
+-- Supabase RPC for a single station's history (chart + table on the monitor).
+-- Run this ONCE in the Supabase SQL Editor.
+--
+-- SOURCE: the PER-STATION table station_<station_id> produced by PL1
+--   (transform_station) — NOT the dim/fact mart. The table name is derived the
+--   same way PL1 builds it: 'station_' + station_id with every non-alphanumeric
+--   character replaced by '_'.
+--
+-- recorded_at is fixed-format text ("YYYY-MM-DD HH:MM:SS") in station_*, so it
+-- is cast to timestamp for date_trunc bucketing. Output columns are unchanged
+-- so the API/frontend contract stays the same.
+--
+-- NOTE: PL1 carries ow_no (OpenWeather nitric oxide) but drops ow_co
+-- (OpenWeather carbon monoxide), so station_* has no ow_co column. The output
+-- still exposes ow_co for contract compatibility, but it is always NULL here.
+-- (The air4thai CO reading — `co` / co_value — is unaffected.)
+-- ===========================================================================
+
 create or replace function get_station_history(
   p_station_id text,
   p_granularity text default 'day',
@@ -28,76 +47,88 @@ returns table (
   ow_clouds     numeric,
   n             int
 )
-language sql
+language plpgsql
 stable
 as $$
-  with clean as (
+declare
+  v_tbl text := 'station_' || regexp_replace(p_station_id, '[^a-zA-Z0-9]', '_', 'g');
+begin
+  -- Station never transformed (no per-station table yet) -> empty result.
+  if not exists (
+    select 1 from pg_tables
+    where schemaname = 'public' and tablename = v_tbl
+  ) then
+    return;
+  end if;
+
+  return query execute format($f$
+    with clean as (
+      select
+        recorded_at::timestamp   as ts,
+        nullif(aqi,        -1)    as aqi,
+        nullif(pm25_value, -1)    as pm25,
+        nullif(pm10_value, -1)    as pm10,
+        nullif(co_value,   -1)    as co,
+        nullif(o3_value,   -1)    as o3,
+        nullif(no2_value,  -1)    as no2,
+        nullif(so2_value,  -1)    as so2,
+        ow_aqi,
+        ow_pm25,
+        ow_pm10,
+        ow_o3,
+        ow_no2,
+        ow_so2,
+        null::numeric            as ow_co,   -- station_* keeps ow_no, not ow_co
+        ow_nh3,
+        ow_temp,
+        ow_feels_like,
+        ow_humidity,
+        ow_pressure,
+        ow_wind_speed,
+        ow_clouds
+      from %I
+      where recorded_at is not null
+    ),
+    bucketed as (
+      select
+        case %L
+          when 'hour'  then to_char(date_trunc('hour',  ts), 'YYYY-MM-DD HH24:00')
+          when 'month' then to_char(date_trunc('month', ts), 'YYYY-MM')
+          else              to_char(date_trunc('day',   ts), 'YYYY-MM-DD')
+        end as bucket,
+        *
+      from clean
+    )
     select
-      f.recorded_at as ts,
-      nullif(f.aqi,        -1) as aqi,
-      nullif(f.pm25_value, -1) as pm25,
-      nullif(f.pm10_value, -1) as pm10,
-      nullif(f.co_value,   -1) as co,
-      nullif(f.o3_value,   -1) as o3,
-      nullif(f.no2_value,  -1) as no2,
-      nullif(f.so2_value,  -1) as so2,
-      f.ow_aqi,
-      f.ow_pm25,
-      f.ow_pm10,
-      f.ow_o3,
-      f.ow_no2,
-      f.ow_so2,
-      f.ow_co,
-      f.ow_nh3,
-      f.ow_temp,
-      f.ow_feels_like,
-      f.ow_humidity,
-      f.ow_pressure,
-      f.ow_wind_speed,
-      f.ow_clouds
-    from fact_air_quality f
-    join dim_station d on d.station_key = f.station_key
-    where d.station_id = p_station_id
-      and f.recorded_at is not null
-  ),
-  bucketed as (
-    select
-      case p_granularity
-        when 'hour'  then to_char(date_trunc('hour',  ts), 'YYYY-MM-DD HH24:00')
-        when 'month' then to_char(date_trunc('month', ts), 'YYYY-MM')
-        else              to_char(date_trunc('day',   ts), 'YYYY-MM-DD')
-      end as bucket,
-      *
-    from clean
-  )
-  select
-    bucket,
-    round(avg(aqi))             as aqi,
-    round(avg(pm25), 1)         as pm25,
-    round(avg(pm10), 1)         as pm10,
-    round(avg(co),   2)         as co,
-    round(avg(o3),   1)         as o3,
-    round(avg(no2),  1)         as no2,
-    round(avg(so2),  1)         as so2,
-    round(avg(ow_aqi))          as ow_aqi,
-    round(avg(ow_pm25), 1)      as ow_pm25,
-    round(avg(ow_pm10), 1)      as ow_pm10,
-    round(avg(ow_o3),   1)      as ow_o3,
-    round(avg(ow_no2),  1)      as ow_no2,
-    round(avg(ow_so2),  1)      as ow_so2,
-    round(avg(ow_co),   1)      as ow_co,
-    round(avg(ow_nh3),  2)      as ow_nh3,
-    round(avg(ow_temp), 1)      as ow_temp,
-    round(avg(ow_feels_like),1) as ow_feels_like,
-    round(avg(ow_humidity))     as ow_humidity,
-    round(avg(ow_pressure))     as ow_pressure,
-    round(avg(ow_wind_speed),1) as ow_wind_speed,
-    round(avg(ow_clouds))       as ow_clouds,
-    count(*)::int               as n
-  from bucketed
-  group by bucket
-  order by bucket desc
-  limit p_limit;
+      bucket,
+      round(avg(aqi))             as aqi,
+      round(avg(pm25), 1)         as pm25,
+      round(avg(pm10), 1)         as pm10,
+      round(avg(co),   2)         as co,
+      round(avg(o3),   1)         as o3,
+      round(avg(no2),  1)         as no2,
+      round(avg(so2),  1)         as so2,
+      round(avg(ow_aqi))          as ow_aqi,
+      round(avg(ow_pm25), 1)      as ow_pm25,
+      round(avg(ow_pm10), 1)      as ow_pm10,
+      round(avg(ow_o3),   1)      as ow_o3,
+      round(avg(ow_no2),  1)      as ow_no2,
+      round(avg(ow_so2),  1)      as ow_so2,
+      round(avg(ow_co),   1)      as ow_co,
+      round(avg(ow_nh3),  2)      as ow_nh3,
+      round(avg(ow_temp), 1)      as ow_temp,
+      round(avg(ow_feels_like),1) as ow_feels_like,
+      round(avg(ow_humidity))     as ow_humidity,
+      round(avg(ow_pressure))     as ow_pressure,
+      round(avg(ow_wind_speed),1) as ow_wind_speed,
+      round(avg(ow_clouds))       as ow_clouds,
+      count(*)::int               as n
+    from bucketed
+    group by bucket
+    order by bucket desc
+    limit %s
+  $f$, v_tbl, p_granularity, p_limit);
+end;
 $$;
 
 grant execute on function get_station_history(text, text, int) to anon, authenticated, service_role;
