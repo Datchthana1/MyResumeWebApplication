@@ -5,9 +5,11 @@ Exposes a single read-only endpoint that the resume frontend polls once per hour
 to show which air-quality stations have reported into Supabase in the latest
 ingestion snapshot, and which are still missing.
 
-Data flow:  Next.js (Vercel)  ->  this API (Render)  ->  Supabase RPC  ->  air_stations
+Data flow:  Next.js (Vercel)  ->  this API (Render)  ->  Supabase RPC  ->  dim/fact mart
 
-The heavy lifting lives in the `get_station_monitor()` Postgres function
+The RPCs read from the star-schema mart (dim_station + fact_air_quality) that the
+pipeline's PL2 builds from the per-station tables — NOT the raw `air_stations`
+bucket. The heavy lifting lives in the `get_station_monitor()` Postgres function
 (see monitor.sql). Run that once in the Supabase SQL editor before deploying.
 """
 

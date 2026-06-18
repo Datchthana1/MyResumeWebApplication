@@ -1,13 +1,18 @@
 -- ===========================================================================
 -- Supabase RPC for the Air Station Monitor
--- Run this ONCE in the Supabase SQL Editor (project that holds `air_stations`).
+-- Run this ONCE in the Supabase SQL Editor (project that holds the mart).
 --
--- It returns one row per DISTINCT station_id (the "expected" set), each carrying
--- its most-recent metadata plus a `reported` flag = true when that station is
--- present in the latest ingestion snapshot (created_at = MAX(created_at)).
+-- Source is the STAR-SCHEMA MART built by the pipeline's PL2
+-- (dim_station + fact_air_quality), NOT the raw `air_stations` bucket.
+-- Data flow:  air_stations (raw) -> PL1 -> station_* -> PL2 -> dim/fact -> here.
 --
--- The created_at column is a fixed-format text timestamp ("YYYY-MM-DD HH:MM:SS"),
--- so lexicographic ordering/comparison is equivalent to chronological ordering.
+-- It returns one row per station in dim_station (the "expected" set), each
+-- carrying its most-recent fact row plus a `reported` flag = true when that
+-- station's latest fact belongs to the latest ingestion snapshot
+-- (created_at = MAX(created_at) across the fact).
+--
+-- last_recorded_at / last_created_at are formatted back to "YYYY-MM-DD HH:MM:SS"
+-- so the API's strptime parsing keeps working unchanged.
 -- ===========================================================================
 
 create or replace function get_station_monitor()
@@ -27,21 +32,23 @@ language sql
 stable
 as $$
   with latest as (
-    select max(created_at) as max_created from air_stations
+    select max(created_at) as max_created from fact_air_quality
   ),
   per_station as (
-    select distinct on (station_id)
-      station_id,
-      area_th,
-      area_en,
-      station_type,
-      lat,
-      lon,
-      recorded_at as last_recorded_at,
-      created_at  as last_created_at,
-      aqi::text   as last_aqi
-    from air_stations
-    order by station_id, created_at desc
+    -- newest fact per station (dim_station = the expected set of stations)
+    select distinct on (f.station_key)
+      d.station_id,
+      d.area_th,
+      d.area_en,
+      d.station_type,
+      d.lat,
+      d.lon,
+      f.recorded_at as last_recorded_at,
+      f.created_at  as last_created_at,
+      f.aqi         as last_aqi
+    from fact_air_quality f
+    join dim_station d on d.station_key = f.station_key
+    order by f.station_key, f.created_at desc nulls last
   )
   select
     p.station_id,
@@ -50,9 +57,9 @@ as $$
     p.station_type,
     p.lat,
     p.lon,
-    p.last_recorded_at,
-    p.last_created_at,
-    p.last_aqi,
+    to_char(p.last_recorded_at, 'YYYY-MM-DD HH24:MI:SS') as last_recorded_at,
+    to_char(p.last_created_at,  'YYYY-MM-DD HH24:MI:SS') as last_created_at,
+    p.last_aqi::text                                     as last_aqi,
     (p.last_created_at = (select max_created from latest)) as reported
   from per_station p
   -- missing stations first, then alphabetical

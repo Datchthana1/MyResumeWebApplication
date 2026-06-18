@@ -1,12 +1,13 @@
 -- ===========================================================================
 -- Supabase RPC: per-station history, aggregated by hour / day / month.
--- Run this ONCE in the Supabase SQL Editor (same project as air_stations),
+-- Run this ONCE in the Supabase SQL Editor (same project as the mart),
 -- in addition to monitor.sql.
 --
--- Source is the raw `air_stations` table. recorded_at is a `timestamp` column;
--- air4thai encodes "no reading" as -1, so those negatives are nulled before
--- averaging. OpenWeather (ow_*) fields are always populated per row and can be
--- negative (temperature), so they are averaged as-is.
+-- Source is the STAR-SCHEMA MART built by the pipeline's PL2
+-- (fact_air_quality joined to dim_station), NOT the raw `air_stations` bucket.
+-- recorded_at is already a real `timestamp` in the fact. air4thai's "no reading"
+-- sentinel (-1) is nulled before averaging; OpenWeather (ow_*) fields can be
+-- legitimately negative (temperature) so they are averaged as-is.
 -- ===========================================================================
 
 create or replace function get_station_history(
@@ -46,32 +47,32 @@ stable
 as $$
   with clean as (
     select
-      recorded_at::timestamp as ts,
-      -- cast via text first so it works whether the column is text or numeric
-      nullif(nullif(aqi::text, '')::numeric, -1) as aqi,
-      nullif(pm25_value::numeric, -1)      as pm25,
-      nullif(pm10_value::numeric, -1)      as pm10,
-      nullif(co_value::numeric,   -1)      as co,
-      nullif(o3_value::numeric,   -1)      as o3,
-      nullif(no2_value::numeric,  -1)      as no2,
-      nullif(so2_value::numeric,  -1)      as so2,
-      ow_aqi::numeric        as ow_aqi,
-      ow_pm25::numeric       as ow_pm25,
-      ow_pm10::numeric       as ow_pm10,
-      ow_o3::numeric         as ow_o3,
-      ow_no2::numeric        as ow_no2,
-      ow_so2::numeric        as ow_so2,
-      ow_co::numeric         as ow_co,
-      ow_nh3::numeric        as ow_nh3,
-      ow_temp::numeric       as ow_temp,
-      ow_feels_like::numeric as ow_feels_like,
-      ow_humidity::numeric   as ow_humidity,
-      ow_pressure::numeric   as ow_pressure,
-      ow_wind_speed::numeric as ow_wind_speed,
-      ow_clouds::numeric     as ow_clouds
-    from air_stations
-    where station_id = p_station_id
-      and recorded_at is not null
+      f.recorded_at as ts,
+      nullif(f.aqi,        -1) as aqi,
+      nullif(f.pm25_value, -1) as pm25,
+      nullif(f.pm10_value, -1) as pm10,
+      nullif(f.co_value,   -1) as co,
+      nullif(f.o3_value,   -1) as o3,
+      nullif(f.no2_value,  -1) as no2,
+      nullif(f.so2_value,  -1) as so2,
+      f.ow_aqi,
+      f.ow_pm25,
+      f.ow_pm10,
+      f.ow_o3,
+      f.ow_no2,
+      f.ow_so2,
+      f.ow_co,
+      f.ow_nh3,
+      f.ow_temp,
+      f.ow_feels_like,
+      f.ow_humidity,
+      f.ow_pressure,
+      f.ow_wind_speed,
+      f.ow_clouds
+    from fact_air_quality f
+    join dim_station d on d.station_key = f.station_key
+    where d.station_id = p_station_id
+      and f.recorded_at is not null
   ),
   bucketed as (
     select
