@@ -1,15 +1,3 @@
--- ===========================================================================
--- Supabase RPC: per-station history, aggregated by hour / day / month.
--- Run this ONCE in the Supabase SQL Editor (same project as the mart),
--- in addition to monitor.sql.
---
--- Source is the STAR-SCHEMA MART built by the pipeline's PL2
--- (fact_air_quality joined to dim_station), NOT the raw `air_stations` bucket.
--- recorded_at is already a real `timestamp` in the fact. air4thai's "no reading"
--- sentinel (-1) is nulled before averaging; OpenWeather (ow_*) fields can be
--- legitimately negative (temperature) so they are averaged as-is.
--- ===========================================================================
-
 create or replace function get_station_history(
   p_station_id text,
   p_granularity text default 'day',
@@ -17,7 +5,6 @@ create or replace function get_station_history(
 )
 returns table (
   bucket        text,
-  -- Air4Thai
   aqi           numeric,
   pm25          numeric,
   pm10          numeric,
@@ -25,7 +12,6 @@ returns table (
   o3            numeric,
   no2           numeric,
   so2           numeric,
-  -- OpenWeather
   ow_aqi        numeric,
   ow_pm25       numeric,
   ow_pm10       numeric,
