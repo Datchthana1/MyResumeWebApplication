@@ -16,7 +16,7 @@ const METRICS = {
     { key: "so2", label: "SO₂", unit: "ppb", color: "#10b981" },
   ],
   ow: [
-    { key: "ow_aqi", label: "OW AQI", unit: "(1–5)", color: "#6366f1" },
+    { key: "ow_aqi", label: "OW AQI", unit: "0–500", color: "#6366f1" },
     { key: "ow_pm25", label: "OW PM2.5", unit: "µg/m³", color: "#6366f1" },
     { key: "ow_pm10", label: "OW PM10", unit: "µg/m³", color: "#6366f1" },
     { key: "ow_o3", label: "OW O₃", unit: "µg/m³", color: "#6366f1" },
