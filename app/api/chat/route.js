@@ -1,21 +1,22 @@
-// Gemini chatbot endpoint — answers questions about Dechthana.
+// Ollama chatbot endpoint — answers questions about Dechthana.
 //
 // This runs ONLY on the server, so the API key is never exposed to the browser.
 // It is stateless: nothing is stored. The client sends the whole in-memory
 // conversation on each request, and as soon as the user leaves the chat page
 // that history is gone (see app/chat/page.jsx).
 //
-// ── Where do I put my Google AI Studio API key? ───────────────────────────────
+// ── Where do I put my Ollama Cloud API key? ───────────────────────────────────
 // Create a file named `.env.local` in the project root (it's already gitignored)
 // and add:
 //
-//     GEMINI_API_KEY=your_key_from_https://aistudio.google.com/apikey
+//     OLLAMA_API_KEY=your_key_from_https://ollama.com/settings/keys
 //
-// Optionally override the model:
+// Optionally override the model or host:
 //
-//     GEMINI_MODEL=gemini-2.5-flash
+//     OLLAMA_MODEL=gpt-oss:20b-cloud
+//     OLLAMA_HOST=https://ollama.com
 //
-// Then restart `npm run dev`. On Vercel, add GEMINI_API_KEY under
+// Then restart `npm run dev`. On Vercel, add OLLAMA_API_KEY under
 // Project → Settings → Environment Variables (do NOT prefix it with
 // NEXT_PUBLIC_, or it would leak to the client).
 // ─────────────────────────────────────────────────────────────────────────────
@@ -44,7 +45,7 @@ Answer only within these categories:
 1. Professional background and career history
 2. Education
 3. Technical skills and tools
-4. Projects and systems built
+4. Projects and systems built (including their architecture)
 5. Career direction and goals
 
 If a question falls outside this scope (personal life, family, personality, relationships, finances, opinions on politics, etc.), respond with:
@@ -75,7 +76,7 @@ If a question falls outside this scope (personal life, family, personality, rela
 - **Links:** GitHub github.com/Datchthana1 · Medium medium.com/@kaiza941 · Facebook facebook.com/datchtana.arunchaiya
 
 ### Current Role
-- **Data Engineer (AI Engineer) — Greenline Synergy Co., Ltd.**
+- **Data Engineer (AI Engineer) — Greenline Synergy Co., Ltd. (GLS)**
   - Started as a Data Engineering intern (Apr–Dec 2025), then converted to
     full-time Data Engineer (Dec 2025 – Present).
   - As a Data Engineer: builds and maintains large-scale financial and
@@ -97,24 +98,71 @@ If a question falls outside this scope (personal life, family, personality, rela
   — covering data science, data engineering and medical information systems.
 
 ### Projects
-- **Thesis — Pain-level prediction (Walailak University, 2024–2025):** built ML
-  models to predict pain levels from physiological signals (HR, EDA, HRV, Skin
-  Temperature) using Decision Tree, Random Forest, Gradient Boosting, XGBoost,
-  LightGBM and CatBoost. Best model reached 83.2% accuracy with XGBoost.
-- **Air Station Data Pipeline (personal, ongoing):** end-to-end pipeline that
-  collects air-quality data (PM2.5 and related metrics) from the OpenWeather and
-  Air4Thai APIs. Ingestion, cleaning and transformation are orchestrated with
-  Apache Airflow as scheduled daily DAGs; processed results are stored in
-  Supabase, ready for analysis and visualisation.
-- **Web development (personal, ongoing):** designs and builds personal web
-  projects — including this portfolio website — with Next.js, React and
-  Tailwind CSS.
+
+#### Thesis — Pain-level prediction (Walailak University, 2024–2025)
+Built ML models to predict pain levels from physiological signals (HR, EDA, HRV,
+Skin Temperature) using Decision Tree, Random Forest, Gradient Boosting, XGBoost,
+LightGBM and CatBoost. Best model reached 83.2% accuracy with XGBoost.
+
+#### Air Pipeline 2 — Air Station Data Pipeline (personal, ongoing)
+An end-to-end air-quality data pipeline that collects PM2.5 and related metrics
+for ~178 air-monitoring stations across Thailand from two sources: the **Air4Thai**
+API (Thailand's Pollution Control Department) and the **OpenWeather** API
+(air pollution + weather). It is orchestrated with **Apache Airflow** as three
+chained DAGs that trigger each other in sequence, and the data is stored in
+**Supabase (PostgreSQL)**. The whole thing runs in **Docker**.
+
+**Architecture (medallion-style: raw → per-station → star-schema mart):**
+- **PL0 — \`PL0_ingestion_air_station\`**: runs hourly (at minute 45 via a cron
+  timetable, timezone Asia/Bangkok). Fetches Air4Thai + OpenWeather for every
+  station, computes the PM2.5 AQI (a 0–500 index via standard breakpoints),
+  upserts the raw readings into the \`air_stations\` table, then triggers PL1.
+- **PL1 — \`PL1_transform_air_station\`**: calls a Postgres RPC
+  \`transform_all_stations()\` that explodes the raw data into one cleaned
+  \`station_*\` table per station; clamps out-of-range values; then triggers PL2.
+- **PL2 — \`PL2_build_dim_fact\`**: calls a Postgres RPC \`build_dim_fact()\` that
+  unions all \`station_*\` tables and builds a **star-schema data mart**:
+  \`dim_station\` + \`dim_date\` + \`fact_air_quality\`.
+- **Serving layer**: this very resume website reads the mart through the RPCs
+  \`get_station_monitor()\` / \`get_station_history()\` to render the air-quality
+  monitor page.
+- **Stack**: Apache Airflow (currently \`airflow standalone\`, SQLite +
+  SequentialExecutor for dev), Supabase/PostgreSQL, Python (requests, pandas,
+  supabase-py, pendulum), Docker.
+- It is a learning-focused project; the roadmap includes hardening reliability
+  (per-station partial-failure handling, concurrency for the ~356 hourly HTTP
+  calls), better data modeling (replacing the per-station tables with a single
+  partitioned table, fixing TEXT timestamps to timestamptz), data-quality tests,
+  alerting/observability, and a production Airflow setup (LocalExecutor/Celery).
+
+#### GLS AI platform — internal AI systems at Greenline Synergy
+At GLS, Dechthana builds the company's internal AI assistant platform. Its
+architecture:
+- **Front-End:** **OpenWebUI** — the chat interface users interact with.
+- **Back-End:** **n8n** — orchestrates the workflows/agent logic; runs on a
+  **VM inside Docker**.
+- **"Brain" (LLM):** **Google Gemini API** — powers all of the conversational
+  responses and reasoning.
+- **Storage / Memory:** **PostgreSQL** — stores documents (for knowledge/RAG)
+  and chat memories (conversation history).
+- **Tool calling / data access:** **Google BigQuery** is connected as a
+  call-tool. In the **ICD-10 Coder** project, n8n queries BigQuery to pull
+  patient history into the workflow so the assistant can help with medical
+  coding.
+- In short: OpenWebUI (UI) → n8n on a Docker VM (orchestration/agent) →
+  Gemini (LLM) + Postgres (documents & chat memory) + BigQuery (tool to fetch
+  patient history for ICD-10 coding).
+
+#### Web development (personal, ongoing)
+Designs and builds personal web projects — including this portfolio website —
+with Next.js, React and Tailwind CSS. This chatbot is powered by Ollama running
+the gpt-oss model.
 
 ### Technical Skills
 - **Languages:** Python, JavaScript, SQL
-- **AI / LLM:** LLM / RAG, Fine-tuning, AI Agents, n8n, Vector Search, Hugging Face
+- **AI / LLM:** LLM / RAG, Fine-tuning, AI Agents, n8n, Vector Search, Hugging Face, Ollama
 - **Data Science:** pandas, NumPy, scikit-learn, XGBoost, LightGBM, CatBoost, PyTorch, Matplotlib, Seaborn
-- **Platforms / Tools:** Google Cloud Platform, Vertex AI, Apache Airflow, n8n, Supabase, Dataform, Next.js
+- **Platforms / Tools:** Google Cloud Platform, Vertex AI, BigQuery, Apache Airflow, n8n, Supabase, PostgreSQL, Dataform, Docker, OpenWebUI, Next.js
 
 ### Career Direction & Goals
 - Aims to become a proficient data scientist and researcher, and to contribute
@@ -124,13 +172,14 @@ If a question falls outside this scope (personal life, family, personality, rela
 `.trim();
 // ⬆⬆⬆  WRITE YOUR SYSTEM PROMPT HERE  ⬆⬆⬆
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
+const MODEL = process.env.OLLAMA_MODEL || "gpt-oss:20b-cloud";
+const HOST = (process.env.OLLAMA_HOST || "https://ollama.com").replace(/\/+$/, "");
 
 export async function POST(req) {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.OLLAMA_API_KEY;
   if (!apiKey) {
     return Response.json(
-      { error: "Server is missing GEMINI_API_KEY. Add it to .env.local." },
+      { error: "Server is missing OLLAMA_API_KEY. Add it to .env.local." },
       { status: 500 }
     );
   }
@@ -143,46 +192,52 @@ export async function POST(req) {
   }
 
   // The client sends the current (in-memory) conversation. We never persist it.
-  const messages = Array.isArray(body?.messages) ? body.messages : [];
-  const contents = messages
+  const history = Array.isArray(body?.messages) ? body.messages : [];
+  const turns = history
     .filter((m) => m && typeof m.text === "string" && m.text.trim())
     .map((m) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.text }],
+      role: m.role === "assistant" ? "assistant" : "user",
+      content: m.text,
     }));
 
-  if (!contents.length) {
+  if (!turns.length) {
     return Response.json({ error: "No message to send." }, { status: 400 });
   }
 
+  const messages = SYSTEM_PROMPT
+    ? [{ role: "system", content: SYSTEM_PROMPT }, ...turns]
+    : turns;
+
   const payload = {
-    contents,
-    generationConfig: {
+    model: MODEL,
+    messages,
+    stream: false,
+    options: {
       temperature: 0.7,
-      maxOutputTokens: 1024,
+      num_predict: 1024,
     },
   };
-  if (SYSTEM_PROMPT) {
-    payload.system_instruction = { parts: [{ text: SYSTEM_PROMPT }] };
-  }
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
+  const url = `${HOST}/api/chat`;
 
-  // gemini-2.5-flash occasionally returns 503 (overloaded) or 429 (rate
-  // limited). Retry a few times with a short backoff so a transient spike on
-  // Google's side doesn't surface as an error to the user.
+  // The cloud model can occasionally return 503 (overloaded) or 429 (rate
+  // limited). Retry a few times with a short backoff so a transient spike
+  // doesn't surface as an error to the user.
   let res;
   let data = null;
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
       res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
         body: JSON.stringify(payload),
       });
     } catch {
       return Response.json(
-        { error: "Could not reach the Gemini API." },
+        { error: "Could not reach the Ollama API." },
         { status: 502 }
       );
     }
@@ -201,15 +256,14 @@ export async function POST(req) {
     const detail =
       res.status === 503
         ? "The model is busy right now. Please try again in a moment."
-        : data?.error?.message || "Gemini request failed.";
+        : data?.error || "Ollama request failed.";
     return Response.json({ error: detail }, { status: res.status });
   }
 
-  const reply =
-    data?.candidates?.[0]?.content?.parts
-      ?.map((p) => p?.text || "")
-      .join("")
-      .trim() || "";
+  // Ollama /api/chat returns the answer in message.content. For reasoning
+  // models like gpt-oss, the chain-of-thought lands in message.thinking, which
+  // we deliberately ignore — only the final content is shown to the user.
+  const reply = (data?.message?.content || "").trim();
 
   if (!reply) {
     return Response.json(

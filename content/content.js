@@ -64,7 +64,7 @@ export const content = {
       placeholder: "Type your question…",
       send: "Send",
       reset: "New chat",
-      notice: "Powered by Google Gemini · history is not stored.",
+      notice: "Powered by Ollama (gpt-oss) · history is not stored.",
       error: "Something went wrong. Please try again.",
     },
     hero: {
@@ -306,7 +306,7 @@ export const content = {
       placeholder: "พิมพ์คำถามของคุณ…",
       send: "ส่ง",
       reset: "เริ่มแชตใหม่",
-      notice: "ขับเคลื่อนด้วย Google Gemini · ไม่มีการเก็บประวัติ",
+      notice: "ขับเคลื่อนด้วย Ollama (gpt-oss) · ไม่มีการเก็บประวัติ",
       error: "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
     },
     hero: {
