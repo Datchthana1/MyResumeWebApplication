@@ -66,9 +66,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href="/#home" className="shrink-0 group">
-            <span className="font-bold text-lg sm:text-xl tracking-tight text-neutral-800 group-hover:text-neutral-950 transition-colors">
+            <span className="font-display font-bold text-lg sm:text-xl tracking-tight text-neutral-800 group-hover:text-neutral-950 transition-colors">
               Dechthana
-              <span className="text-neutral-400">.</span>
+              <span className="text-signal">.</span>
             </span>
           </Link>
 
@@ -86,13 +86,13 @@ export default function Navbar() {
               >
                 <span className="relative z-10">{link.label}</span>
                 {active === link.id && (
-                  <span className="absolute inset-0 rounded-full bg-black/5" />
+                  <span className="absolute inset-0 rounded-full bg-(--signal-wash)" />
                 )}
               </Link>
             ))}
             <Link
               href="/chat"
-              className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-sm text-white transition-colors hover:bg-neutral-700"
+              className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-sm text-white transition-all hover:bg-(--signal-strong) hover:shadow-[0_10px_24px_-10px_rgba(14,159,110,0.6)]"
             >
               <span aria-hidden>✨</span>
               {t.ui.askAi}
@@ -152,7 +152,7 @@ export default function Navbar() {
                   onClick={handleClose}
                   className={`flex items-center justify-center py-3 rounded-xl text-base font-medium transition-all duration-300 ${
                     active === link.id
-                      ? "bg-black/5 text-neutral-950"
+                      ? "bg-(--signal-wash) text-neutral-950"
                       : "text-neutral-600 hover:bg-black/5 hover:text-neutral-950"
                   }`}
                 >
@@ -162,7 +162,7 @@ export default function Navbar() {
               <Link
                 href="/chat"
                 onClick={handleClose}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-neutral-900 py-3 text-base font-medium text-white transition-colors hover:bg-neutral-700"
+                className="flex items-center justify-center gap-1.5 rounded-xl bg-neutral-900 py-3 text-base font-medium text-white transition-colors hover:bg-(--signal-strong)"
               >
                 <span aria-hidden>✨</span>
                 {t.ui.askAi}

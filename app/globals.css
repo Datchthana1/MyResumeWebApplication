@@ -1,19 +1,39 @@
 @import "tailwindcss";
 
+/* ================================================================
+   "Telemetry" design system
+   A light, instrument-like palette: cool paper ground, near-black
+   ink, and a single emerald "signal" accent (in AQI, green = good
+   air — grounded in Dechthana's air-quality work). Used sparingly.
+================================================================ */
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  /* Grayscale accent — used sparingly (hero name only) */
-  --accent-from: #0a0a0a;
-  --accent-via: #525252;
-  --accent-to: #0a0a0a;
+  --paper: #f4f5f3;
+  --ink: #15171a;
+  --muted: #6b7177;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+
+  --line: rgba(21, 23, 26, 0.1);
+  --line-strong: rgba(21, 23, 26, 0.16);
+
+  --signal: #0e9f6e;
+  --signal-strong: #0b8a5f;
+  --signal-wash: rgba(14, 159, 110, 0.1);
+
+  /* Hero name shimmer: ink → signal → ink */
+  --accent-from: #15171a;
+  --accent-via: #0e9f6e;
+  --accent-to: #15171a;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-signal: var(--signal);
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-display: var(--font-display), var(--font-geist-sans), sans-serif;
 }
 
 html {
@@ -28,6 +48,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-geist-sans), sans-serif;
 }
 
 /* ----------------------------------------------------------------
@@ -69,20 +93,65 @@ body {
 }
 
 /* ----------------------------------------------------------------
-   Card surface (Apple-style minimal B&W)
-   - near-opaque white, hairline border, soft shadow
+   Telemetry helpers — the monospace "instrument" voice
+----------------------------------------------------------------- */
+.kicker {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  color: var(--muted);
+}
+
+/* Pulsing live dot */
+.signal-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: var(--signal);
+  box-shadow: 0 0 0 0 rgba(14, 159, 110, 0.5);
+  animation: pulseDot 2.4s cubic-bezier(0.66, 0, 0, 1) infinite;
+}
+@keyframes pulseDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(14, 159, 110, 0.45);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(14, 159, 110, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(14, 159, 110, 0);
+  }
+}
+
+/* Animated underline drawn under a section title when its Reveal fires */
+.title-rule {
+  display: block;
+  height: 2px;
+  width: 0;
+  margin-top: 14px;
+  background: linear-gradient(90deg, var(--signal), transparent);
+  transition: width 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+}
+.reveal.is-visible .title-rule {
+  width: 64px;
+}
+
+/* ----------------------------------------------------------------
+   Card surface — white cards float over the paper ground
 ----------------------------------------------------------------- */
 .card {
   position: relative;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.07);
+  border: 1px solid var(--line);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -16px rgba(0, 0, 0, 0.18);
 }
 
 /* Lighter variant for chips / nav */
 .card-thin {
   background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--line);
 }
 
 .card-hover {
@@ -90,15 +159,139 @@ body {
     border-color 0.4s ease, box-shadow 0.4s ease;
 }
 .card-hover:hover {
-  transform: translateY(-2px);
-  border-color: rgba(0, 0, 0, 0.14);
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05),
-    0 18px 40px -20px rgba(0, 0, 0, 0.28);
+    0 22px 44px -20px rgba(0, 0, 0, 0.3);
 }
 
 /* ----------------------------------------------------------------
-   Scroll reveal — Apple-style "settle into place"
-   fade in + lift up + a subtle zoom (scale 0.96 → 1)
+   Pills — hover tints toward the signal accent
+----------------------------------------------------------------- */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.7);
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease,
+    transform 0.25s ease;
+}
+.pill:hover {
+  color: var(--signal-strong);
+  border-color: rgba(14, 159, 110, 0.35);
+  background: var(--signal-wash);
+  transform: translateY(-1px);
+}
+
+/* ----------------------------------------------------------------
+   Buttons
+----------------------------------------------------------------- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+.btn-primary:hover {
+  background: #000;
+  box-shadow: 0 12px 30px -12px rgba(14, 159, 110, 0.55);
+}
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+}
+.btn-ghost:hover {
+  border-color: rgba(14, 159, 110, 0.5);
+  color: var(--signal-strong);
+  background: var(--signal-wash);
+}
+
+/* Animated link underline (grows from the left) */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 1.5px;
+  width: 0;
+  background: var(--signal);
+  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* Magnetic wrapper — JS sets the transform, CSS smooths it */
+.magnetic {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Scroll progress bar (top of viewport) */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--signal), var(--signal-strong));
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+/* Typewriter caret */
+.caret {
+  display: inline-block;
+  width: 2px;
+  margin-left: 2px;
+  align-self: stretch;
+  background: var(--signal);
+  animation: blinkCaret 1s steps(1) infinite;
+}
+@keyframes blinkCaret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Soft scroll cue at the foot of the hero */
+.scroll-cue {
+  animation: cueBob 2s ease-in-out infinite;
+}
+@keyframes cueBob {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 1;
+  }
+}
+
+/* ----------------------------------------------------------------
+   Scroll reveal — "settle into place": fade + lift + subtle zoom
 ----------------------------------------------------------------- */
 .reveal {
   opacity: 0;
@@ -112,7 +305,6 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* Stronger zoom variant for feature elements */
 .reveal-zoom {
   transform: translateY(40px) scale(0.9);
 }
@@ -178,7 +370,6 @@ body {
 .slide-up {
   animation: slideUp 0.25s ease-in forwards;
 }
-
 
 /* Lightbox overlay + image transitions */
 @keyframes fadeInOverlay {
@@ -261,5 +452,8 @@ body {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+  .title-rule {
+    width: 64px;
   }
 }

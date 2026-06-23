@@ -3,23 +3,29 @@ import Image from "next/image";
 import Link from "next/link";
 import Dechthana from "@/assets/Dechthana.jpg";
 import Reveal from "@/components/Reveal";
+import SignalField from "@/components/SignalField";
+import Magnetic from "@/components/Magnetic";
+import Typewriter from "@/components/Typewriter";
 import { MonitorSummary } from "@/components/Monitor";
 import { useLang } from "@/components/LanguageProvider";
 
 function Pill({ children }) {
-  return (
-    <span className="px-3 py-1.5 rounded-full text-sm card-thin text-neutral-700 hover:text-neutral-950 hover:border-black/20 transition-colors">
-      {children}
-    </span>
-  );
+  return <span className="pill">{children}</span>;
 }
 
-function SectionHeading({ title }) {
+function SectionHeading({ eyebrow, title }) {
   return (
     <div className="mb-8">
-      <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
+      {eyebrow && (
+        <p className="kicker mb-3 flex items-center gap-2">
+          <span className="signal-dot" />
+          {eyebrow}
+        </p>
+      )}
+      <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
         {title}
       </h2>
+      <span className="title-rule" />
     </div>
   );
 }
@@ -32,50 +38,73 @@ export default function Portfolio() {
       {/* ============================ HERO ============================ */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center px-6 pt-20"
+        className="relative isolate min-h-screen flex items-center justify-center overflow-hidden px-6 pt-24"
       >
-        <div className="max-w-3xl mx-auto text-center animate-fadeInUp">
-          <div className="relative inline-block mb-10">
+        {/* Signature: a living signal field behind the name */}
+        <SignalField className="absolute inset-0 z-0" />
+        {/* Paper wash — clears a legible space behind the text, fades the
+            field into the page top and bottom */}
+        <div
+          className="pointer-events-none absolute inset-0 z-0"
+          style={{
+            background:
+              "radial-gradient(46% 34% at 50% 47%, rgba(244,245,243,0.66), rgba(244,245,243,0) 70%), linear-gradient(to bottom, rgba(244,245,243,0.55), rgba(244,245,243,0) 22%, rgba(244,245,243,0) 76%, var(--paper))",
+          }}
+        />
+
+        {/* Telemetry strip */}
+        <div className="pointer-events-none absolute inset-x-0 top-24 z-10 flex justify-center px-6">
+          <div className="kicker flex flex-wrap items-center justify-center gap-x-6 gap-y-1">
+            <span>13.7563&deg;N 100.5018&deg;E</span>
+            <span className="hidden sm:inline">DATA &middot; AI ENGINEER</span>
+            <span className="inline-flex items-center gap-1.5">
+              <span className="signal-dot" /> LIVE
+            </span>
+          </div>
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-3xl text-center animate-fadeInUp">
+          <div className="relative mb-10 inline-block">
             <Image
               src={Dechthana}
               alt={`${t.hero.firstName} ${t.hero.lastName}`}
               width={144}
               height={144}
               priority
-              className="relative rounded-full ring-1 ring-black/10 shadow-lg object-cover w-[144px] h-[144px]"
+              className="relative h-[144px] w-[144px] rounded-full object-cover shadow-lg ring-1 ring-black/10"
             />
+            {/* Status indicator — the instrument is "online" */}
+            <span className="absolute bottom-3 right-3 flex h-4 w-4 items-center justify-center rounded-full bg-white ring-1 ring-black/5">
+              <span className="signal-dot" />
+            </span>
           </div>
 
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-400 mb-5">
-            {t.hero.greeting}
-          </p>
-          <h1 className="text-6xl sm:text-8xl font-extrabold tracking-tighter leading-[0.95] text-neutral-950">
+          <p className="kicker mb-5">{t.hero.greeting}</p>
+          <h1 className="font-display text-6xl font-bold leading-[0.95] tracking-tight text-neutral-950 sm:text-8xl">
             {t.hero.firstName}
             <br />
             <span className="text-gradient-animated">{t.hero.lastName}</span>
           </h1>
 
-          <p className="mt-7 text-lg sm:text-2xl font-medium text-neutral-500">
-            {t.hero.positions.join("  ·  ")}
-          </p>
+          <div className="mt-7 flex min-h-[2.25rem] items-center justify-center text-lg font-medium text-neutral-500 sm:text-2xl">
+            <Typewriter words={t.hero.positions} className="text-neutral-700" />
+          </div>
 
-          <p className="mt-5 max-w-xl mx-auto text-neutral-500 leading-relaxed">
+          <p className="mx-auto mt-5 max-w-xl leading-relaxed text-neutral-500">
             {t.hero.tagline}
           </p>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="#experience"
-              className="px-6 py-3 rounded-full font-medium text-white bg-neutral-950 hover:bg-black hover:scale-105 transition-all duration-300"
-            >
-              {t.ui.viewWork}
-            </Link>
-            <Link
-              href="#contact"
-              className="px-6 py-3 rounded-full font-medium text-neutral-800 border border-black/15 hover:border-black/40 hover:text-black transition-all duration-300"
-            >
-              {t.ui.getInTouch}
-            </Link>
+            <Magnetic>
+              <Link href="#experience" className="btn-primary">
+                {t.ui.viewWork}
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link href="#contact" className="btn-ghost">
+                {t.ui.getInTouch}
+              </Link>
+            </Magnetic>
           </div>
 
           <div className="mt-7 flex items-center justify-center gap-5 text-sm">
@@ -85,27 +114,34 @@ export default function Portfolio() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-neutral-950 transition-colors"
+                className="link-underline text-neutral-400 transition-colors hover:text-neutral-950"
               >
                 {s.label}
               </a>
             ))}
           </div>
         </div>
+
+        {/* Scroll cue — only shown when the viewport is tall enough to clear
+            the hero content, so it never collides with the social links */}
+        <div className="scroll-cue kicker pointer-events-none absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 [@media(min-height:960px)]:flex">
+          <span>SCROLL</span>
+          <span aria-hidden>&darr;</span>
+        </div>
       </section>
 
       {/* ============================ ABOUT ============================ */}
-      <section id="about" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="about" className="relative mx-auto max-w-5xl px-6 py-12">
         <Reveal>
-          <SectionHeading title={t.about.title} />
+          <SectionHeading eyebrow={t.about.eyebrow} title={t.about.title} />
         </Reveal>
-        <div className="grid md:grid-cols-5 gap-5 items-stretch">
+        <div className="grid items-stretch gap-5 md:grid-cols-5">
           <Reveal className="md:col-span-3">
-            <div className="card card-hover rounded-3xl p-7 h-full">
+            <div className="card card-hover h-full rounded-3xl p-7">
               {t.about.paragraphs.map((p, i) => (
                 <p
                   key={i}
-                  className={`text-neutral-600 leading-relaxed ${i > 0 ? "mt-3" : ""}`}
+                  className={`leading-relaxed text-neutral-600 ${i > 0 ? "mt-3" : ""}`}
                 >
                   {p}
                 </p>
@@ -114,10 +150,8 @@ export default function Portfolio() {
           </Reveal>
 
           <Reveal className="md:col-span-2" delay={120}>
-            <div className="card card-hover rounded-3xl p-7 h-full">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-4">
-                {t.about.languagesLabel}
-              </h3>
+            <div className="card card-hover h-full rounded-3xl p-7">
+              <h3 className="kicker mb-4">{t.about.languagesLabel}</h3>
               <ul className="space-y-3">
                 {t.about.spoken.map((s) => (
                   <li key={s.lang} className="flex items-center justify-between">
@@ -132,20 +166,18 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ SKILLS ============================ */}
-      <section id="skills" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="skills" className="relative mx-auto max-w-5xl px-6 py-12">
         <Reveal>
-          <SectionHeading title={t.skills.title} />
+          <SectionHeading eyebrow={t.skills.eyebrow} title={t.skills.title} />
         </Reveal>
         <Reveal>
-          <div className="card rounded-3xl p-7 sm:p-8 divide-y divide-black/5">
+          <div className="card divide-y divide-black/5 rounded-3xl p-7 sm:p-8">
             {t.skills.groups.map((group) => (
               <div
                 key={group.title}
-                className="grid sm:grid-cols-[120px_1fr] gap-3 sm:gap-6 py-4 first:pt-0 last:pb-0"
+                className="grid gap-3 py-4 first:pt-0 last:pb-0 sm:grid-cols-[120px_1fr] sm:gap-6"
               >
-                <h3 className="text-xs font-mono uppercase tracking-widest text-neutral-400 sm:pt-1.5">
-                  {group.title}
-                </h3>
+                <h3 className="kicker sm:pt-1.5">{group.title}</h3>
                 <div className="flex flex-wrap gap-2">
                   {group.items.map((item) => (
                     <Pill key={item}>{item}</Pill>
@@ -158,25 +190,33 @@ export default function Portfolio() {
       </section>
 
       {/* ========================= EXPERIENCE ========================= */}
-      <section id="experience" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="experience" className="relative mx-auto max-w-5xl px-6 py-12">
         <Reveal>
-          <SectionHeading title={t.experience.title} />
+          <SectionHeading
+            eyebrow={t.experience.eyebrow}
+            title={t.experience.title}
+          />
         </Reveal>
 
         {/* Compact timeline — full write-ups live on /Experience */}
-        <ol className="relative border-l border-black/10 ml-2 space-y-7">
+        <ol className="relative ml-2 space-y-7 border-l border-black/10">
           {t.experience.items.map((exp, i) => (
-            <Reveal as="li" key={`${exp.role}-${i}`} delay={i * 70} className="relative pl-7">
-              <span className="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-neutral-950 ring-4 ring-white" />
-              <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5">
-                <h3 className="text-base sm:text-lg font-semibold text-neutral-950">
+            <Reveal
+              as="li"
+              key={`${exp.role}-${i}`}
+              delay={i * 70}
+              className="relative pl-7"
+            >
+              <span className="absolute -left-[5px] top-1.5 h-2.5 w-2.5 rounded-full bg-signal ring-4 ring-(--paper)" />
+              <div className="flex flex-col gap-0.5 sm:flex-row sm:items-baseline sm:justify-between">
+                <h3 className="text-base font-semibold text-neutral-950 sm:text-lg">
                   {exp.role}
                 </h3>
-                <span className="text-xs font-mono text-neutral-400 shrink-0">
+                <span className="shrink-0 font-mono text-xs text-neutral-400">
                   {exp.period}
                 </span>
               </div>
-              <p className="text-sm text-neutral-500 mb-2.5">{exp.org}</p>
+              <p className="mb-2.5 text-sm text-neutral-500">{exp.org}</p>
               <div className="flex flex-wrap gap-1.5">
                 {exp.tags.map((tag) => (
                   <Pill key={tag}>{tag}</Pill>
@@ -190,7 +230,7 @@ export default function Portfolio() {
           <div className="mt-8">
             <Link
               href="/Experience"
-              className="inline-flex items-center gap-2 text-neutral-950 hover:text-black hover:gap-3 transition-all"
+              className="group inline-flex items-center gap-2 font-medium text-neutral-950 transition-all hover:gap-3 hover:text-(--signal-strong)"
             >
               {t.ui.seeDetailedExperience}
               <span aria-hidden>&rarr;</span>
@@ -200,12 +240,12 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ MONITOR ============================ */}
-      <section id="monitor" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="monitor" className="relative mx-auto max-w-5xl px-6 py-12">
         <Reveal>
-          <SectionHeading title={t.monitor.title} />
+          <SectionHeading eyebrow={t.monitor.eyebrow} title={t.monitor.title} />
         </Reveal>
         <Reveal>
-          <p className="-mt-4 mb-8 max-w-2xl text-neutral-500 leading-relaxed">
+          <p className="-mt-4 mb-8 max-w-2xl leading-relaxed text-neutral-500">
             {t.monitor.subtitle}
           </p>
         </Reveal>
@@ -215,24 +255,27 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ EDUCATION ============================ */}
-      <section id="education" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="education" className="relative mx-auto max-w-5xl px-6 py-12">
         <Reveal>
-          <SectionHeading title={t.education.title} />
+          <SectionHeading
+            eyebrow={t.education.eyebrow}
+            title={t.education.title}
+          />
         </Reveal>
         <div className="space-y-5">
           {t.education.items.map((edu, i) => (
             <Reveal key={`${edu.degree}-${i}`} delay={i * 80}>
               <article className="card card-hover rounded-3xl p-7">
-                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-2">
+                <div className="mb-2 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
                   <h3 className="text-lg font-semibold text-neutral-950">
                     {edu.degree}
                   </h3>
-                  <span className="text-sm font-mono text-neutral-500">
+                  <span className="font-mono text-sm text-neutral-500">
                     {edu.period}
                   </span>
                 </div>
-                <p className="text-neutral-500 text-sm mb-3">{edu.school}</p>
-                <p className="text-neutral-600 leading-relaxed">{edu.detail}</p>
+                <p className="mb-3 text-sm text-neutral-500">{edu.school}</p>
+                <p className="leading-relaxed text-neutral-600">{edu.detail}</p>
               </article>
             </Reveal>
           ))}
@@ -240,48 +283,40 @@ export default function Portfolio() {
       </section>
 
       {/* ============================ CONTACT ============================ */}
-      <section id="contact" className="relative max-w-5xl mx-auto px-6 py-12">
+      <section id="contact" className="relative mx-auto max-w-5xl px-6 py-12">
         <Reveal>
-          <SectionHeading title={t.contact.title} />
+          <SectionHeading eyebrow={t.contact.eyebrow} title={t.contact.title} />
         </Reveal>
         <Reveal delay={100}>
           <div className="card card-hover rounded-3xl p-7 sm:p-8">
-            <p className="text-neutral-600 leading-relaxed mb-6">
+            <p className="mb-6 leading-relaxed text-neutral-600">
               {t.contact.intro}
             </p>
-            <div className="grid sm:grid-cols-2 gap-5">
+            <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
-                  {t.contact.emailFormalLabel}
-                </p>
+                <p className="kicker mb-1">{t.contact.emailFormalLabel}</p>
                 <a
                   href="mailto:Dechthana.ar@mail.wu.ac.th"
-                  className="text-neutral-800 hover:text-black break-all transition-colors"
+                  className="link-underline break-all text-neutral-800 hover:text-black"
                 >
                   Dechthana.ar@mail.wu.ac.th
                 </a>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
-                  {t.contact.emailPersonalLabel}
-                </p>
+                <p className="kicker mb-1">{t.contact.emailPersonalLabel}</p>
                 <a
                   href="mailto:Kaiza941@gmail.com"
-                  className="text-neutral-800 hover:text-black break-all transition-colors"
+                  className="link-underline break-all text-neutral-800 hover:text-black"
                 >
                   Kaiza941@gmail.com
                 </a>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
-                  {t.contact.locationLabel}
-                </p>
+                <p className="kicker mb-1">{t.contact.locationLabel}</p>
                 <p className="text-neutral-800">{t.contact.location}</p>
               </div>
               <div>
-                <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">
-                  {t.contact.findMeLabel}
-                </p>
+                <p className="kicker mb-1">{t.contact.findMeLabel}</p>
                 <div className="flex gap-4">
                   {t.socials.map((s) => (
                     <a
@@ -289,7 +324,7 @@ export default function Portfolio() {
                       href={s.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-neutral-800 hover:text-black underline-offset-4 hover:underline transition-colors"
+                      className="link-underline text-neutral-800 hover:text-black"
                     >
                       {s.label}
                     </a>

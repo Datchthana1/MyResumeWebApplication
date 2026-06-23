@@ -112,7 +112,11 @@ export default function ChatPage() {
         </div>
 
         <header className="mb-6">
-          <h1 className="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl">
+          <p className="kicker mb-3 flex items-center gap-2">
+            <span className="signal-dot" />
+            AI ASSISTANT &middot; gpt-oss
+          </p>
+          <h1 className="font-display text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl">
             {c.title}
           </h1>
           <p className="mt-2 text-sm text-neutral-500">{c.subtitle}</p>
@@ -186,7 +190,7 @@ export default function ChatPage() {
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className="h-12 shrink-0 rounded-2xl bg-neutral-900 px-5 text-sm font-medium text-white transition-colors hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="h-12 shrink-0 rounded-2xl bg-neutral-900 px-5 text-sm font-medium text-white transition-all hover:bg-(--signal-strong) hover:shadow-[0_10px_24px_-10px_rgba(14,159,110,0.6)] disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-neutral-900 disabled:hover:shadow-none"
           >
             {c.send}
           </button>
