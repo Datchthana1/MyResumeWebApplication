@@ -8,8 +8,9 @@
 // can see who's interested and what people ask about.
 //
 // ── Environment variables ─────────────────────────────────────────────────────
-//   GEMINI_API_KEY        required — https://aistudio.google.com/apikey
-//   GEMINI_MODEL          optional — defaults below
+//   OLLAMA_API_KEY        required — https://ollama.com/settings/keys
+//   OLLAMA_MODEL          optional — defaults to gpt-oss:20b-cloud
+//   OLLAMA_HOST           optional — defaults to https://ollama.com
 //   MONITOR_API_URL       optional — FastAPI backend base URL (server-side).
 //                         Falls back to NEXT_PUBLIC_MONITOR_API_URL, then
 //                         http://localhost:8000. Used to (a) read live station
@@ -164,7 +165,8 @@ You can answer detailed questions about the Air Station Monitor: what a station 
 - If the LIVE STATION DATA below says it's unavailable, say the backend is still waking and explain the cold-start — do NOT invent station values.
 `.trim();
 
-const MODEL = process.env.GEMINI_MODEL || "gemini-3.5-flash";
+const MODEL = process.env.OLLAMA_MODEL || "gpt-oss:20b-cloud";
+const HOST = (process.env.OLLAMA_HOST || "https://ollama.com").replace(/\/+$/, "");
 
 const API_BASE =
   process.env.MONITOR_API_URL ||
@@ -282,10 +284,10 @@ async function logChat(payload) {
 /* --------------------------------- route -------------------------------- */
 
 export async function POST(req) {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.OLLAMA_API_KEY;
   if (!apiKey) {
     return Response.json(
-      { error: "Server is missing GEMINI_API_KEY. Add it to .env.local." },
+      { error: "Server is missing OLLAMA_API_KEY. Add it to .env.local." },
       { status: 500 }
     );
   }
@@ -300,14 +302,14 @@ export async function POST(req) {
   const messages = Array.isArray(body?.messages) ? body.messages : [];
   const sessionId = typeof body?.session_id === "string" ? body.session_id : null;
 
-  const contents = messages
+  const turns = messages
     .filter((m) => m && typeof m.text === "string" && m.text.trim())
     .map((m) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.text }],
+      role: m.role === "assistant" ? "assistant" : "user",
+      content: m.text,
     }));
 
-  if (!contents.length) {
+  if (!turns.length) {
     return Response.json({ error: "No message to send." }, { status: 400 });
   }
 
@@ -316,15 +318,16 @@ export async function POST(req) {
   const fullSystem = `${SYSTEM_PROMPT}\n\n${buildStationBlock(stationData)}`;
 
   const payload = {
-    contents,
-    generationConfig: {
+    model: MODEL,
+    messages: [{ role: "system", content: fullSystem }, ...turns],
+    stream: false,
+    options: {
       temperature: 0.7,
-      maxOutputTokens: 1536,
+      num_predict: 1536,
     },
-    system_instruction: { parts: [{ text: fullSystem }] },
   };
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
+  const url = `${HOST}/api/chat`;
 
   // Retry transient 503/429 a few times with short backoff.
   let res;
@@ -333,12 +336,15 @@ export async function POST(req) {
     try {
       res = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
         body: JSON.stringify(payload),
       });
     } catch {
       return Response.json(
-        { error: "Could not reach the Gemini API." },
+        { error: "Could not reach the Ollama API." },
         { status: 502 }
       );
     }
@@ -357,15 +363,14 @@ export async function POST(req) {
     const detail =
       res.status === 503
         ? "The model is busy right now. Please try again in a moment."
-        : data?.error?.message || "Gemini request failed.";
+        : data?.error || "Ollama request failed.";
     return Response.json({ error: detail }, { status: res.status });
   }
 
-  const reply =
-    data?.candidates?.[0]?.content?.parts
-      ?.map((p) => p?.text || "")
-      .join("")
-      .trim() || "";
+  // Ollama /api/chat returns the answer in message.content. For reasoning
+  // models (gpt-oss) the chain-of-thought lands in message.thinking, which we
+  // deliberately ignore — only the final content is shown to the user.
+  const reply = (data?.message?.content || "").trim();
 
   if (!reply) {
     return Response.json(

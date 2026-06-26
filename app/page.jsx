@@ -3,6 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Dechthana from "@/assets/Dechthana.jpg";
 import Reveal from "@/components/Reveal";
+import SignalField from "@/components/SignalField";
+import Typewriter from "@/components/Typewriter";
+import Magnetic from "@/components/Magnetic";
 import { MonitorSummary } from "@/components/Monitor";
 import { EvolutionMarch } from "@/components/SapienMark";
 import { useLang } from "@/components/LanguageProvider";
@@ -35,16 +38,25 @@ export default function Portfolio() {
         id="home"
         className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 pt-20"
       >
-        {/* Ambient atmosphere — soft, slow-drifting fields. Restrained: one
-            faint accent note, the rest neutral, so the page still reads B&W. */}
+        {/* Ambient: a living signal field (sensor stream) behind the name,
+            tying the page to the air-quality / data work. */}
+        <SignalField className="pointer-events-none absolute inset-0 -z-10 opacity-90" />
+        {/* Paper wash — keeps the text legible and fades the field at the edges */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(46% 34% at 50% 47%, rgba(255,255,255,0.72), rgba(255,255,255,0) 70%), linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(255,255,255,0) 22%, rgba(255,255,255,0) 78%, #ffffff)",
+          }}
+        />
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="animate-aurora absolute -top-24 left-1/2 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,var(--accent-soft),transparent_62%)]" />
-          <div className="animate-aurora absolute bottom-0 right-[8%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),transparent_60%)] [animation-delay:-6s]" />
           {/* faint baseline grid the march walks on */}
           <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
         </div>
 
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="relative z-10 max-w-3xl mx-auto text-center">
           <div className="animate-fadeInUp mb-9" style={{ animationDelay: "0ms" }}>
             <div className="group relative inline-block animate-floaty">
               <span
@@ -69,7 +81,7 @@ export default function Portfolio() {
             {t.hero.greeting}
           </p>
           <h1
-            className="animate-fadeInUp text-6xl sm:text-8xl font-extrabold tracking-tighter leading-[0.95] text-neutral-950"
+            className="animate-fadeInUp font-display text-6xl sm:text-8xl font-bold tracking-tight leading-[0.95] text-neutral-950"
             style={{ animationDelay: "160ms" }}
           >
             {t.hero.firstName}
@@ -77,12 +89,13 @@ export default function Portfolio() {
             <span className="text-gradient-animated">{t.hero.lastName}</span>
           </h1>
 
-          <p
-            className="animate-fadeInUp mt-7 text-lg sm:text-2xl font-medium text-neutral-500"
+          {/* Roles type and erase like a live readout */}
+          <div
+            className="animate-fadeInUp mt-7 flex min-h-[2.25rem] items-center justify-center text-lg font-medium text-neutral-500 sm:text-2xl"
             style={{ animationDelay: "240ms" }}
           >
-            {t.hero.positions.join("  ·  ")}
-          </p>
+            <Typewriter words={t.hero.positions} className="text-neutral-600" />
+          </div>
 
           <p
             className="animate-fadeInUp mt-5 max-w-xl mx-auto text-neutral-500 leading-relaxed"
@@ -106,18 +119,22 @@ export default function Portfolio() {
             className="animate-fadeInUp mt-9 flex flex-wrap items-center justify-center gap-4"
             style={{ animationDelay: "480ms" }}
           >
-            <Link
-              href="#experience"
-              className="px-6 py-3 rounded-full font-medium text-white bg-neutral-950 hover:bg-black hover:scale-105 transition-all duration-300"
-            >
-              {t.ui.viewWork}
-            </Link>
-            <Link
-              href="#contact"
-              className="px-6 py-3 rounded-full font-medium text-neutral-800 border border-black/15 hover:border-black/40 hover:text-black transition-all duration-300"
-            >
-              {t.ui.getInTouch}
-            </Link>
+            <Magnetic>
+              <Link
+                href="#experience"
+                className="inline-block px-6 py-3 rounded-full font-medium text-white bg-neutral-950 hover:bg-black transition-all duration-300"
+              >
+                {t.ui.viewWork}
+              </Link>
+            </Magnetic>
+            <Magnetic>
+              <Link
+                href="#contact"
+                className="inline-block px-6 py-3 rounded-full font-medium text-neutral-800 border border-black/15 hover:border-black/40 hover:text-black transition-all duration-300"
+              >
+                {t.ui.getInTouch}
+              </Link>
+            </Magnetic>
           </div>
 
           <div

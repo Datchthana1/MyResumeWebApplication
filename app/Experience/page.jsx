@@ -86,12 +86,16 @@ const Page = () => {
   return (
     <div className="relative font-sans min-h-screen text-neutral-900 px-5 pt-28 pb-16">
       <div className="max-w-5xl mx-auto mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
+        <p className="kicker mb-3 flex items-center gap-2">
+          <span className="signal-dot" />
+          {t.experienceDetail.eyebrow}
+        </p>
+        <h1 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-neutral-950">
           {t.experienceDetail.title}
         </h1>
         <Link
           href="/#experience"
-          className="inline-flex items-center gap-2 mt-4 text-sm text-neutral-500 hover:text-neutral-950 transition-colors"
+          className="link-underline inline-flex items-center gap-2 mt-4 text-sm text-neutral-500 hover:text-neutral-950 transition-colors"
         >
           <span aria-hidden>&larr;</span>
           {t.ui.backToHome}
