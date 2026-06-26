@@ -154,21 +154,6 @@ export default function Portfolio() {
             ))}
           </div>
         </div>
-
-        {/* Scroll hint */}
-        <a
-          href="#about"
-          aria-label={t.hero.scrollHint}
-          className="animate-fadeInUp absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1.5 text-neutral-400 transition-colors hover:text-neutral-700 sm:flex"
-          style={{ animationDelay: "680ms" }}
-        >
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
-            {t.hero.scrollHint}
-          </span>
-          <span className="flex h-8 w-5 items-start justify-center rounded-full border border-current p-1">
-            <span className="h-1.5 w-1 animate-bounce rounded-full bg-current" />
-          </span>
-        </a>
       </section>
 
       {/* ============================ ABOUT ============================ */}
