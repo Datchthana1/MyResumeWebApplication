@@ -187,14 +187,14 @@ export function EvolutionMarch({ className = "" }) {
         strokeLinecap="round"
       />
       {STAGES.map((s, i) => (
-        <g
-          key={s.key}
-          className="sapien-figure"
-          style={{ animationDelay: `${i * 160}ms` }}
-          transform={`translate(${4 + i * step} 0)`}
-        >
-          <g className={`evo-pose ${s.anim}`}>
-            <Stick head={s.head} limbs={s.limbs} spark={s.spark} sw={s.sw} />
+        // Outer <g> positions the figure (transform attribute only). The CSS
+        // entrance/gait animations live on inner <g>s so their animated
+        // `transform` never clobbers this horizontal placement.
+        <g key={s.key} transform={`translate(${4 + i * step} 0)`}>
+          <g className="sapien-figure" style={{ animationDelay: `${i * 160}ms` }}>
+            <g className={`evo-pose ${s.anim}`}>
+              <Stick head={s.head} limbs={s.limbs} spark={s.spark} sw={s.sw} />
+            </g>
           </g>
         </g>
       ))}
