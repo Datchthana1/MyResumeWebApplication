@@ -245,10 +245,11 @@ body {
    upright human keeps an endless stride (evolution that never stops).
 ----------------------------------------------------------------- */
 .sapien-figure {
-  opacity: 0;
   transform-box: fill-box;
   transform-origin: bottom center;
-  animation: sapienRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  /* `both` keeps the END state (opacity 1) after the rise — `backwards` alone
+     reverted to opacity:0 and the figures vanished. */
+  animation: sapienRise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 @keyframes sapienRise {
   from {
@@ -288,6 +289,43 @@ body {
 /* Nav logo: spark gently breathes on hover of the wordmark. */
 .group:hover .sapien-spark {
   opacity: 1;
+}
+
+/* Each evolutionary stage has its own characteristic gait loop. */
+.evo-pose {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+.evo-ape {
+  animation: apeSway 3.2s ease-in-out infinite;
+}
+.evo-knuckle {
+  animation: knuckleBob 1.7s ease-in-out infinite;
+}
+.evo-first {
+  animation: firstStep 1.5s ease-in-out infinite;
+}
+.evo-erectus {
+  animation: erectusStride 1.4s ease-in-out infinite;
+}
+.evo-sapiens {
+  animation: sapienWalk 1.7s ease-in-out infinite;
+}
+@keyframes apeSway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+@keyframes knuckleBob {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-2px) rotate(1deg); }
+}
+@keyframes firstStep {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-1.5px) rotate(1deg); }
+}
+@keyframes erectusStride {
+  0%, 100% { transform: rotate(-1.6deg); }
+  50% { transform: rotate(1.6deg); }
 }
 
 /* ----------------------------------------------------------------

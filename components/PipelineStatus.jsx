@@ -1,10 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { API_BASE } from "@/components/monitorApi";
 
-// Render free tier can cold-start; give the request room.
-const FETCH_TIMEOUT_MS = 75_000;
+// Inferred from the data, queried by the Next.js /api/pipeline route straight
+// from Supabase — no dependency on the (separate) FastAPI/Render backend.
+const FETCH_TIMEOUT_MS = 30_000;
 const POLL_MS = 30_000;
 
 // State → presentation. `live` drives the pulsing ring on the running stage.
@@ -36,7 +36,7 @@ export default function PipelineStatus({ m }) {
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS);
     try {
-      const res = await fetch(`${API_BASE}/api/pipeline/status`, {
+      const res = await fetch(`/api/pipeline`, {
         signal: ctrl.signal,
         cache: "no-store",
       });

@@ -61,28 +61,119 @@ export function SapienMark({ size = 28, className = "", spark = true, sw = 3.6 }
   );
 }
 
+// One stick figure assembled from limb paths + a head, optionally with the
+// curiosity spark. Stroke-only so it stays a "stick man".
+function Stick({ head, limbs, spark, sw = 3 }) {
+  return (
+    <g
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={sw}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      {limbs.map((d, i) => (
+        <path key={i} d={d} />
+      ))}
+      <circle cx={head.cx} cy={head.cy} r={head.r} />
+      {spark && (
+        <g className="sapien-spark" stroke="none" fill="var(--accent, #2f6bff)">
+          <path
+            d={`M${spark.x} ${spark.y} l1.2 3 3 1.2 -3 1.2 -1.2 3 -1.2 -3 -3 -1.2 3 -1.2 z`}
+          />
+        </g>
+      )}
+    </g>
+  );
+}
+
+// The five evolutionary stages, each with its own posture + gait animation.
+// Local coords share a ground line at y=58, figures face right.
+const STAGES = [
+  {
+    key: "ape", // ลิง — crouched, long arms reaching the ground
+    anim: "evo-ape",
+    sw: 2.8,
+    head: { cx: 28, cy: 31, r: 4 },
+    limbs: [
+      "M16 42 L25 34", // low diagonal spine
+      "M25 35 L30 48 L32 57", // front arm to ground
+      "M24 36 L20 48 L19 57", // back arm to ground
+      "M16 42 L13 51 L11 58", // back leg (bent)
+      "M16 42 L20 51 L23 58", // front leg (bent)
+    ],
+  },
+  {
+    key: "knuckle", // วานรไร้หาง — tailless ape, knuckle-walking
+    anim: "evo-knuckle",
+    sw: 2.9,
+    head: { cx: 25.5, cy: 22, r: 4 },
+    limbs: [
+      "M16 40 L23 26", // steep spine
+      "M23 27 L28 42 L30 54", // long knuckle arm
+      "M22 28 L16 37", // back arm
+      "M16 40 L12 50 L10 58",
+      "M16 40 L21 50 L24 58",
+    ],
+  },
+  {
+    key: "first", // มนุษย์คนแรก — first hominid, semi-upright
+    anim: "evo-first",
+    sw: 3,
+    head: { cx: 22.5, cy: 15.5, r: 4.2 },
+    limbs: [
+      "M17 38 L21 20",
+      "M21 21 L27 30",
+      "M21 21 L14 28",
+      "M17 38 L12 49 L9 58",
+      "M17 38 L23 48 L26 58",
+    ],
+  },
+  {
+    key: "erectus", // Homo erectus — upright, striding
+    anim: "evo-erectus",
+    sw: 3.1,
+    head: { cx: 20.5, cy: 12, r: 4.4 },
+    limbs: [
+      "M17 37 L19.5 17",
+      "M19 18 L26 24",
+      "M19 18 L11 22",
+      "M17 37 L11 48 L7 57",
+      "M17 37 L24 47 L28 57",
+    ],
+  },
+  {
+    key: "sapiens", // Homo sapiens — fully upright + curiosity spark
+    anim: "evo-sapiens",
+    sw: 3.2,
+    spark: { x: 25, y: 2 },
+    head: { cx: 19, cy: 11, r: 4.5 },
+    limbs: [
+      "M17 37 L18.5 16",
+      "M18 17 L26 22",
+      "M18 17 L10 21",
+      "M17 37 L10 48 L6 57",
+      "M17 37 L24 47 L28 57",
+    ],
+  },
+];
+
 /**
- * The hero signature: a row of figures evolving from hunched to upright. On
- * load each rises into place in sequence (evolution unfolding); the upright
- * human keeps a subtle, endless stride (evolution that never stops).
+ * The hero signature: the march of human evolution — ape → tailless ape →
+ * first human → Homo erectus → Homo sapiens. Each rises into place in sequence
+ * on load, then keeps its own characteristic gait forever (evolution that
+ * never stops). Stage labels live in the aria-label for accessibility.
  */
 export function EvolutionMarch({ className = "" }) {
-  // hunched ancestor → … → upright modern human (with the curiosity spark)
-  const stages = [
-    { lean: 40, sw: 3.2 },
-    { lean: 27, sw: 3.3 },
-    { lean: 14, sw: 3.4 },
-    { lean: 0, sw: 3.6, spark: true },
-  ];
-  const step = 44; // horizontal spacing between figures
-  const width = step * stages.length + 12;
+  const step = 40; // horizontal spacing between stages
+  const width = step * STAGES.length + 8;
 
   return (
     <svg
-      viewBox={`0 0 ${width} 64`}
+      viewBox={`0 0 ${width} 62`}
       className={className}
       role="img"
-      aria-label="The evolution of Homo sapiens — curiosity that never stops"
+      aria-label="The march of human evolution: ape, tailless ape, first human, Homo erectus, Homo sapiens — curiosity that never stops evolving"
     >
       {/* ground line the march walks along */}
       <line
@@ -95,16 +186,15 @@ export function EvolutionMarch({ className = "" }) {
         strokeWidth="1.5"
         strokeLinecap="round"
       />
-      {stages.map((s, i) => (
+      {STAGES.map((s, i) => (
         <g
-          key={i}
+          key={s.key}
           className="sapien-figure"
-          style={{ animationDelay: `${i * 180}ms` }}
-          transform={`translate(${8 + i * step} 4)`}
+          style={{ animationDelay: `${i * 160}ms` }}
+          transform={`translate(${4 + i * step} 0)`}
         >
-          {/* the last (upright) figure keeps walking forever */}
-          <g className={i === stages.length - 1 ? "sapien-walk" : ""}>
-            <Figure lean={s.lean} sw={s.sw} spark={s.spark} />
+          <g className={`evo-pose ${s.anim}`}>
+            <Stick head={s.head} limbs={s.limbs} spark={s.spark} sw={s.sw} />
           </g>
         </g>
       ))}
