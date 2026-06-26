@@ -48,6 +48,13 @@ export default function ChatPage() {
   const [error, setError] = useState("");
 
   const scrollRef = useRef(null);
+  // Stable id for this chat session, so server-side logs can group a
+  // conversation. Regenerated on "New chat". Not persisted anywhere client-side.
+  const sessionId = useRef(
+    (typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `s-${Date.now()}-${Math.random().toString(36).slice(2)}`)
+  );
 
   // Keep the latest message in view.
   useEffect(() => {
@@ -72,7 +79,7 @@ export default function ChatPage() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next }),
+        body: JSON.stringify({ messages: next, session_id: sessionId.current }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || c.error);
@@ -88,6 +95,10 @@ export default function ChatPage() {
     setMessages([]);
     setInput("");
     setError("");
+    sessionId.current =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : `s-${Date.now()}-${Math.random().toString(36).slice(2)}`;
   }
 
   return (

@@ -18,12 +18,9 @@ export const metadata = {
   title: "Dechthana Arunchaiya — Portfolio",
   description:
     "Portfolio of Dechthana Arunchaiya — Data Scientist, Data Engineer & Web Developer.",
-  icons: {
-    icon: [
-      { url: "/profile.png", sizes: "32x32" },
-      { url: "/profile.png", sizes: "16x16" },
-    ],
-  },
+  // Tab icon comes from app/icon.svg (the Sapien mark — a striding Homo
+  // sapiens, for curiosity that never stops). Next.js picks it up by
+  // convention, so no explicit `icons` override is needed here.
 };
 
 export default function RootLayout({ children }) {

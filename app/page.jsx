@@ -4,6 +4,7 @@ import Link from "next/link";
 import Dechthana from "@/assets/Dechthana.jpg";
 import Reveal from "@/components/Reveal";
 import { MonitorSummary } from "@/components/Monitor";
+import { EvolutionMarch } from "@/components/SapienMark";
 import { useLang } from "@/components/LanguageProvider";
 
 function Pill({ children }) {
@@ -32,38 +33,79 @@ export default function Portfolio() {
       {/* ============================ HERO ============================ */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center px-6 pt-20"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 pt-20"
       >
-        <div className="max-w-3xl mx-auto text-center animate-fadeInUp">
-          <div className="relative inline-block mb-10">
-            <Image
-              src={Dechthana}
-              alt={`${t.hero.firstName} ${t.hero.lastName}`}
-              width={144}
-              height={144}
-              priority
-              className="relative rounded-full ring-1 ring-black/10 shadow-lg object-cover w-[144px] h-[144px]"
-            />
+        {/* Ambient atmosphere — soft, slow-drifting fields. Restrained: one
+            faint accent note, the rest neutral, so the page still reads B&W. */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="animate-aurora absolute -top-24 left-1/2 h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_center,var(--accent-soft),transparent_62%)]" />
+          <div className="animate-aurora absolute bottom-0 right-[8%] h-[30rem] w-[30rem] rounded-full bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.05),transparent_60%)] [animation-delay:-6s]" />
+          {/* faint baseline grid the march walks on */}
+          <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+        </div>
+
+        <div className="max-w-3xl mx-auto text-center">
+          <div className="animate-fadeInUp mb-9" style={{ animationDelay: "0ms" }}>
+            <div className="group relative inline-block animate-floaty">
+              <span
+                aria-hidden
+                className="absolute -inset-1.5 rounded-full bg-[conic-gradient(from_0deg,var(--accent),transparent_55%)] opacity-0 blur-[2px] transition-opacity duration-500 group-hover:opacity-40"
+              />
+              <Image
+                src={Dechthana}
+                alt={`${t.hero.firstName} ${t.hero.lastName}`}
+                width={144}
+                height={144}
+                priority
+                className="relative rounded-full ring-1 ring-black/10 shadow-lg object-cover w-[144px] h-[144px]"
+              />
+            </div>
           </div>
 
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-400 mb-5">
+          <p
+            className="animate-fadeInUp font-mono text-xs uppercase tracking-[0.3em] text-neutral-400 mb-5"
+            style={{ animationDelay: "80ms" }}
+          >
             {t.hero.greeting}
           </p>
-          <h1 className="text-6xl sm:text-8xl font-extrabold tracking-tighter leading-[0.95] text-neutral-950">
+          <h1
+            className="animate-fadeInUp text-6xl sm:text-8xl font-extrabold tracking-tighter leading-[0.95] text-neutral-950"
+            style={{ animationDelay: "160ms" }}
+          >
             {t.hero.firstName}
             <br />
             <span className="text-gradient-animated">{t.hero.lastName}</span>
           </h1>
 
-          <p className="mt-7 text-lg sm:text-2xl font-medium text-neutral-500">
+          <p
+            className="animate-fadeInUp mt-7 text-lg sm:text-2xl font-medium text-neutral-500"
+            style={{ animationDelay: "240ms" }}
+          >
             {t.hero.positions.join("  ·  ")}
           </p>
 
-          <p className="mt-5 max-w-xl mx-auto text-neutral-500 leading-relaxed">
+          <p
+            className="animate-fadeInUp mt-5 max-w-xl mx-auto text-neutral-500 leading-relaxed"
+            style={{ animationDelay: "320ms" }}
+          >
             {t.hero.tagline}
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+          {/* Signature: Homo sapiens evolving forward, forever walking. */}
+          <div
+            className="animate-fadeInUp mt-9 flex flex-col items-center"
+            style={{ animationDelay: "400ms" }}
+          >
+            <EvolutionMarch className="h-14 w-auto text-neutral-900 sm:h-16" />
+            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-400">
+              {t.hero.evolutionCaption}
+            </p>
+          </div>
+
+          <div
+            className="animate-fadeInUp mt-9 flex flex-wrap items-center justify-center gap-4"
+            style={{ animationDelay: "480ms" }}
+          >
             <Link
               href="#experience"
               className="px-6 py-3 rounded-full font-medium text-white bg-neutral-950 hover:bg-black hover:scale-105 transition-all duration-300"
@@ -78,20 +120,38 @@ export default function Portfolio() {
             </Link>
           </div>
 
-          <div className="mt-7 flex items-center justify-center gap-5 text-sm">
+          <div
+            className="animate-fadeInUp mt-7 flex items-center justify-center gap-5 text-sm"
+            style={{ animationDelay: "560ms" }}
+          >
             {t.socials.map((s) => (
               <a
                 key={s.label}
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-neutral-400 hover:text-neutral-950 transition-colors"
+                className="link-underline text-neutral-400 hover:text-neutral-950 transition-colors"
               >
                 {s.label}
               </a>
             ))}
           </div>
         </div>
+
+        {/* Scroll hint */}
+        <a
+          href="#about"
+          aria-label={t.hero.scrollHint}
+          className="animate-fadeInUp absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-1.5 text-neutral-400 transition-colors hover:text-neutral-700 sm:flex"
+          style={{ animationDelay: "680ms" }}
+        >
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">
+            {t.hero.scrollHint}
+          </span>
+          <span className="flex h-8 w-5 items-start justify-center rounded-full border border-current p-1">
+            <span className="h-1.5 w-1 animate-bounce rounded-full bg-current" />
+          </span>
+        </a>
       </section>
 
       {/* ============================ ABOUT ============================ */}
@@ -277,6 +337,30 @@ export default function Portfolio() {
                   {t.contact.locationLabel}
                 </p>
                 <p className="text-neutral-800">{t.contact.location}</p>
+                {/* Coordinate badge — central Bang Kapi, with a corner accent */}
+                <a
+                  href={`https://maps.google.com/?q=${encodeURIComponent(
+                    t.contact.coordinates
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative mt-2 inline-flex items-center gap-2 overflow-hidden rounded-lg border border-black/10 bg-white px-3 py-1.5 transition-colors hover:border-black/25"
+                >
+                  <span
+                    aria-hidden
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ background: "var(--accent)" }}
+                  />
+                  <span className="font-mono text-xs tracking-wide text-neutral-500 group-hover:text-neutral-800">
+                    {t.contact.coordinates}
+                  </span>
+                  {/* accent corner triangle */}
+                  <span
+                    aria-hidden
+                    className="absolute bottom-0 right-0 h-0 w-0 border-b-[14px] border-l-[14px] border-l-transparent transition-transform duration-300 group-hover:scale-125"
+                    style={{ borderBottomColor: "var(--accent)" }}
+                  />
+                </a>
               </div>
               <div>
                 <p className="text-xs font-mono uppercase tracking-widest text-neutral-400 mb-1">

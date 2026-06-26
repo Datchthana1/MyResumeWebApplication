@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useLang } from "@/components/LanguageProvider";
 import LangToggle from "@/components/LangToggle";
+import { SapienMark } from "@/components/SapienMark";
 
 const SECTIONS = ["home", "about", "skills", "experience", "monitor", "education", "contact"];
 
@@ -64,11 +65,15 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/#home" className="shrink-0 group">
+          {/* Logo — Sapien mark + wordmark */}
+          <Link href="/#home" className="shrink-0 group inline-flex items-center gap-2">
+            <SapienMark
+              size={26}
+              className="text-neutral-900 transition-transform duration-300 group-hover:-translate-y-0.5"
+            />
             <span className="font-bold text-lg sm:text-xl tracking-tight text-neutral-800 group-hover:text-neutral-950 transition-colors">
               Dechthana
-              <span className="text-neutral-400">.</span>
+              <span style={{ color: "var(--accent)" }}>.</span>
             </span>
           </Link>
 

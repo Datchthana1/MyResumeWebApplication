@@ -31,6 +31,13 @@ const platforms = [
   "Dataform",
   "Next.js",
 ];
+const governance = [
+  "Row-Level Security (RLS)",
+  "Column-Level Security (CLS)",
+  "RBAC",
+  "Access Control",
+  "Data Validation",
+];
 
 const socials = [
   { label: "GitHub", href: "https://github.com/Datchthana1" },
@@ -74,6 +81,8 @@ export const content = {
       positions: ["Data Engineer (AI Engineer)", "Data Scientist", "Web Developer"],
       tagline:
         "Turning data into insight and ideas into products — passionate about data science, engineering, and building things for the web.",
+      evolutionCaption: "Curiosity that never stops evolving",
+      scrollHint: "Scroll",
     },
     about: {
       eyebrow: "01 / About",
@@ -97,6 +106,7 @@ export const content = {
         { title: "AI / LLM", items: aiTools },
         { title: "Data Science", items: dataTools },
         { title: "Platforms", items: platforms },
+        { title: "Data Governance", items: governance },
       ],
     },
     experience: {
@@ -178,6 +188,12 @@ export const content = {
       error: "Couldn't reach the monitor API.",
       timeoutHint:
         "The backend may be waking from sleep (Render free tier). Try again in a moment.",
+      // cold-start explainer (why values can show as null / — on first load)
+      coldStartTitle: "Backend is waking up",
+      coldStartBody:
+        "Seeing null or — values? The monitor API runs on a free tier that sleeps when idle, so the first visit has to “boost” it back up before any data can be fetched. Give it at least ~60 seconds, then refresh.",
+      coldStartWaitSeconds: 60,
+      coldStartWaking: "Waking the backend… first load can take up to a minute.",
       // filters / search
       filterAll: "All",
       filterReported: "Reported",
@@ -218,6 +234,28 @@ export const content = {
       legendMissing: "Missing",
       howItWorks:
         "“Sending” = the station is in the latest snapshot AND its actual reading (recorded_at) is fresh. “Stale data” = the pipeline still re-writes it every hour, but air4thai keeps returning the same old reading. “Missing” = not in the latest snapshot at all. Click any row for the station's history.",
+      // live pipeline stepper (PL1/PL2/PL3 from Airflow)
+      pipelineEyebrow: "Airflow",
+      pipelineTitle: "Pipeline Status",
+      pipelineSubtitle: "Which stage of the Airflow pipeline is running right now.",
+      pipelineActive: "{stage} is running now",
+      pipelineIdle: "Pipeline is idle — no stage running.",
+      pipelineUnconfigured: "Live Airflow link isn't set up yet — showing the pipeline stages.",
+      pipelineNotLinked: "Airflow not linked",
+      pipelineLastRun: "Last run",
+      pipelineClickHint: "Tap a stage for details.",
+      pipelineStates: {
+        running: "Running",
+        success: "Success",
+        failed: "Failed",
+        up_for_retry: "Retrying",
+        queued: "Queued",
+        scheduled: "Scheduled",
+        none: "No runs yet",
+        unconfigured: "Not linked",
+        unauthorized: "Unauthorized",
+        error: "Unreachable",
+      },
     },
     education: {
       eyebrow: "04 / Education",
@@ -240,7 +278,8 @@ export const content = {
       emailFormalLabel: "Email (Formal)",
       emailPersonalLabel: "Email (Personal)",
       locationLabel: "Location",
-      location: "Hatyai, Thailand",
+      location: "Bang Kapi, Bangkok",
+      coordinates: "13.7659°N 100.6478°E",
       findMeLabel: "Find Me",
     },
     experienceDetail: {
@@ -316,6 +355,8 @@ export const content = {
       positions: ["Data Engineer (AI Engineer)", "Data Scientist", "Web Developer"],
       tagline:
         "เปลี่ยนข้อมูลให้เป็นข้อมูลเชิงลึก และเปลี่ยนไอเดียให้เป็นผลิตภัณฑ์ — หลงใหลในงานด้าน Data Science, Data Engineering และการสร้างสรรค์งานบนเว็บ",
+      evolutionCaption: "ความอยากรู้ที่วิวัฒน์ไม่เคยหยุด",
+      scrollHint: "เลื่อนลง",
     },
     about: {
       eyebrow: "01 / เกี่ยวกับ",
@@ -339,6 +380,7 @@ export const content = {
         { title: "AI / LLM", items: aiTools },
         { title: "Data Science", items: dataTools },
         { title: "แพลตฟอร์ม", items: platforms },
+        { title: "Data Governance", items: governance },
       ],
     },
     experience: {
@@ -460,6 +502,28 @@ export const content = {
       legendMissing: "ยังไม่ส่ง",
       howItWorks:
         "“ส่งจริง” = สถานีอยู่ใน snapshot ล่าสุด และค่าวัดจริง (recorded_at) ยังสด · “ค่าค้าง” = pipeline ยังเขียน row ทุกชั่วโมง แต่ air4thai ส่งค่าวัดเดิมซ้ำ ๆ ไม่อัปเดต · “ไม่ส่ง” = ไม่อยู่ใน snapshot ล่าสุดเลย · คลิกที่แถวเพื่อดูข้อมูลย้อนหลังของสถานีนั้น",
+      // stepper แสดงขั้นของ pipeline (PL1/PL2/PL3 จาก Airflow)
+      pipelineEyebrow: "Airflow",
+      pipelineTitle: "สถานะ Pipeline",
+      pipelineSubtitle: "ตอนนี้ Airflow Pipeline กำลังทำงานอยู่ที่ขั้นไหน",
+      pipelineActive: "ตอนนี้ {stage} กำลังทำงานอยู่",
+      pipelineIdle: "Pipeline ว่างอยู่ — ไม่มีขั้นที่กำลังรัน",
+      pipelineUnconfigured: "ยังไม่ได้เชื่อม Airflow แบบเรียลไทม์ — แสดงเป็นขั้นตอนของ Pipeline",
+      pipelineNotLinked: "ยังไม่ได้เชื่อม Airflow",
+      pipelineLastRun: "รันล่าสุด",
+      pipelineClickHint: "แตะที่ขั้นเพื่อดูรายละเอียด",
+      pipelineStates: {
+        running: "กำลังรัน",
+        success: "สำเร็จ",
+        failed: "ล้มเหลว",
+        up_for_retry: "กำลังลองใหม่",
+        queued: "รอคิว",
+        scheduled: "ตั้งเวลาไว้",
+        none: "ยังไม่เคยรัน",
+        unconfigured: "ยังไม่เชื่อม",
+        unauthorized: "ไม่มีสิทธิ์เข้าถึง",
+        error: "เชื่อมต่อไม่ได้",
+      },
     },
     education: {
       eyebrow: "04 / การศึกษา",
@@ -482,7 +546,8 @@ export const content = {
       emailFormalLabel: "อีเมล (ทางการ)",
       emailPersonalLabel: "อีเมล (ส่วนตัว)",
       locationLabel: "ที่อยู่",
-      location: "หาดใหญ่, ประเทศไทย",
+      location: "บางกะปิ, กรุงเทพฯ",
+      coordinates: "13.7659°N 100.6478°E",
       findMeLabel: "ช่องทางติดตาม",
     },
     experienceDetail: {

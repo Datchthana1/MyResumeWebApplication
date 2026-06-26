@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useLang } from "@/components/LanguageProvider";
 import { API_BASE } from "@/components/monitorApi";
 import StationDetail from "@/components/StationDetail";
+import PipelineStatus from "@/components/PipelineStatus";
 
 // Leaflet touches `window`, so load the map only on the client.
 const StationMap = dynamic(() => import("@/components/StationMap"), {
@@ -328,6 +329,28 @@ export function MonitorBoard() {
         )}
       </div>
 
+      {/* Cold-start explainer — why values can read null / — on first load.
+          The monitor API sleeps on the free tier; the first request "boosts"
+          it awake before any data can be fetched. */}
+      {(loading || error) && (
+        <div
+          className="mt-6 flex items-start gap-3 rounded-2xl border px-5 py-4"
+          style={{ borderColor: "var(--accent-soft)", background: "var(--accent-soft)" }}
+        >
+          <span
+            className={`mt-1 inline-flex h-2.5 w-2.5 shrink-0 rounded-full ${loading ? "animate-ping" : ""}`}
+            style={{ background: "var(--accent)" }}
+          />
+          <div className="text-sm">
+            <p className="font-semibold text-neutral-800">{m.coldStartTitle}</p>
+            <p className="mt-1 text-neutral-600">{m.coldStartBody}</p>
+            {loading && (
+              <p className="mt-1 font-mono text-xs text-neutral-500">{m.coldStartWaking}</p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Pipeline-down banner */}
       {!error && data?.is_stale && (
         <div className="mt-6 flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4">
@@ -379,6 +402,11 @@ export function MonitorBoard() {
               <HealthBar ok={data.ok_count} total={data.total} />
             </div>
           )}
+
+          {/* Live pipeline stage (PL1/PL2/PL3 from Airflow) */}
+          <div className="mt-8">
+            <PipelineStatus m={m} />
+          </div>
 
           {/* Map */}
           {!loading && data && (
