@@ -81,7 +81,7 @@ export const content = {
       positions: ["Data Engineer (AI Engineer)", "Data Scientist", "Web Developer"],
       tagline:
         "Turning data into insight and ideas into products — passionate about data science, engineering, and building things for the web.",
-      evolutionCaption: "Curiosity that never stops evolving",
+      evolutionCaption: "Curiosity is what evolved us",
       scrollHint: "Scroll",
     },
     about: {
@@ -356,7 +356,7 @@ export const content = {
       positions: ["Data Engineer (AI Engineer)", "Data Scientist", "Web Developer"],
       tagline:
         "เปลี่ยนข้อมูลให้เป็นข้อมูลเชิงลึก และเปลี่ยนไอเดียให้เป็นผลิตภัณฑ์ — หลงใหลในงานด้าน Data Science, Data Engineering และการสร้างสรรค์งานบนเว็บ",
-      evolutionCaption: "ความอยากรู้ที่วิวัฒน์ไม่เคยหยุด",
+      evolutionCaption: "ความอยากรู้คือสิ่งที่ทำให้มนุษย์วิวัฒนาการ",
       scrollHint: "เลื่อนลง",
     },
     about: {
