@@ -8,6 +8,7 @@ import Typewriter from "@/components/Typewriter";
 import Magnetic from "@/components/Magnetic";
 import { MonitorSummary } from "@/components/Monitor";
 import { EvolutionMarch } from "@/components/SapienMark";
+import EvolutionScroll from "@/components/EvolutionScroll";
 import { useLang } from "@/components/LanguageProvider";
 
 function Pill({ children }) {
@@ -155,6 +156,10 @@ export default function Portfolio() {
           </div>
         </div>
       </section>
+
+      {/* ============================ THE ASCENT ============================ */}
+      {/* Scroll-scrubbed walk through human evolution — the signature moment. */}
+      <EvolutionScroll />
 
       {/* ============================ ABOUT ============================ */}
       <section id="about" className="relative max-w-5xl mx-auto px-6 py-12">

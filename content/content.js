@@ -84,6 +84,41 @@ export const content = {
       evolutionCaption: "Curiosity is what evolved us",
       scrollHint: "Scroll",
     },
+    ascent: {
+      eyebrow: "The Ascent",
+      lead: "Curiosity is what evolved us",
+      sub: "Twenty million years, scrubbed into one scroll. Roll down to evolve — roll back up to rewind.",
+      scrollHint: "Scroll to evolve",
+      unit: "years ago",
+      present: "Today",
+      stages: [
+        {
+          name: "Tailless ape",
+          latin: "Hominoidea",
+          note: "Down from the branches, knuckles on the ground — the first to look past the next tree.",
+        },
+        {
+          name: "Australopithecus",
+          latin: "A. afarensis",
+          note: "Stood up to see over the grass, and two hands came free to wonder with.",
+        },
+        {
+          name: "Homo habilis",
+          latin: "the handy one",
+          note: "Struck the first tools — curiosity, given an edge.",
+        },
+        {
+          name: "Homo erectus",
+          latin: "upright human",
+          note: "Kept the fire and made the long walk out of Africa.",
+        },
+        {
+          name: "Homo sapiens",
+          latin: "the one who knows",
+          note: "Still asking why. The spark that refuses to settle.",
+        },
+      ],
+    },
     about: {
       eyebrow: "01 / About",
       title: "About Me",
@@ -358,6 +393,41 @@ export const content = {
         "เปลี่ยนข้อมูลให้เป็นข้อมูลเชิงลึก และเปลี่ยนไอเดียให้เป็นผลิตภัณฑ์ — หลงใหลในงานด้าน Data Science, Data Engineering และการสร้างสรรค์งานบนเว็บ",
       evolutionCaption: "ความอยากรู้คือสิ่งที่ทำให้มนุษย์วิวัฒนาการ",
       scrollHint: "เลื่อนลง",
+    },
+    ascent: {
+      eyebrow: "วิวัฒนาการ",
+      lead: "ความอยากรู้คือสิ่งที่ทำให้มนุษย์วิวัฒนาการ",
+      sub: "ยี่สิบล้านปี ย่อลงในการเลื่อนเพียงครั้งเดียว เลื่อนลงเพื่อวิวัฒน์ — เลื่อนขึ้นเพื่อย้อนกลับ",
+      scrollHint: "เลื่อนเพื่อวิวัฒน์",
+      unit: "ปีก่อน",
+      present: "ปัจจุบัน",
+      stages: [
+        {
+          name: "วานรไร้หาง",
+          latin: "Hominoidea",
+          note: "ลงจากยอดไม้ ใช้ข้อนิ้วเดินบนพื้น — ตัวแรกที่มองไกลเกินต้นไม้ต้นถัดไป",
+        },
+        {
+          name: "ออสตราโลพิเทคัส",
+          latin: "A. afarensis",
+          note: "ลุกขึ้นยืนเพื่อมองข้ามทุ่งหญ้า และมือทั้งสองก็ว่างพอจะสงสัย",
+        },
+        {
+          name: "โฮโม ฮาบิลิส",
+          latin: "ผู้ถือเครื่องมือ",
+          note: "สร้างเครื่องมือชิ้นแรก — ความอยากรู้ที่ถูกลับให้คม",
+        },
+        {
+          name: "โฮโม อิเรกตัส",
+          latin: "มนุษย์ยืนตรง",
+          note: "รักษาไฟไว้ และออกเดินทางไกลจากแอฟริกา",
+        },
+        {
+          name: "โฮโม เซเปียนส์",
+          latin: "ผู้รู้",
+          note: "ยังคงถามว่าทำไม ประกายที่ไม่เคยหยุดนิ่ง",
+        },
+      ],
     },
     about: {
       eyebrow: "01 / เกี่ยวกับ",
