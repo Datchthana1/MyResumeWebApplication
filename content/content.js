@@ -119,6 +119,12 @@ export const content = {
         },
       ],
     },
+    credo: {
+      eyebrow: "Why Sapien",
+      lead: "We only move forward on the shoulders of giants. What lifts us higher isn't a bigger brain — it's the curiosity to keep reaching, and the will to master one craft as fully as we can.",
+      body: "Books were my starting point. They showed me how remarkable we already are — a body and mind evolved to adapt, to rewire, to take raw signal and connect it into meaning without a seam.",
+      close: "So being smart was never about who holds the most. It's about who looks wider, connects faster, and turns the problem over to find the angle no one else saw.",
+    },
     about: {
       eyebrow: "01 / About",
       title: "About Me",
@@ -428,6 +434,12 @@ export const content = {
           note: "ยังคงถามว่าทำไม ประกายที่ไม่เคยหยุดนิ่ง",
         },
       ],
+    },
+    credo: {
+      eyebrow: "ทำไมต้อง Sapien",
+      lead: "เราก้าวไปข้างหน้าได้เพราะยืนอยู่บนไหล่ของยักษ์ สิ่งที่พาเราสูงขึ้นไม่ใช่สมองที่ใหญ่กว่า แต่คือความอยากรู้ที่ไม่หยุดเอื้อม และความตั้งใจจะเชี่ยวชาญสักอย่างให้ถึงที่สุด",
+      body: "จุดเริ่มต้นของผมคือหนังสือ มันทำให้ผมเห็นว่าร่างกายและสมองของเราถูกวิวัฒน์มาอย่างน่าทึ่ง — ปรับตัว ปรับโครงสร้างสมอง รับสัญญาณดิบที่เข้ามาแล้วเชื่อมโยงให้เป็นความหมายได้อย่างไร้รอยต่อ",
+      close: "ผมเลยเชื่อว่าความเก่งไม่เคยวัดกันที่ใครมีสมองมากกว่า แต่วัดที่ใครหาความรู้ได้กว้างกว่า เชื่อมโยงได้เร็วกว่า และพลิกหามุมที่คนอื่นมองไม่เห็น",
     },
     about: {
       eyebrow: "01 / เกี่ยวกับ",

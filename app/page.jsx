@@ -7,7 +7,7 @@ import SignalField from "@/components/SignalField";
 import Typewriter from "@/components/Typewriter";
 import Magnetic from "@/components/Magnetic";
 import { MonitorSummary } from "@/components/Monitor";
-import { EvolutionMarch } from "@/components/SapienMark";
+import { EvolutionMarch, SapienMark } from "@/components/SapienMark";
 import EvolutionScroll from "@/components/EvolutionScroll";
 import { useLang } from "@/components/LanguageProvider";
 
@@ -160,6 +160,40 @@ export default function Portfolio() {
       {/* ============================ THE ASCENT ============================ */}
       {/* Scroll-scrubbed walk through human evolution — the signature moment. */}
       <EvolutionScroll />
+
+      {/* ============================ CREDO ============================ */}
+      {/* Why the Sapien theme exists — the belief behind the evolution motif:
+          standing on the shoulders of giants, curiosity as the engine, and
+          intelligence as reach + connection rather than raw horsepower. */}
+      <section id="credo" className="relative mx-auto max-w-4xl px-6 py-20 sm:py-28">
+        <Reveal>
+          <div className="mb-9 flex items-center gap-3">
+            <SapienMark size={26} className="text-neutral-900" />
+            <p className="kicker">{t.credo.eyebrow}</p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={60}>
+          <p className="font-display text-2xl font-medium leading-[1.32] tracking-tight text-neutral-950 sm:text-[2.05rem]">
+            {t.credo.lead}
+          </p>
+        </Reveal>
+
+        <Reveal delay={120}>
+          <p className="mt-8 max-w-2xl leading-relaxed text-neutral-500">
+            {t.credo.body}
+          </p>
+        </Reveal>
+
+        <Reveal delay={160}>
+          <p
+            className="mt-10 border-l-2 pl-5 font-display text-xl font-medium leading-relaxed text-neutral-950 sm:text-2xl"
+            style={{ borderColor: "var(--accent)" }}
+          >
+            {t.credo.close}
+          </p>
+        </Reveal>
+      </section>
 
       {/* ============================ ABOUT ============================ */}
       <section id="about" className="relative max-w-5xl mx-auto px-6 py-12">
