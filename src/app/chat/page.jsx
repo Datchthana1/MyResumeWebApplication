@@ -11,7 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { useLang } from "@/components/LanguageProvider";
+import { useLang } from "@/providers/LanguageProvider";
 
 // Tailwind classes for the markdown elements the bot tends to emit (bold,
 // bullet / numbered lists, links, inline code). react-markdown never renders

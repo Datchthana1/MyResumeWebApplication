@@ -2,14 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import Dechthana from "@/assets/Dechthana.jpg";
-import Reveal from "@/components/Reveal";
-import SignalField from "@/components/SignalField";
-import Typewriter from "@/components/Typewriter";
-import Magnetic from "@/components/Magnetic";
-import { MonitorSummary } from "@/components/Monitor";
-import { EvolutionMarch, SapienMark } from "@/components/SapienMark";
-import EvolutionScroll from "@/components/EvolutionScroll";
-import { useLang } from "@/components/LanguageProvider";
+import Reveal from "@/components/ui/Reveal";
+import SignalField from "@/components/ui/SignalField";
+import Typewriter from "@/components/ui/Typewriter";
+import Magnetic from "@/components/ui/Magnetic";
+import { MonitorSummary } from "@/components/monitor/Monitor";
+import { EvolutionMarch, SapienMark } from "@/components/ui/SapienMark";
+import EvolutionScroll from "@/components/sections/EvolutionScroll";
+import { useLang } from "@/providers/LanguageProvider";
 
 function Pill({ children }) {
   return (

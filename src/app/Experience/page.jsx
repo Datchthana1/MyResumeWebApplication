@@ -4,11 +4,11 @@ import CompetitionContest from "@/assets/CompetitionContest.jpg";
 import ProcedureOfDemostration from "@/assets/ProcedureOfDemostration.webp";
 import VibeInContest from "@/assets/VibeInContest.jpg";
 import { useEffect, useState } from "react";
-import ExperienceList from "@/components/ExperienceList";
-import Lightbox from "@/components/LightBox";
+import ExperienceList from "@/components/experience/ExperienceList";
+import Lightbox from "@/components/ui/LightBox";
 import GLS_Logo2 from "@/assets/GLS_Logo2.jpg";
 import GLS_Vibe from "@/assets/GLS_Vibe.jpg";
-import { useLang } from "@/components/LanguageProvider";
+import { useLang } from "@/providers/LanguageProvider";
 
 const Page = () => {
   const { t } = useLang();

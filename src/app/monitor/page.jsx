@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { MonitorBoard } from "@/components/Monitor";
-import { useLang } from "@/components/LanguageProvider";
+import { MonitorBoard } from "@/components/monitor/Monitor";
+import { useLang } from "@/providers/LanguageProvider";
 
 export default function MonitorPage() {
   const { t } = useLang();

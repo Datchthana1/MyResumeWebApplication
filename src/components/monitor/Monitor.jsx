@@ -3,13 +3,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useLang } from "@/components/LanguageProvider";
-import { API_BASE } from "@/components/monitorApi";
-import StationDetail from "@/components/StationDetail";
-import PipelineStatus from "@/components/PipelineStatus";
+import { useLang } from "@/providers/LanguageProvider";
+import { API_BASE } from "@/lib/monitorApi";
+import StationDetail from "@/components/monitor/StationDetail";
+import PipelineStatus from "@/components/monitor/PipelineStatus";
 
 // Leaflet touches `window`, so load the map only on the client.
-const StationMap = dynamic(() => import("@/components/StationMap"), {
+const StationMap = dynamic(() => import("@/components/monitor/StationMap"), {
   ssr: false,
   loading: () => (
     <div className="flex h-[460px] w-full items-center justify-center rounded-3xl bg-black/[0.03] text-sm text-neutral-400">

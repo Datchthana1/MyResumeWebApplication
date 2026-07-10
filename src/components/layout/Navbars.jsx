@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useLang } from "@/components/LanguageProvider";
-import LangToggle from "@/components/LangToggle";
-import { SapienMark } from "@/components/SapienMark";
+import { useLang } from "@/providers/LanguageProvider";
+import LangToggle from "@/components/layout/LangToggle";
+import { SapienMark } from "@/components/ui/SapienMark";
 
 const SECTIONS = ["home", "about", "skills", "experience", "monitor", "education", "contact"];
 

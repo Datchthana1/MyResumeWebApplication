@@ -1,5 +1,5 @@
 "use client";
-import { useLang } from "@/components/LanguageProvider";
+import { useLang } from "@/providers/LanguageProvider";
 
 const LANGS = [
   { code: "en", label: "EN" },

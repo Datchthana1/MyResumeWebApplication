@@ -21,7 +21,7 @@
  */
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useLang } from "@/components/LanguageProvider";
+import { useLang } from "@/providers/LanguageProvider";
 
 // ---- Skeleton keyframes -----------------------------------------------------
 // One figure lives in a local 44×64 box, feet on the ground line at y≈61,

@@ -1,8 +1,8 @@
 import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
-import Navbar from "@/components/Navbars";
-import Footer from "../components/Footer";
-import ScrollProgress from "@/components/ScrollProgress";
-import { LanguageProvider } from "@/components/LanguageProvider";
+import Navbar from "@/components/layout/Navbars";
+import Footer from "@/components/layout/Footer";
+import ScrollProgress from "@/components/layout/ScrollProgress";
+import { LanguageProvider } from "@/providers/LanguageProvider";
 import "./globals.css";
 
 const geistSans = Geist({

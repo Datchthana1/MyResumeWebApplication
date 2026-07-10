@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { API_BASE } from "@/components/monitorApi";
-import LineChart from "@/components/LineChart";
+import { API_BASE } from "@/lib/monitorApi";
+import LineChart from "@/components/ui/LineChart";
 
 // Metric catalogue. Keys match the get_station_history RPC columns.
 const METRICS = {

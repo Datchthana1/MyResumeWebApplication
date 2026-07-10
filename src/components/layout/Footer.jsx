@@ -1,6 +1,6 @@
 // components/Footer.jsx
 "use client";
-import { useLang } from "@/components/LanguageProvider";
+import { useLang } from "@/providers/LanguageProvider";
 
 export default function Footer() {
   const { t } = useLang();
