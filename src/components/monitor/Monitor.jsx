@@ -99,7 +99,7 @@ function statusLabel(status, m) {
   return m.statusMissing;
 }
 
-function StatCard({ value, label, tone = "neutral" }) {
+export function StatCard({ value, label, tone = "neutral" }) {
   const tones = {
     neutral: "text-neutral-950",
     good: "text-emerald-600",
@@ -138,7 +138,7 @@ function HealthBar({ ok, total }) {
 
 const DOT_COLORS = { good: "bg-emerald-500", warn: "bg-amber-500", bad: "bg-rose-500" };
 
-function StatusDot({ tone = "good" }) {
+export function StatusDot({ tone = "good" }) {
   return (
     <span className="relative inline-flex h-2.5 w-2.5">
       {tone === "good" && (
@@ -150,7 +150,7 @@ function StatusDot({ tone = "good" }) {
 }
 
 // minutes -> "2h 15m" / "45m" using localized units.
-function formatAge(mins, m) {
+export function formatAge(mins, m) {
   if (mins == null) return "—";
   const h = Math.floor(mins / 60);
   const rem = mins % 60;
