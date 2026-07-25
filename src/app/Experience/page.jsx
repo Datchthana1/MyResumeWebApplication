@@ -8,7 +8,7 @@ import ExperienceList from "@/components/experience/ExperienceList";
 import Lightbox from "@/components/ui/LightBox";
 import GLS_Logo2 from "@/assets/GLS_Logo2.jpg";
 import GLS_Vibe from "@/assets/GLS_Vibe.jpg";
-import BDI_Logo from "@/assets/BDI_Logo.png";
+import BDI_Logo from "@/assets/BDI_Logo.webp";
 import { useLang } from "@/providers/LanguageProvider";
 
 const Page = () => {
