@@ -131,7 +131,7 @@ export const content = {
       title: "About Me",
       blurb: "The short version — what I do, and what I'm chasing.",
       paragraphs: [
-        "I'm a Data Engineer at BDI (on contract), and previously built data and AI systems at Greenline Synergy. I'm a 2025 graduate in Innovation of Medical Informatics from Walailak University, with a strong passion for data science, data engineering, and building AI systems that are accurate, reliable and genuinely useful.",
+        "I'm a Data Engineer at the Big Data Institute (BDI), on contract, and I previously built data and AI systems at Greenline Synergy. I'm a 2025 graduate in Innovation of Medical Informatics from Walailak University, with a strong passion for data science, data engineering, and building AI systems that are accurate, reliable and genuinely useful.",
         "My goal is to become a proficient data scientist and researcher, and to contribute to impactful projects that make a difference.",
       ],
       highlight: "Data Engineer working on AI",
@@ -160,11 +160,11 @@ export const content = {
       items: [
         {
           role: "Data Engineer",
-          org: "BDI",
+          org: "Big Data Institute (BDI)",
           period: "Contract · Jul 2026 – Present",
           summary:
-            "I recently joined BDI as a Data Engineer on a contract basis (from July 2026), working on data engineering — the pipelines and infrastructure that turn raw data into clean, reliable, ready-to-use datasets.",
-          tags: ["Data Engineering", "Data Pipelines", "Contract"],
+            "I recently joined the Big Data Institute (BDI) as a Data Engineer on a contract basis (from July 2026). Right now I'm getting up to speed — learning the systems and the way the team works as I settle into the role.",
+          tags: ["Data Engineering", "Contract"],
         },
         {
           role: "Data Engineer",
@@ -374,9 +374,9 @@ export const content = {
       linksLabel: "Links",
       items: {
         "Data Engineer @ BDI": {
-          org: "BDI · Contract · Jul 2026 – Present",
+          org: "Big Data Institute (BDI) · Contract · Jul 2026 – Present",
           paragraphs: [
-            "I joined BDI in July 2026 as a Data Engineer on a contract basis. My focus is data engineering — designing, building and maintaining the data pipelines and infrastructure that keep data clean, reliable and ready to use.",
+            "I joined the Big Data Institute (BDI) in July 2026 as a Data Engineer on a contract basis. I've just started, so I'm currently ramping up — getting to know the systems, tools and the way the team works as I settle into the role. More detail to come as I take on projects.",
           ],
         },
         "Data Engineer @ Greenline Synergy": {
@@ -495,7 +495,7 @@ export const content = {
       title: "เกี่ยวกับผม",
       blurb: "ฉบับย่อ — ผมทำอะไร และกำลังไล่ตามอะไรอยู่",
       paragraphs: [
-        "ผมเป็น Data Engineer ที่ BDI (สัญญาจ้าง) และก่อนหน้านี้เคยสร้างระบบข้อมูลและ AI ที่ Greenline Synergy เป็นบัณฑิตปี 2025 สาขานวัตกรรมสารสนเทศการแพทย์ จากมหาวิทยาลัยวลัยลักษณ์ ผมมีความหลงใหลอย่างมากในงานด้าน Data Science, Data Engineering และการสร้างระบบ AI ที่แม่นยำ น่าเชื่อถือ และใช้งานได้จริง",
+        "ผมเป็น Data Engineer ที่ Big Data Institute (BDI) แบบสัญญาจ้าง และก่อนหน้านี้เคยสร้างระบบข้อมูลและ AI ที่ Greenline Synergy เป็นบัณฑิตปี 2025 สาขานวัตกรรมสารสนเทศการแพทย์ จากมหาวิทยาลัยวลัยลักษณ์ ผมมีความหลงใหลอย่างมากในงานด้าน Data Science, Data Engineering และการสร้างระบบ AI ที่แม่นยำ น่าเชื่อถือ และใช้งานได้จริง",
         "เป้าหมายของผมคือการเป็น Data Scientist และนักวิจัยที่เชี่ยวชาญ และได้มีส่วนร่วมในโปรเจกต์ที่สร้างผลกระทบและความเปลี่ยนแปลงที่ดี",
       ],
       highlight: "Data Engineer ที่ทำงานด้าน AI",
@@ -524,11 +524,11 @@ export const content = {
       items: [
         {
           role: "Data Engineer",
-          org: "BDI",
+          org: "Big Data Institute (BDI)",
           period: "สัญญาจ้าง · ก.ค. 2026 – ปัจจุบัน",
           summary:
-            "ผมเพิ่งย้ายมาร่วมงานกับ BDI ในตำแหน่ง Data Engineer แบบสัญญาจ้าง (เริ่มกรกฎาคม 2026) ดูแลงานด้าน Data Engineering — Pipeline และโครงสร้างพื้นฐานข้อมูลที่เปลี่ยนข้อมูลดิบให้เป็นชุดข้อมูลที่สะอาด เชื่อถือได้ และพร้อมใช้งาน",
-          tags: ["Data Engineering", "Data Pipelines", "Contract"],
+            "ผมเพิ่งเข้าร่วมงานกับ Big Data Institute (BDI) ในตำแหน่ง Data Engineer แบบสัญญาจ้าง (เริ่มกรกฎาคม 2026) ตอนนี้กำลังเรียนรู้งานและทำความคุ้นเคยกับระบบและทีม ระหว่างปรับตัวเข้ากับบทบาทใหม่",
+          tags: ["Data Engineering", "Contract"],
         },
         {
           role: "Data Engineer",
@@ -732,9 +732,9 @@ export const content = {
       linksLabel: "ลิงก์",
       items: {
         "Data Engineer @ BDI": {
-          org: "BDI · สัญญาจ้าง · ก.ค. 2026 – ปัจจุบัน",
+          org: "Big Data Institute (BDI) · สัญญาจ้าง · ก.ค. 2026 – ปัจจุบัน",
           paragraphs: [
-            "ผมเข้าร่วมงานกับ BDI ในเดือนกรกฎาคม 2026 ในตำแหน่ง Data Engineer แบบสัญญาจ้าง โดยโฟกัสที่งาน Data Engineering — ออกแบบ พัฒนา และดูแล Data Pipeline และโครงสร้างพื้นฐานข้อมูลให้สะอาด เชื่อถือได้ และพร้อมใช้งาน",
+            "ผมเข้าร่วมงานกับ Big Data Institute (BDI) ในเดือนกรกฎาคม 2026 ในตำแหน่ง Data Engineer แบบสัญญาจ้าง ตอนนี้เพิ่งเริ่มงาน จึงกำลังเรียนรู้งานและทำความคุ้นเคยกับระบบ เครื่องมือ และการทำงานของทีม ระหว่างปรับตัวเข้ากับบทบาทใหม่ — รายละเอียดเพิ่มเติมจะตามมาเมื่อได้เริ่มโปรเจกต์",
           ],
         },
         "Data Engineer @ Greenline Synergy": {

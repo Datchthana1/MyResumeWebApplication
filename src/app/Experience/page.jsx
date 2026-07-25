@@ -8,6 +8,7 @@ import ExperienceList from "@/components/experience/ExperienceList";
 import Lightbox from "@/components/ui/LightBox";
 import GLS_Logo2 from "@/assets/GLS_Logo2.jpg";
 import GLS_Vibe from "@/assets/GLS_Vibe.jpg";
+import BDI_Logo from "@/assets/BDI_Logo.png";
 import { useLang } from "@/providers/LanguageProvider";
 
 const Page = () => {
@@ -19,8 +20,10 @@ const Page = () => {
   // from `t`. Each key matches an entry in t.experienceDetail.items.
   const items = t.experienceDetail.items;
   const visuals = {
-    // Current role at BDI — no photos/tools yet, just the write-up.
-    "Data Engineer @ BDI": {},
+    // Current role at BDI — logo only for now (still ramping up).
+    "Data Engineer @ BDI": {
+      picture: [BDI_Logo],
+    },
     "Data Engineer @ Greenline Synergy": {
       Tools: ["SQL", "Google Cloud Platform", "Dataform", "BigQuery"],
       picture: [GLS_Logo2, GLS_Vibe],
