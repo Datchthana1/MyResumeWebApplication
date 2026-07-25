@@ -131,7 +131,7 @@ export const content = {
       title: "About Me",
       blurb: "The short version — what I do, and what I'm chasing.",
       paragraphs: [
-        "I'm a Data Engineer working on AI at Greenline Synergy, and a 2025 graduate in Innovation of Medical Informatics from Walailak University. I have a strong passion for data science, data engineering, and building AI systems that are accurate, reliable and genuinely useful.",
+        "I'm a Data Engineer at BDI (on contract), and previously built data and AI systems at Greenline Synergy. I'm a 2025 graduate in Innovation of Medical Informatics from Walailak University, with a strong passion for data science, data engineering, and building AI systems that are accurate, reliable and genuinely useful.",
         "My goal is to become a proficient data scientist and researcher, and to contribute to impactful projects that make a difference.",
       ],
       highlight: "Data Engineer working on AI",
@@ -160,18 +160,26 @@ export const content = {
       items: [
         {
           role: "Data Engineer",
-          org: "Greenline Synergy Co., Ltd.",
-          period: "Intern (Apr–Dec 2025) → Full-time (Dec 2025 – Present)",
+          org: "BDI",
+          period: "Contract · Jul 2026 – Present",
           summary:
-            "I joined Greenline Synergy as a Data Engineering intern (Apr–Dec 2025) and was then converted to a full-time Data Engineer (Dec 2025 – Present). I build and maintain large-scale financial and healthcare data transformation pipelines for hospitals — designing ETL/ELT flows that ingest data from multiple sources, transforming it into clean, structured datasets, and performing data validation to guarantee quality and reliability for downstream analytics.",
+            "I recently joined BDI as a Data Engineer on a contract basis (from July 2026), working on data engineering — the pipelines and infrastructure that turn raw data into clean, reliable, ready-to-use datasets.",
+          tags: ["Data Engineering", "Data Pipelines", "Contract"],
+        },
+        {
+          role: "Data Engineer",
+          org: "Greenline Synergy Co., Ltd.",
+          period: "Intern (Apr–Dec 2025) → Full-time (Dec 2025 – Jun 2026)",
+          summary:
+            "I joined Greenline Synergy as a Data Engineering intern (Apr–Dec 2025) and was then converted to a full-time Data Engineer (Dec 2025 – Jun 2026). I built and maintained large-scale financial and healthcare data transformation pipelines for hospitals — designing ETL/ELT flows that ingest data from multiple sources, transforming it into clean, structured datasets, and performing data validation to guarantee quality and reliability for downstream analytics.",
           tags: ["ETL / ELT", "Data Transformation", "Data Validation", "SQL", "Dataform", "GCP"],
         },
         {
           role: "Data Engineer — AI Engineer",
           org: "Greenline Synergy Co., Ltd.",
-          period: "Full-time · Dec 2025 – Present",
+          period: "Full-time · Dec 2025 – Jun 2026",
           summary:
-            "Within the same Data Engineering role at Greenline Synergy, I also work as an AI Engineer building AI systems that go beyond simple prompting. I build Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders — built as prototypes and proofs of concept to pitch the AI capability.",
+            "Within the same Data Engineering role at Greenline Synergy, I also worked as an AI Engineer building AI systems that go beyond simple prompting. I built Retrieval-Augmented Generation (RAG) systems grounded in real documents and knowledge bases, multi-tool / workflow agents that call functions and chain steps to complete tasks autonomously (including automation built with n8n), and fine-tuned domain-specific LLMs for medical use cases such as assisting medical coders — built as prototypes and proofs of concept to pitch the AI capability.",
           tags: ["RAG", "AI Agents", "n8n", "Fine-tuning", "LLM", "Vertex AI", "Vector Search"],
         },
         {
@@ -365,20 +373,26 @@ export const content = {
       toolsLabel: "Tools",
       linksLabel: "Links",
       items: {
-        "Data Engineer @ Greenline Synergy": {
-          org: "Greenline Synergy Co., Ltd. · Intern (Apr–Dec 2025) → Full-time (Dec 2025 – Present)",
+        "Data Engineer @ BDI": {
+          org: "BDI · Contract · Jul 2026 – Present",
           paragraphs: [
-            "I started at Greenline Synergy as a Data Engineering intern and was later brought on full-time as a Data Engineer. My core responsibility is building and maintaining large-scale financial and healthcare data pipelines for hospitals.",
-            "Day to day, I design ETL/ELT flows that ingest data from many different source systems and transform it into clean, well-structured datasets ready for downstream analytics. I rely heavily on SQL and Dataform on Google Cloud Platform to keep transformations modular, version-controlled and testable.",
-            "A big part of the role is data validation — writing checks and assertions that guarantee the data is accurate, consistent and reliable before it reaches reporting and analytics, since this is financial and clinical data where mistakes are costly.",
+            "I joined BDI in July 2026 as a Data Engineer on a contract basis. My focus is data engineering — designing, building and maintaining the data pipelines and infrastructure that keep data clean, reliable and ready to use.",
+          ],
+        },
+        "Data Engineer @ Greenline Synergy": {
+          org: "Greenline Synergy Co., Ltd. · Intern (Apr–Dec 2025) → Full-time (Dec 2025 – Jun 2026)",
+          paragraphs: [
+            "I started at Greenline Synergy as a Data Engineering intern and was later brought on full-time as a Data Engineer. My core responsibility was building and maintaining large-scale financial and healthcare data pipelines for hospitals.",
+            "Day to day, I designed ETL/ELT flows that ingest data from many different source systems and transform it into clean, well-structured datasets ready for downstream analytics. I relied heavily on SQL and Dataform on Google Cloud Platform to keep transformations modular, version-controlled and testable.",
+            "A big part of the role was data validation — writing checks and assertions that guaranteed the data was accurate, consistent and reliable before it reached reporting and analytics, since this was financial and clinical data where mistakes are costly.",
           ],
         },
         "AI Engineer @ Greenline Synergy": {
-          org: "Greenline Synergy Co., Ltd. · Full-time · Dec 2025 – Present",
+          org: "Greenline Synergy Co., Ltd. · Full-time · Dec 2025 – Jun 2026",
           paragraphs: [
-            "Within the same role at Greenline Synergy, I also work as an AI Engineer, building AI systems that go well beyond simple prompting. So far these have been prototypes — proofs of concept that show what's possible rather than fully deployed products.",
-            "I design and ship Retrieval-Augmented Generation (RAG) systems that are grounded in the company's real documents and knowledge bases, so answers are based on actual sources rather than the model guessing. I also build multi-tool / workflow agents that call functions and chain steps together to complete tasks autonomously — including automation pipelines built with n8n.",
-            "On top of that, I fine-tune domain-specific LLMs for medical use cases, such as assisting medical coders with Medical Coding. These are built as demos and prototypes that we use to pitch and sell the AI capability — focusing on accuracy and reliability so they clearly show the value before any full deployment.",
+            "Within the same role at Greenline Synergy, I also worked as an AI Engineer, building AI systems that go well beyond simple prompting. These were prototypes — proofs of concept that show what's possible rather than fully deployed products.",
+            "I designed and shipped Retrieval-Augmented Generation (RAG) systems grounded in the company's real documents and knowledge bases, so answers were based on actual sources rather than the model guessing. I also built multi-tool / workflow agents that call functions and chain steps together to complete tasks autonomously — including automation pipelines built with n8n.",
+            "On top of that, I fine-tuned domain-specific LLMs for medical use cases, such as assisting medical coders with Medical Coding. These were built as demos and prototypes that we used to pitch and sell the AI capability — focusing on accuracy and reliability so they clearly showed the value before any full deployment.",
           ],
         },
         "Data Scientist — Thesis Project": {
@@ -481,7 +495,7 @@ export const content = {
       title: "เกี่ยวกับผม",
       blurb: "ฉบับย่อ — ผมทำอะไร และกำลังไล่ตามอะไรอยู่",
       paragraphs: [
-        "ผมเป็น Data Engineer ที่ทำงานด้าน AI ที่ Greenline Synergy และเป็นบัณฑิตปี 2025 สาขานวัตกรรมสารสนเทศการแพทย์ จากมหาวิทยาลัยวลัยลักษณ์ ผมมีความหลงใหลอย่างมากในงานด้าน Data Science, Data Engineering และการสร้างระบบ AI ที่แม่นยำ น่าเชื่อถือ และใช้งานได้จริง",
+        "ผมเป็น Data Engineer ที่ BDI (สัญญาจ้าง) และก่อนหน้านี้เคยสร้างระบบข้อมูลและ AI ที่ Greenline Synergy เป็นบัณฑิตปี 2025 สาขานวัตกรรมสารสนเทศการแพทย์ จากมหาวิทยาลัยวลัยลักษณ์ ผมมีความหลงใหลอย่างมากในงานด้าน Data Science, Data Engineering และการสร้างระบบ AI ที่แม่นยำ น่าเชื่อถือ และใช้งานได้จริง",
         "เป้าหมายของผมคือการเป็น Data Scientist และนักวิจัยที่เชี่ยวชาญ และได้มีส่วนร่วมในโปรเจกต์ที่สร้างผลกระทบและความเปลี่ยนแปลงที่ดี",
       ],
       highlight: "Data Engineer ที่ทำงานด้าน AI",
@@ -510,16 +524,24 @@ export const content = {
       items: [
         {
           role: "Data Engineer",
-          org: "บริษัท Greenline Synergy จำกัด",
-          period: "ฝึกงาน (เม.ย.–ธ.ค. 2025) → พนักงานประจำ (ธ.ค. 2025 – ปัจจุบัน)",
+          org: "BDI",
+          period: "สัญญาจ้าง · ก.ค. 2026 – ปัจจุบัน",
           summary:
-            "ผมเริ่มที่ Greenline Synergy ในฐานะนักศึกษาฝึกงานด้าน Data Engineering (เม.ย.–ธ.ค. 2025) ก่อนได้รับการบรรจุเป็น Data Engineer เต็มเวลา (ธ.ค. 2025 – ปัจจุบัน) ผมพัฒนาและดูแลระบบ Pipeline สำหรับแปลงข้อมูลทางการเงินและข้อมูลสุขภาพขนาดใหญ่ให้กับโรงพยาบาล — ออกแบบกระบวนการ ETL/ELT ที่ดึงข้อมูลจากหลายแหล่ง แปลงให้เป็นชุดข้อมูลที่สะอาดและมีโครงสร้าง พร้อมทำ Data Validation เพื่อรับประกันคุณภาพและความน่าเชื่อถือสำหรับงานวิเคราะห์ปลายทาง",
+            "ผมเพิ่งย้ายมาร่วมงานกับ BDI ในตำแหน่ง Data Engineer แบบสัญญาจ้าง (เริ่มกรกฎาคม 2026) ดูแลงานด้าน Data Engineering — Pipeline และโครงสร้างพื้นฐานข้อมูลที่เปลี่ยนข้อมูลดิบให้เป็นชุดข้อมูลที่สะอาด เชื่อถือได้ และพร้อมใช้งาน",
+          tags: ["Data Engineering", "Data Pipelines", "Contract"],
+        },
+        {
+          role: "Data Engineer",
+          org: "บริษัท Greenline Synergy จำกัด",
+          period: "ฝึกงาน (เม.ย.–ธ.ค. 2025) → พนักงานประจำ (ธ.ค. 2025 – มิ.ย. 2026)",
+          summary:
+            "ผมเริ่มที่ Greenline Synergy ในฐานะนักศึกษาฝึกงานด้าน Data Engineering (เม.ย.–ธ.ค. 2025) ก่อนได้รับการบรรจุเป็น Data Engineer เต็มเวลา (ธ.ค. 2025 – มิ.ย. 2026) ผมพัฒนาและดูแลระบบ Pipeline สำหรับแปลงข้อมูลทางการเงินและข้อมูลสุขภาพขนาดใหญ่ให้กับโรงพยาบาล — ออกแบบกระบวนการ ETL/ELT ที่ดึงข้อมูลจากหลายแหล่ง แปลงให้เป็นชุดข้อมูลที่สะอาดและมีโครงสร้าง พร้อมทำ Data Validation เพื่อรับประกันคุณภาพและความน่าเชื่อถือสำหรับงานวิเคราะห์ปลายทาง",
           tags: ["ETL / ELT", "Data Transformation", "Data Validation", "SQL", "Dataform", "GCP"],
         },
         {
           role: "Data Engineer — AI Engineer",
           org: "บริษัท Greenline Synergy จำกัด",
-          period: "พนักงานประจำ · ธ.ค. 2025 – ปัจจุบัน",
+          period: "พนักงานประจำ · ธ.ค. 2025 – มิ.ย. 2026",
           summary:
             "ในตำแหน่ง Data Engineer ที่ Greenline Synergy ผมยังทำงานเป็น AI Engineer สร้างระบบ AI ที่ไปไกลกว่าการ Prompt ธรรมดา ผมสร้างระบบ Retrieval-Augmented Generation (RAG) ที่อ้างอิงจากเอกสารและฐานความรู้จริง, Agent ที่เรียกใช้เครื่องมือและเชื่อมต่อขั้นตอนต่าง ๆ เพื่อทำงานได้เองอัตโนมัติ (รวมถึงระบบอัตโนมัติที่สร้างด้วย n8n) และ LLM ที่ Fine-tune เฉพาะทางสำหรับงานการแพทย์ เช่น ช่วยงาน Medical Coding — โดยสร้างเป็น Prototype และ Proof of Concept เพื่อนำไปนำเสนอความสามารถของ AI",
           tags: ["RAG", "AI Agents", "n8n", "Fine-tuning", "LLM", "Vertex AI", "Vector Search"],
@@ -709,8 +731,14 @@ export const content = {
       toolsLabel: "เครื่องมือ",
       linksLabel: "ลิงก์",
       items: {
+        "Data Engineer @ BDI": {
+          org: "BDI · สัญญาจ้าง · ก.ค. 2026 – ปัจจุบัน",
+          paragraphs: [
+            "ผมเข้าร่วมงานกับ BDI ในเดือนกรกฎาคม 2026 ในตำแหน่ง Data Engineer แบบสัญญาจ้าง โดยโฟกัสที่งาน Data Engineering — ออกแบบ พัฒนา และดูแล Data Pipeline และโครงสร้างพื้นฐานข้อมูลให้สะอาด เชื่อถือได้ และพร้อมใช้งาน",
+          ],
+        },
         "Data Engineer @ Greenline Synergy": {
-          org: "บริษัท Greenline Synergy จำกัด · ฝึกงาน (เม.ย.–ธ.ค. 2025) → พนักงานประจำ (ธ.ค. 2025 – ปัจจุบัน)",
+          org: "บริษัท Greenline Synergy จำกัด · ฝึกงาน (เม.ย.–ธ.ค. 2025) → พนักงานประจำ (ธ.ค. 2025 – มิ.ย. 2026)",
           paragraphs: [
             "ผมเริ่มที่ Greenline Synergy ในฐานะนักศึกษาฝึกงานด้าน Data Engineering ก่อนได้รับการบรรจุเป็น Data Engineer เต็มเวลา หน้าที่หลักของผมคือพัฒนาและดูแลระบบ Data Pipeline สำหรับข้อมูลทางการเงินและข้อมูลสุขภาพขนาดใหญ่ให้กับโรงพยาบาล",
             "งานประจำวันคือออกแบบกระบวนการ ETL/ELT ที่ดึงข้อมูลจากระบบต้นทางหลายแหล่ง และแปลง (Transformation) ให้เป็นชุดข้อมูลที่สะอาดและมีโครงสร้างที่ดี พร้อมสำหรับการวิเคราะห์ปลายทาง โดยใช้ SQL และ Dataform บน Google Cloud Platform เป็นหลัก เพื่อให้การแปลงข้อมูลเป็นโมดูล จัดเวอร์ชันได้ และทดสอบได้",
@@ -718,7 +746,7 @@ export const content = {
           ],
         },
         "AI Engineer @ Greenline Synergy": {
-          org: "บริษัท Greenline Synergy จำกัด · พนักงานประจำ · ธ.ค. 2025 – ปัจจุบัน",
+          org: "บริษัท Greenline Synergy จำกัด · พนักงานประจำ · ธ.ค. 2025 – มิ.ย. 2026",
           paragraphs: [
             "ในตำแหน่งเดียวกันที่ Greenline Synergy ผมยังทำงานเป็น AI Engineer สร้างระบบ AI ที่ไปไกลกว่าการ Prompt ธรรมดา โดยที่ผ่านมาเป็นการสร้างในระดับ Prototype — เป็น Proof of Concept ที่แสดงให้เห็นว่าทำอะไรได้บ้าง มากกว่าจะเป็นผลิตภัณฑ์ที่ Deploy ใช้งานจริงเต็มรูปแบบ",
             "ผมออกแบบและส่งมอบระบบ Retrieval-Augmented Generation (RAG) ที่อ้างอิงจากเอกสารและฐานความรู้จริงของบริษัท เพื่อให้คำตอบมาจากแหล่งข้อมูลจริงไม่ใช่การเดาของโมเดล รวมถึงสร้าง Agent แบบ multi-tool / workflow ที่เรียกใช้ฟังก์ชันและเชื่อมต่อขั้นตอนต่าง ๆ เพื่อทำงานได้เองอัตโนมัติ — รวมถึงระบบอัตโนมัติที่สร้างด้วย n8n",

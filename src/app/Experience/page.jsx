@@ -19,6 +19,8 @@ const Page = () => {
   // from `t`. Each key matches an entry in t.experienceDetail.items.
   const items = t.experienceDetail.items;
   const visuals = {
+    // Current role at BDI — no photos/tools yet, just the write-up.
+    "Data Engineer @ BDI": {},
     "Data Engineer @ Greenline Synergy": {
       Tools: ["SQL", "Google Cloud Platform", "Dataform", "BigQuery"],
       picture: [GLS_Logo2, GLS_Vibe],
