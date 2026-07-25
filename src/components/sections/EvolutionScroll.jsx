@@ -243,10 +243,10 @@ export default function EvolutionScroll() {
         <p className="kicker mb-3 flex items-center gap-2">
           <span className="signal-dot" /> {A.eyebrow}
         </p>
-        <h2 className="font-display text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
+        <h2 className="font-display text-3xl font-bold tracking-tight text-ink sm:text-4xl">
           {A.lead}
         </h2>
-        <svg viewBox={`0 0 ${SCENE_W} ${SCENE_H}`} className="mt-8 w-full text-neutral-900" role="img" aria-label={A.lead}>
+        <svg viewBox={`0 0 ${SCENE_W} ${SCENE_H}`} className="mt-8 w-full text-ink" role="img" aria-label={A.lead}>
           <line x1={MARGIN * 0.5} y1={GROUND_Y} x2={SCENE_W - MARGIN * 0.5} y2={GROUND_Y} stroke="currentColor" strokeOpacity="0.15" strokeWidth="1.5" />
           {STAGES.map((s, i) => {
             const xf = i / (N - 1);
@@ -260,8 +260,8 @@ export default function EvolutionScroll() {
         <ol className="mt-6 grid gap-4 sm:grid-cols-5">
           {A.stages.map((s) => (
             <li key={s.name}>
-              <p className="font-display text-sm font-semibold text-neutral-900">{s.name}</p>
-              <p className="mt-0.5 text-xs italic text-neutral-400">{s.latin}</p>
+              <p className="font-display text-sm font-semibold text-ink">{s.name}</p>
+              <p className="mt-0.5 text-xs italic text-ink-3">{s.latin}</p>
             </li>
           ))}
         </ol>
@@ -278,7 +278,7 @@ export default function EvolutionScroll() {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             background:
-              "radial-gradient(70% 55% at 50% 96%, var(--accent-soft), transparent 60%), linear-gradient(to bottom, #ffffff, #fbfbfd 60%, #f4f5f8)",
+              "radial-gradient(70% 55% at 50% 96%, var(--spark-soft), transparent 60%), linear-gradient(to bottom, var(--paper), var(--surface) 55%, var(--surface-2))",
           }}
         />
 
@@ -288,35 +288,35 @@ export default function EvolutionScroll() {
             <p className="kicker flex items-center gap-2">
               <span className="signal-dot" /> {A.eyebrow}
             </p>
-            <p className="font-mono text-xs tabular-nums text-neutral-400">
+            <p className="font-mono text-xs tabular-nums text-ink-3">
               {String(pct).padStart(2, "0")}
-              <span className="text-neutral-300">/100</span>
+              <span className="text-ink-3">/100</span>
             </p>
           </div>
 
-          <h2 className="mt-5 max-w-2xl font-display text-4xl font-bold leading-[1.02] tracking-tight text-neutral-950 sm:text-6xl">
+          <h2 className="mt-5 max-w-2xl font-display text-4xl font-bold leading-[1.02] tracking-tight text-ink sm:text-6xl">
             {A.lead}
           </h2>
-          <p className="mt-4 max-w-md leading-relaxed text-neutral-500">{A.sub}</p>
+          <p className="mt-4 max-w-md leading-relaxed text-ink-2">{A.sub}</p>
         </div>
 
         {/* odometer + current stage — the narration that scrubs with scroll */}
         <div className="mx-auto mt-8 grid w-full max-w-6xl grid-cols-1 items-end gap-6 px-6 sm:grid-cols-[auto_1fr]">
           <div>
             <div className="flex items-baseline gap-3">
-              <span className="font-mono text-5xl font-medium tabular-nums leading-none tracking-tight text-neutral-950 sm:text-7xl">
+              <span className="font-mono text-5xl font-medium tabular-nums leading-none tracking-tight text-ink sm:text-7xl">
                 {yearsLabel ?? A.present}
               </span>
             </div>
-            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-400">
+            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink-3">
               {yearsLabel ? A.unit : " "}
             </p>
           </div>
 
           <div key={active} className="animate-fadeInUp sm:justify-self-end sm:text-right">
-            <p className="font-display text-2xl font-semibold text-neutral-950">{stage.name}</p>
-            <p className="mt-0.5 text-sm italic text-neutral-400">{stage.latin}</p>
-            <p className="mt-2 max-w-xs text-sm leading-relaxed text-neutral-500 sm:ml-auto">
+            <p className="font-display text-2xl font-semibold text-ink">{stage.name}</p>
+            <p className="mt-0.5 text-sm italic text-ink-3">{stage.latin}</p>
+            <p className="mt-2 max-w-xs text-sm leading-relaxed text-ink-2 sm:ml-auto">
               {stage.note}
             </p>
           </div>
@@ -326,7 +326,7 @@ export default function EvolutionScroll() {
         <div className="relative mt-auto w-full">
           <svg
             viewBox={`0 0 ${SCENE_W} ${SCENE_H}`}
-            className="block h-[42vh] w-full text-neutral-900"
+            className="block h-[42vh] w-full text-ink"
             preserveAspectRatio="xMidYMax meet"
             aria-hidden
           >
@@ -379,7 +379,7 @@ export default function EvolutionScroll() {
             className="pointer-events-none absolute inset-x-0 bottom-3 flex justify-center transition-opacity duration-500"
             style={{ opacity: p > 0.02 ? 0 : 1 }}
           >
-            <span className="animate-floaty font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-400">
+            <span className="animate-floaty font-mono text-[11px] uppercase tracking-[0.25em] text-ink-3">
               ↓ {A.scrollHint}
             </span>
           </div>

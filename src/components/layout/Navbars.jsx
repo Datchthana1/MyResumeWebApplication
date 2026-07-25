@@ -16,7 +16,6 @@ export default function Navbar() {
 
   const links = SECTIONS.map((id) => ({ id, label: t.nav[id] }));
 
-  // Solidify navbar after scrolling a bit
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
@@ -24,7 +23,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Highlight the section currently in view
   useEffect(() => {
     const sections = SECTIONS.map((id) => document.getElementById(id)).filter(
       Boolean
@@ -56,97 +54,99 @@ export default function Navbar() {
 
   return (
     <>
-    <nav
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-white/75 backdrop-blur-xl border-b border-black/8 shadow-[0_1px_20px_-12px_rgba(0,0,0,0.25)]"
-          : "bg-transparent border-b border-transparent"
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo — Sapien mark + wordmark */}
-          <Link href="/#home" className="shrink-0 group inline-flex items-center gap-2">
-            <SapienMark
-              size={26}
-              className="text-neutral-900 transition-transform duration-300 group-hover:-translate-y-0.5"
-            />
-            <span className="font-bold text-lg sm:text-xl tracking-tight text-neutral-800 group-hover:text-neutral-950 transition-colors">
-              Dechthana
-              <span style={{ color: "var(--accent)" }}>.</span>
-            </span>
-          </Link>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1">
-            {links.map((link) => (
-              <Link
-                key={link.id}
-                href={`/#${link.id}`}
-                className={`relative px-4 py-2 text-sm rounded-full transition-colors duration-300 ${
-                  active === link.id
-                    ? "text-neutral-950"
-                    : "text-neutral-500 hover:text-neutral-950"
-                }`}
-              >
-                <span className="relative z-10">{link.label}</span>
-                {active === link.id && (
-                  <span className="absolute inset-0 rounded-full bg-black/5" />
-                )}
-              </Link>
-            ))}
+      <nav
+        className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
+          scrolled
+            ? "border-b border-line bg-paper/80 backdrop-blur-xl shadow-[0_1px_24px_-14px_rgba(23,20,14,0.4)]"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            {/* Logo — Sapien mark + wordmark */}
             <Link
-              href="/chat"
-              className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-sm text-white transition-colors hover:bg-neutral-700"
+              href="/#home"
+              className="group inline-flex shrink-0 items-center gap-2"
             >
-              <span aria-hidden>✨</span>
-              {t.ui.askAi}
+              <SapienMark
+                size={26}
+                className="text-ink transition-transform duration-300 group-hover:-translate-y-0.5"
+              />
+              <span className="text-lg font-bold tracking-tight text-ink-2 transition-colors group-hover:text-ink sm:text-xl">
+                Dechthana
+                <span className="text-spark">.</span>
+              </span>
             </Link>
-            <LangToggle className="ml-2" />
-          </div>
 
-          {/* Mobile: toggle + menu button */}
-          <div className="md:hidden flex items-center gap-2">
-            <LangToggle />
-            <button
-              onClick={handleToggle}
-              aria-label="Toggle menu"
-              className="relative w-9 h-9 flex flex-col justify-center items-center"
-            >
-              <span
-                className={`block h-0.5 w-6 bg-neutral-800 rounded-full transition-all duration-300 ${
-                  isOpen ? "rotate-45 translate-y-0.75" : "-translate-y-1"
-                }`}
-              />
-              <span
-                className={`block h-0.5 w-6 bg-neutral-800 rounded-full transition-all duration-300 my-1 ${
-                  isOpen ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`block h-0.5 w-6 bg-neutral-800 rounded-full transition-all duration-300 ${
-                  isOpen ? "-rotate-45 -translate-y-1.75" : "translate-y-1"
-                }`}
-              />
-            </button>
+            {/* Desktop Menu */}
+            <div className="hidden items-center gap-1 md:flex">
+              {links.map((link) => (
+                <Link
+                  key={link.id}
+                  href={`/#${link.id}`}
+                  className={`relative rounded-full px-4 py-2 text-sm transition-colors duration-300 ${
+                    active === link.id
+                      ? "text-ink"
+                      : "text-ink-3 hover:text-ink"
+                  }`}
+                >
+                  <span className="relative z-10">{link.label}</span>
+                  {active === link.id && (
+                    <span className="absolute inset-0 rounded-full bg-ink/[0.06]" />
+                  )}
+                </Link>
+              ))}
+              <Link
+                href="/chat"
+                className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm text-paper transition-colors hover:bg-black"
+              >
+                <span aria-hidden>✦</span>
+                {t.ui.askAi}
+              </Link>
+              <LangToggle className="ml-2" />
+            </div>
+
+            {/* Mobile: toggle + menu button */}
+            <div className="flex items-center gap-2 md:hidden">
+              <LangToggle />
+              <button
+                onClick={handleToggle}
+                aria-label="Toggle menu"
+                className="relative flex h-9 w-9 flex-col items-center justify-center"
+              >
+                <span
+                  className={`block h-0.5 w-6 rounded-full bg-ink transition-all duration-300 ${
+                    isOpen ? "translate-y-0.75 rotate-45" : "-translate-y-1"
+                  }`}
+                />
+                <span
+                  className={`my-1 block h-0.5 w-6 rounded-full bg-ink transition-all duration-300 ${
+                    isOpen ? "opacity-0" : "opacity-100"
+                  }`}
+                />
+                <span
+                  className={`block h-0.5 w-6 rounded-full bg-ink transition-all duration-300 ${
+                    isOpen ? "-translate-y-1.75 -rotate-45" : "translate-y-1"
+                  }`}
+                />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
 
-      {/* Mobile Menu — rendered outside <nav> so its backdrop-blur isn't
-          neutralised by the nav's own backdrop-filter when scrolled */}
+      {/* Mobile Menu */}
       {isOpen && (
         <>
           <div
-            className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 ${
+            className={`fixed inset-0 z-40 bg-ink/20 backdrop-blur-sm ${
               closing ? "fade-out" : "fade-in"
             }`}
             onClick={handleClose}
           />
           <div className="mobile-menu-container">
             <div
-              className={`card rounded-3xl p-4 space-y-2 shadow-2xl ${
+              className={`card space-y-2 rounded-3xl p-4 shadow-2xl ${
                 closing ? "slide-up" : "slide-down"
               }`}
             >
@@ -155,10 +155,10 @@ export default function Navbar() {
                   key={link.id}
                   href={`/#${link.id}`}
                   onClick={handleClose}
-                  className={`flex items-center justify-center py-3 rounded-xl text-base font-medium transition-all duration-300 ${
+                  className={`flex items-center justify-center rounded-xl py-3 text-base font-medium transition-all duration-300 ${
                     active === link.id
-                      ? "bg-black/5 text-neutral-950"
-                      : "text-neutral-600 hover:bg-black/5 hover:text-neutral-950"
+                      ? "bg-ink/[0.06] text-ink"
+                      : "text-ink-2 hover:bg-ink/[0.05] hover:text-ink"
                   }`}
                 >
                   {link.label}
@@ -167,9 +167,9 @@ export default function Navbar() {
               <Link
                 href="/chat"
                 onClick={handleClose}
-                className="flex items-center justify-center gap-1.5 rounded-xl bg-neutral-900 py-3 text-base font-medium text-white transition-colors hover:bg-neutral-700"
+                className="flex items-center justify-center gap-1.5 rounded-xl bg-ink py-3 text-base font-medium text-paper transition-colors hover:bg-black"
               >
-                <span aria-hidden>✨</span>
+                <span aria-hidden>✦</span>
                 {t.ui.askAi}
               </Link>
             </div>

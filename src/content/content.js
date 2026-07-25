@@ -76,13 +76,14 @@ export const content = {
     },
     hero: {
       greeting: "Hello, my name is",
+      kicker: "Curiosity, evolving",
       firstName: "Dechthana",
       lastName: "Arunchaiya",
       positions: ["Data Engineer (AI Engineer)", "Data Scientist", "Web Developer"],
       tagline:
-        "Turning data into insight and ideas into products — passionate about data science, engineering, and building things for the web.",
+        "I turn raw signal into meaning — building the data pipelines and AI systems that make sense of it. Driven by a curiosity that never stops evolving.",
       evolutionCaption: "Curiosity is what evolved us",
-      scrollHint: "Scroll",
+      scrollHint: "Scroll to begin",
     },
     ascent: {
       eyebrow: "The Ascent",
@@ -126,8 +127,9 @@ export const content = {
       close: "So being smart was never about who holds the most. It's about who looks wider, connects faster, and turns the problem over to find the angle no one else saw.",
     },
     about: {
-      eyebrow: "01 / About",
+      eyebrow: "Who I am",
       title: "About Me",
+      blurb: "The short version — what I do, and what I'm chasing.",
       paragraphs: [
         "I'm a Data Engineer working on AI at Greenline Synergy, and a 2025 graduate in Innovation of Medical Informatics from Walailak University. I have a strong passion for data science, data engineering, and building AI systems that are accurate, reliable and genuinely useful.",
         "My goal is to become a proficient data scientist and researcher, and to contribute to impactful projects that make a difference.",
@@ -140,8 +142,9 @@ export const content = {
       ],
     },
     skills: {
-      eyebrow: "02 / Skills",
+      eyebrow: "Tools of the trade",
       title: "Tech & Tools",
+      blurb: "The languages, models, and platforms I build with every day.",
       groups: [
         { title: "Languages", items: programming },
         { title: "AI / LLM", items: aiTools },
@@ -151,8 +154,9 @@ export const content = {
       ],
     },
     experience: {
-      eyebrow: "03 / Experience",
+      eyebrow: "The work",
       title: "What I've Done",
+      blurb: "Where I've worked, and what I actually built there.",
       items: [
         {
           role: "Data Engineer",
@@ -326,21 +330,25 @@ export const content = {
       eqUnitKm: "km",
     },
     education: {
-      eyebrow: "04 / Education",
+      eyebrow: "Where I studied",
       title: "Education",
+      blurb: "My degree, and the honours I earned along the way.",
+      honourLabel: "Graduated with",
       items: [
         {
           degree: "B.Sc. in Innovation of Medical Informatics",
           school: "Walailak University",
           period: "2021 – 2025",
+          honour: "First Class Honours · GPA 3.91",
           detail:
-            "Graduated in 2025. Studied the intersection of healthcare, data and software — covering data science, data engineering and medical information systems.",
+            "Graduated in 2025 with First Class Honours (GPA 3.91). Studied the intersection of healthcare, data and software — covering data science, data engineering and medical information systems.",
         },
       ],
     },
     contact: {
-      eyebrow: "05 / Contact",
+      eyebrow: "Say hello",
       title: "Let's Connect",
+      blurb: "Hiring, collaborating, or just curious? Reach me here.",
       intro:
         "Have a project, opportunity, or just want to say hi? I'd love to hear from you.",
       emailFormalLabel: "Email (Formal)",
@@ -418,13 +426,14 @@ export const content = {
     },
     hero: {
       greeting: "สวัสดีครับ ผมชื่อ",
+      kicker: "ความอยากรู้ที่ยังวิวัฒน์",
       firstName: "เดชธนา",
       lastName: "อรัญชัยยะ",
       positions: ["Data Engineer (AI Engineer)", "Data Scientist", "Web Developer"],
       tagline:
-        "เปลี่ยนข้อมูลให้เป็นข้อมูลเชิงลึก และเปลี่ยนไอเดียให้เป็นผลิตภัณฑ์ — หลงใหลในงานด้าน Data Science, Data Engineering และการสร้างสรรค์งานบนเว็บ",
+        "ผมเปลี่ยน 'สัญญาณดิบ' ให้กลายเป็น 'ความหมาย' — ด้วยการสร้าง Data Pipeline และระบบ AI ที่ทำให้ข้อมูลเข้าใจได้ ขับเคลื่อนด้วยความอยากรู้ที่ไม่เคยหยุดวิวัฒน์",
       evolutionCaption: "ความอยากรู้คือสิ่งที่ทำให้มนุษย์วิวัฒนาการ",
-      scrollHint: "เลื่อนลง",
+      scrollHint: "เลื่อนเพื่อเริ่ม",
     },
     ascent: {
       eyebrow: "วิวัฒนาการ",
@@ -468,8 +477,9 @@ export const content = {
       close: "ผมเลยเชื่อว่าความเก่งไม่เคยวัดกันที่ใครมีสมองมากกว่า แต่วัดที่ใครหาความรู้ได้กว้างกว่า เชื่อมโยงได้เร็วกว่า และพลิกหามุมที่คนอื่นมองไม่เห็น",
     },
     about: {
-      eyebrow: "01 / เกี่ยวกับ",
+      eyebrow: "ผมเป็นใคร",
       title: "เกี่ยวกับผม",
+      blurb: "ฉบับย่อ — ผมทำอะไร และกำลังไล่ตามอะไรอยู่",
       paragraphs: [
         "ผมเป็น Data Engineer ที่ทำงานด้าน AI ที่ Greenline Synergy และเป็นบัณฑิตปี 2025 สาขานวัตกรรมสารสนเทศการแพทย์ จากมหาวิทยาลัยวลัยลักษณ์ ผมมีความหลงใหลอย่างมากในงานด้าน Data Science, Data Engineering และการสร้างระบบ AI ที่แม่นยำ น่าเชื่อถือ และใช้งานได้จริง",
         "เป้าหมายของผมคือการเป็น Data Scientist และนักวิจัยที่เชี่ยวชาญ และได้มีส่วนร่วมในโปรเจกต์ที่สร้างผลกระทบและความเปลี่ยนแปลงที่ดี",
@@ -482,8 +492,9 @@ export const content = {
       ],
     },
     skills: {
-      eyebrow: "02 / ทักษะ",
+      eyebrow: "เครื่องมือที่ใช้",
       title: "เทคโนโลยีและเครื่องมือ",
+      blurb: "ภาษา โมเดล และแพลตฟอร์มที่ผมใช้สร้างงานทุกวัน",
       groups: [
         { title: "ภาษาโปรแกรม", items: programming },
         { title: "AI / LLM", items: aiTools },
@@ -493,8 +504,9 @@ export const content = {
       ],
     },
     experience: {
-      eyebrow: "03 / ประสบการณ์",
+      eyebrow: "ผลงาน",
       title: "สิ่งที่ผมทำมา",
+      blurb: "ที่ที่ผมเคยทำงาน และสิ่งที่ผมสร้างขึ้นมาจริง ๆ",
       items: [
         {
           role: "Data Engineer",
@@ -662,21 +674,25 @@ export const content = {
       eqUnitKm: "กม.",
     },
     education: {
-      eyebrow: "04 / การศึกษา",
+      eyebrow: "ที่ที่ผมเรียน",
       title: "การศึกษา",
+      blurb: "ปริญญาของผม และเกียรตินิยมที่ได้มาระหว่างทาง",
+      honourLabel: "จบด้วย",
       items: [
         {
           degree: "วท.บ. นวัตกรรมสารสนเทศการแพทย์",
           school: "มหาวิทยาลัยวลัยลักษณ์",
           period: "2021 – 2025",
+          honour: "เกียรตินิยมอันดับหนึ่ง · GPA 3.91",
           detail:
-            "สำเร็จการศึกษาปี 2025 ศึกษาจุดบรรจบของการแพทย์ ข้อมูล และซอฟต์แวร์ — ครอบคลุมทั้ง Data Science, Data Engineering และระบบสารสนเทศทางการแพทย์",
+            "สำเร็จการศึกษาปี 2025 ด้วยเกียรตินิยมอันดับหนึ่ง (GPA 3.91) ศึกษาจุดบรรจบของการแพทย์ ข้อมูล และซอฟต์แวร์ — ครอบคลุมทั้ง Data Science, Data Engineering และระบบสารสนเทศทางการแพทย์",
         },
       ],
     },
     contact: {
-      eyebrow: "05 / ติดต่อ",
+      eyebrow: "ทักทายกัน",
       title: "มาเชื่อมต่อกัน",
+      blurb: "จ้างงาน ร่วมงาน หรือแค่อยากทัก? ติดต่อผมได้ที่นี่",
       intro:
         "มีโปรเจกต์ โอกาสในการทำงาน หรืออยากทักมาทักทาย? ผมยินดีรับฟังเสมอครับ",
       emailFormalLabel: "อีเมล (ทางการ)",

@@ -36,7 +36,7 @@ function Figure({ lean = 0, sw = 3.4, spark = false, className = "" }) {
         <path d="M19.6 18 L28 23" />
         <path d="M19.6 18 L11 21" />
         {spark && (
-          <g stroke="none" fill="var(--accent, #2f6bff)" className="sapien-spark">
+          <g stroke="none" fill="var(--accent, #d8541f)" className="sapien-spark">
             <path d="M27 1.5 l1.2 3 3 1.2 -3 1.2 -1.2 3 -1.2 -3 -3 -1.2 3 -1.2 z" />
           </g>
         )}
@@ -77,7 +77,7 @@ function Stick({ head, limbs, spark, sw = 3 }) {
       ))}
       <circle cx={head.cx} cy={head.cy} r={head.r} />
       {spark && (
-        <g className="sapien-spark" stroke="none" fill="var(--accent, #2f6bff)">
+        <g className="sapien-spark" stroke="none" fill="var(--accent, #d8541f)">
           <path
             d={`M${spark.x} ${spark.y} l1.2 3 3 1.2 -3 1.2 -1.2 3 -1.2 -3 -3 -1.2 3 -1.2 z`}
           />

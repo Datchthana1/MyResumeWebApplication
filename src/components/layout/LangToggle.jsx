@@ -11,7 +11,7 @@ export default function LangToggle({ className = "" }) {
 
   return (
     <div
-      className={`inline-flex items-center rounded-full border border-black/10 p-0.5 text-xs font-mono ${className}`}
+      className={`mono inline-flex items-center rounded-full border border-line p-0.5 text-xs ${className}`}
       role="group"
       aria-label="Language"
     >
@@ -23,10 +23,10 @@ export default function LangToggle({ className = "" }) {
             type="button"
             onClick={() => setLang(l.code)}
             aria-pressed={active}
-            className={`px-2.5 py-1 rounded-full transition-colors duration-300 ${
+            className={`rounded-full px-2.5 py-1 transition-colors duration-300 ${
               active
-                ? "bg-neutral-950 text-white"
-                : "text-neutral-500 hover:text-neutral-950"
+                ? "bg-ink text-paper"
+                : "text-ink-3 hover:text-ink"
             }`}
           >
             {l.label}
