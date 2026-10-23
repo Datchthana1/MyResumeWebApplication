@@ -20,6 +20,6 @@ export const FEATURES = [
 ];
 
 export const CONTACT = {
-  emailFormal: "Dechthana.ar@mail.wu.ac.th",
+  emailFormal: "dechthanaar@gmail.com",
   emailPersonal: "Kaiza941@gmail.com",
 };
