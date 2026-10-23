@@ -60,8 +60,8 @@ function sourceLabel(status, m) {
 
 // TMD-ish magnitude bands -> badge tone.
 function magnitudeTone(mag) {
-  if (mag == null) return "bg-neutral-100 text-neutral-400";
-  if (mag < 3) return "bg-neutral-100 text-neutral-600";
+  if (mag == null) return "bg-surface-2 text-ink-3";
+  if (mag < 3) return "bg-surface-2 text-ink-2";
   if (mag < 4) return "bg-sky-50 text-sky-700";
   if (mag < 5) return "bg-amber-50 text-amber-700";
   if (mag < 6) return "bg-orange-50 text-orange-700";
@@ -89,18 +89,18 @@ export function EarthquakeBoard({ lang, m }) {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-400">
+          <p className="font-mono text-xs uppercase tracking-[0.3em] text-ink-3">
             {m.eqEyebrow}
           </p>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl">
+          <h2 className="mt-2 text-2xl font-bold tracking-tight text-ink sm:text-3xl">
             {m.eqTitle}
           </h2>
-          <p className="mt-2 max-w-2xl text-neutral-500">{m.eqSubtitle}</p>
+          <p className="mt-2 max-w-2xl text-ink-3">{m.eqSubtitle}</p>
         </div>
         <button
           onClick={refresh}
           disabled={loading}
-          className="inline-flex items-center gap-2 self-start rounded-full border border-black/15 px-4 py-2 text-sm text-neutral-800 transition-all hover:border-black/40 hover:text-black disabled:opacity-50 sm:self-auto"
+          className="inline-flex items-center gap-2 self-start rounded-full border border-line-strong px-4 py-2 text-sm text-ink transition-all hover:border-line-strong hover:text-ink disabled:opacity-50 sm:self-auto"
         >
           <span className={loading ? "animate-spin" : ""}>↻</span>
           {loading ? m.loading : m.refresh}
@@ -112,15 +112,15 @@ export function EarthquakeBoard({ lang, m }) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <StatusDot tone={sourceStyle.tone} />
-            <span className="text-sm font-medium text-neutral-800">
+            <span className="text-sm font-medium text-ink">
               {loading && !data ? m.loading : sourceLabel(source?.status, m)}
             </span>
           </div>
-          <span className="font-mono text-xs text-neutral-400">
+          <span className="font-mono text-xs text-ink-3">
             {m.checkedLabel}: {lastFetched ? lastFetched.toLocaleTimeString() : "—"}
           </span>
         </div>
-        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-neutral-400">
+        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-ink-3">
           <span>
             {m.eqLastFetch}: {source?.last_fetch_at ?? "—"}
           </span>
@@ -130,16 +130,16 @@ export function EarthquakeBoard({ lang, m }) {
             </span>
           )}
         </div>
-        <p className="mt-3 text-xs text-neutral-400">{m.eqSourceExplain}</p>
+        <p className="mt-3 text-xs text-ink-3">{m.eqSourceExplain}</p>
       </div>
 
       {error ? (
         <div className="card mt-6 rounded-3xl p-10 text-center">
-          <p className="text-neutral-700">{m.eqError}</p>
-          <p className="mt-1 text-sm text-neutral-400">{error === "timeout" ? m.timeoutHint : error}</p>
+          <p className="text-ink-2">{m.eqError}</p>
+          <p className="mt-1 text-sm text-ink-3">{error === "timeout" ? m.timeoutHint : error}</p>
           <button
             onClick={refresh}
-            className="mt-5 rounded-full bg-neutral-950 px-5 py-2.5 text-sm font-medium text-white hover:bg-black"
+            className="mt-5 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper hover:bg-black"
           >
             {m.retry}
           </button>
@@ -165,7 +165,7 @@ export function EarthquakeBoard({ lang, m }) {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-black/8 text-xs font-mono uppercase tracking-wider text-neutral-400">
+                  <tr className="border-b border-line text-xs font-mono uppercase tracking-wider text-ink-3">
                     <th className="px-5 py-3 font-medium">{m.eqColDatetime}</th>
                     <th className="px-5 py-3 text-right font-medium">{m.eqColMagnitude}</th>
                     <th className="hidden px-5 py-3 text-right font-medium sm:table-cell">
@@ -175,16 +175,16 @@ export function EarthquakeBoard({ lang, m }) {
                     <th className="hidden px-5 py-3 font-medium md:table-cell">{m.eqColOrigin}</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-black/5">
+                <tbody className="divide-y divide-line">
                   {loading ? (
                     <tr>
-                      <td colSpan={5} className="px-5 py-12 text-center text-neutral-400">
+                      <td colSpan={5} className="px-5 py-12 text-center text-ink-3">
                         {m.loading}
                       </td>
                     </tr>
                   ) : events.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-5 py-12 text-center text-neutral-400">
+                      <td colSpan={5} className="px-5 py-12 text-center text-ink-3">
                         {m.eqNoResults}
                       </td>
                     </tr>
@@ -192,9 +192,9 @@ export function EarthquakeBoard({ lang, m }) {
                     events.map((ev, i) => (
                       <tr
                         key={`${ev.datetime_utc}-${ev.lat}-${ev.lon}-${i}`}
-                        className="transition-colors hover:bg-black/[0.03]"
+                        className="transition-colors hover:bg-surface-2"
                       >
-                        <td className="px-5 py-3 font-mono text-xs text-neutral-600">
+                        <td className="px-5 py-3 font-mono text-xs text-ink-2">
                           {ev.datetime_thai ?? ev.datetime_utc ?? "—"}
                         </td>
                         <td className="px-5 py-3 text-right">
@@ -204,10 +204,10 @@ export function EarthquakeBoard({ lang, m }) {
                             {ev.magnitude ?? "—"}
                           </span>
                         </td>
-                        <td className="hidden px-5 py-3 text-right tabular-nums text-neutral-500 sm:table-cell">
+                        <td className="hidden px-5 py-3 text-right tabular-nums text-ink-3 sm:table-cell">
                           {ev.depth_km != null ? `${ev.depth_km} ${m.eqUnitKm}` : "—"}
                         </td>
-                        <td className="max-w-xs truncate px-5 py-3 text-neutral-700">
+                        <td className="max-w-xs truncate px-5 py-3 text-ink-2">
                           {locationOf(ev, lang)}
                         </td>
                         <td className="hidden px-5 py-3 md:table-cell">
@@ -215,7 +215,7 @@ export function EarthquakeBoard({ lang, m }) {
                             className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
                               ev.is_domestic
                                 ? "bg-emerald-50 text-emerald-700"
-                                : "bg-neutral-100 text-neutral-500"
+                                : "bg-surface-2 text-ink-3"
                             }`}
                           >
                             {ev.is_domestic ? m.eqDomestic : m.eqForeign}

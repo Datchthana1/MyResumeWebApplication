@@ -4,7 +4,8 @@ import {
   IBM_Plex_Sans_Thai,
   IBM_Plex_Mono,
 } from "next/font/google";
-import Navbar from "@/components/layout/Navbars";
+import Navbar from "@/components/layout/Navbar";
+import SkipLink from "@/components/layout/SkipLink";
 import Footer from "@/components/layout/Footer";
 import ScrollProgress from "@/components/layout/ScrollProgress";
 import { LanguageProvider } from "@/providers/LanguageProvider";
@@ -59,9 +60,12 @@ export default function RootLayout({ children }) {
     >
       <body className="antialiased">
         <LanguageProvider>
+          <SkipLink />
           <ScrollProgress />
           <Navbar />
-          <main>{children}</main>
+          <main id="main" tabIndex={-1} className="focus:outline-none">
+            {children}
+          </main>
           <Footer />
         </LanguageProvider>
       </body>

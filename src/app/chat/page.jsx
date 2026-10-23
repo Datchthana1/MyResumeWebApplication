@@ -8,35 +8,20 @@
 // back to /chat always starts a fresh, empty session.
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import PageHeader from "@/components/ui/PageHeader";
+import Icon from "@/components/ui/Icon";
+import ChatMessage from "@/components/chat/ChatMessage";
+import ChatComposer from "@/components/chat/ChatComposer";
+import SuggestedPrompts from "@/components/chat/SuggestedPrompts";
 import { useLang } from "@/providers/LanguageProvider";
 
-// Tailwind classes for the markdown elements the bot tends to emit (bold,
-// bullet / numbered lists, links, inline code). react-markdown never renders
-// raw HTML by default, so this is safe for LLM output.
-const mdComponents = {
-  p: (props) => <p className="mb-2 last:mb-0" {...props} />,
-  ul: (props) => <ul className="mb-2 list-disc space-y-1 pl-5 last:mb-0" {...props} />,
-  ol: (props) => <ol className="mb-2 list-decimal space-y-1 pl-5 last:mb-0" {...props} />,
-  li: (props) => <li className="leading-relaxed" {...props} />,
-  strong: (props) => <strong className="font-semibold" {...props} />,
-  a: (props) => (
-    <a
-      className="underline underline-offset-2 hover:text-neutral-950"
-      target="_blank"
-      rel="noopener noreferrer"
-      {...props}
-    />
-  ),
-  code: (props) => (
-    <code className="rounded bg-black/10 px-1 py-0.5 text-[0.85em]" {...props} />
-  ),
-  h1: (props) => <h1 className="mb-2 text-base font-semibold" {...props} />,
-  h2: (props) => <h2 className="mb-2 text-base font-semibold" {...props} />,
-  h3: (props) => <h3 className="mb-1 font-semibold" {...props} />,
-};
+// Stable session id, so server-side logs can group a conversation. Regenerated
+// on "New chat". Not persisted anywhere client-side.
+function newSessionId() {
+  return typeof crypto !== "undefined" && crypto.randomUUID
+    ? crypto.randomUUID()
+    : `s-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
 
 export default function ChatPage() {
   const { t } = useLang();
@@ -48,13 +33,7 @@ export default function ChatPage() {
   const [error, setError] = useState("");
 
   const scrollRef = useRef(null);
-  // Stable id for this chat session, so server-side logs can group a
-  // conversation. Regenerated on "New chat". Not persisted anywhere client-side.
-  const sessionId = useRef(
-    (typeof crypto !== "undefined" && crypto.randomUUID
-      ? crypto.randomUUID()
-      : `s-${Date.now()}-${Math.random().toString(36).slice(2)}`)
-  );
+  const sessionId = useRef(newSessionId());
 
   // Keep the latest message in view.
   useEffect(() => {
@@ -64,9 +43,10 @@ export default function ChatPage() {
     });
   }, [messages, loading]);
 
-  async function sendMessage(e) {
-    e?.preventDefault();
-    const text = input.trim();
+  // Sends `raw` as a new user message. Used by the composer and by the
+  // suggested-prompt chips.
+  async function send(raw) {
+    const text = raw.trim();
     if (!text || loading) return;
 
     const next = [...messages, { role: "user", text }];
@@ -91,87 +71,69 @@ export default function ChatPage() {
     }
   }
 
+  function handleSubmit(e) {
+    e?.preventDefault();
+    send(input);
+  }
+
   function resetChat() {
     setMessages([]);
     setInput("");
     setError("");
-    sessionId.current =
-      typeof crypto !== "undefined" && crypto.randomUUID
-        ? crypto.randomUUID()
-        : `s-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    sessionId.current = newSessionId();
   }
+
+  const hasMessages = messages.length > 0;
 
   return (
     <div className="relative min-h-screen px-6 pb-16 pt-28">
       <div className="mx-auto flex max-w-3xl flex-col">
-        <div className="mb-6 flex items-center justify-between gap-4">
-          <Link
-            href="/#home"
-            className="inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-950"
-          >
-            <span aria-hidden>&larr;</span>
-            {t.ui.backToHome}
-          </Link>
-          {messages.length > 0 && (
-            <button
-              onClick={resetChat}
-              className="text-sm text-neutral-500 transition-colors hover:text-neutral-950"
-            >
-              {c.reset}
-            </button>
-          )}
-        </div>
-
-        <header className="mb-6">
-          <h1 className="text-2xl font-bold tracking-tight text-neutral-900 sm:text-3xl">
-            {c.title}
-          </h1>
-          <p className="mt-2 text-sm text-neutral-500">{c.subtitle}</p>
-        </header>
+        <PageHeader
+          backHref="/#home"
+          eyebrow={t.ui.askAi}
+          title={c.title}
+          blurb={c.subtitle}
+          actions={
+            hasMessages && (
+              <button type="button" onClick={resetChat} className="icon-btn px-4 py-2 text-sm">
+                {c.reset}
+              </button>
+            )
+          }
+        />
 
         {/* Conversation */}
         <div
           ref={scrollRef}
-          className="card flex h-[55vh] flex-col gap-4 overflow-y-auto rounded-3xl p-4 sm:p-6"
+          role="log"
+          aria-live="polite"
+          className={`card flex flex-col gap-4 overflow-y-auto rounded-3xl p-4 sm:p-6 ${
+            hasMessages || loading ? "h-[55vh]" : "min-h-[320px]"
+          }`}
         >
-          {messages.length === 0 && !loading && (
-            <div className="m-auto max-w-sm text-center text-sm text-neutral-400">
-              {c.empty}
+          {/* Empty state doubles as the starting point: one tap asks a question */}
+          {!hasMessages && !loading && (
+            <div className="m-auto flex max-w-lg flex-col items-center gap-6 py-6 text-center">
+              <span className="feature-icon">
+                <Icon name="spark" size={20} />
+              </span>
+              <p className="text-ink-2">{c.empty}</p>
+              <SuggestedPrompts onPick={(prompt) => send(prompt)} disabled={loading} />
             </div>
           )}
 
           {messages.map((m, i) => (
-            <div
-              key={i}
-              className={`flex ${
-                m.role === "user" ? "justify-end" : "justify-start"
-              }`}
-            >
-              <div
-                className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-                  m.role === "user"
-                    ? "whitespace-pre-wrap bg-neutral-900 text-white"
-                    : "bg-black/5 text-neutral-800"
-                }`}
-              >
-                {m.role === "user" ? (
-                  m.text
-                ) : (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-                    {m.text}
-                  </ReactMarkdown>
-                )}
-              </div>
-            </div>
+            <ChatMessage key={i} role={m.role} text={m.text} />
           ))}
 
           {loading && (
             <div className="flex justify-start">
-              <div className="rounded-2xl bg-black/5 px-4 py-3">
-                <span className="flex gap-1">
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-neutral-400 [animation-delay:-0.3s]" />
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-neutral-400 [animation-delay:-0.15s]" />
-                  <span className="h-2 w-2 animate-bounce rounded-full bg-neutral-400" />
+              <div className="rounded-2xl bg-surface-2 px-4 py-3">
+                <span className="flex items-center gap-1">
+                  <span className="sr-only">{c.thinking}</span>
+                  <span aria-hidden className="h-2 w-2 animate-bounce rounded-full bg-ink-3 [animation-delay:-0.3s]" />
+                  <span aria-hidden className="h-2 w-2 animate-bounce rounded-full bg-ink-3 [animation-delay:-0.15s]" />
+                  <span aria-hidden className="h-2 w-2 animate-bounce rounded-full bg-ink-3" />
                 </span>
               </div>
             </div>
@@ -179,31 +141,21 @@ export default function ChatPage() {
         </div>
 
         {error && (
-          <p className="mt-3 text-sm text-red-500">{error}</p>
+          <p role="alert" className="mt-3 text-sm text-spark-ink">
+            {error}
+          </p>
         )}
 
         {/* Composer */}
-        <form onSubmit={sendMessage} className="mt-4 flex items-end gap-2">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) sendMessage(e);
-            }}
-            rows={1}
-            placeholder={c.placeholder}
-            className="card max-h-40 min-h-[48px] flex-1 resize-none rounded-2xl px-4 py-3 text-sm text-neutral-900 outline-none placeholder:text-neutral-400 focus:border-neutral-400"
-          />
-          <button
-            type="submit"
-            disabled={loading || !input.trim()}
-            className="h-12 shrink-0 rounded-2xl bg-neutral-900 px-5 text-sm font-medium text-white transition-colors hover:bg-neutral-700 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            {c.send}
-          </button>
-        </form>
+        <ChatComposer
+          value={input}
+          onChange={setInput}
+          onSubmit={handleSubmit}
+          loading={loading}
+          placeholder={c.placeholder}
+        />
 
-        <p className="mt-3 text-center text-xs text-neutral-400">{c.notice}</p>
+        <p className="mt-3 text-center text-xs text-ink-3">{c.notice}</p>
       </div>
     </div>
   );

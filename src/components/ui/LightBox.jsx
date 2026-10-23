@@ -1,34 +1,77 @@
 "use client";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Icon from "@/components/ui/Icon";
+import { useLang } from "@/providers/LanguageProvider";
 
-export default function Lightbox({ lightbox, closing, closeLightbox }) {
-  if (!lightbox.isOpen) return null;
+// Matches the .animate-fadeOut / fadeOutOverlay duration in globals.css.
+const CLOSE_MS = 300;
+
+// Full-screen image viewer. Closes on Escape, backdrop click or the close
+// button; focus moves to the close button on open and returns to the opener
+// on close. `alt` describes the image for screen readers.
+export default function LightBox({ src, alt, onClose }) {
+  const { t } = useLang();
+  const closeRef = useRef(null);
+  const timerRef = useRef(null);
+  const [closing, setClosing] = useState(false);
+
+  const requestClose = useCallback(() => {
+    if (timerRef.current) return;
+    setClosing(true);
+    timerRef.current = setTimeout(onClose, CLOSE_MS);
+  }, [onClose]);
+
+  // Focus management and body scroll lock for the life of the dialog.
+  useEffect(() => {
+    const opener = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      clearTimeout(timerRef.current);
+      if (opener instanceof HTMLElement) opener.focus();
+    };
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") requestClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [requestClose]);
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center z-50 
-        bg-black/30 backdrop-blur-sm 
-        ${closing ? "animate-fadeOutOverlay" : "animate-fadeInOverlay"}`}
-      onClick={closeLightbox}
+      className={`fixed inset-0 z-[60] flex items-center justify-center bg-ink/30 p-4 backdrop-blur-sm ${
+        closing ? "animate-fadeOutOverlay" : "animate-fadeInOverlay"
+      }`}
+      onClick={requestClose}
     >
       <div
-        className={`relative max-w-3xl max-h-[90vh] 
-          ${closing ? "animate-fadeOut" : "animate-fadeInUp"}`}
+        role="dialog"
+        aria-modal="true"
+        aria-label={alt}
+        className={`relative max-h-[90vh] max-w-[min(90vw,48rem)] ${
+          closing ? "animate-fadeOut" : "animate-fadeInUp"
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         <Image
-          src={lightbox.src}
-          alt="Expanded image"
-          width={800}
-          height={600}
-          className="rounded-3xl object-contain"
+          src={src}
+          alt={alt}
+          className="block h-auto max-h-[85vh] w-auto max-w-full rounded-3xl bg-surface object-contain"
         />
         <button
-          className="absolute top-3 right-3 w-10 h-10 flex items-center justify-center rounded-full card text-neutral-800 text-2xl leading-none cursor-pointer hover:scale-110 transition-transform"
-          onClick={closeLightbox}
-          aria-label="Close"
+          ref={closeRef}
+          type="button"
+          onClick={requestClose}
+          aria-label={t.ui.close}
+          className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-line bg-surface text-ink-2 shadow transition-colors hover:text-ink"
         >
-          &times;
+          <Icon name="close" size={16} />
         </button>
       </div>
     </div>

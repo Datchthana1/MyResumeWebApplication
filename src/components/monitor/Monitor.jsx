@@ -12,7 +12,7 @@ import PipelineStatus from "@/components/monitor/PipelineStatus";
 const StationMap = dynamic(() => import("@/components/monitor/StationMap"), {
   ssr: false,
   loading: () => (
-    <div className="flex h-[460px] w-full items-center justify-center rounded-3xl bg-black/[0.03] text-sm text-neutral-400">
+    <div className="flex h-[460px] w-full items-center justify-center rounded-3xl bg-surface-2 text-sm text-ink-3">
       …
     </div>
   ),
@@ -101,7 +101,7 @@ function statusLabel(status, m) {
 
 export function StatCard({ value, label, tone = "neutral" }) {
   const tones = {
-    neutral: "text-neutral-950",
+    neutral: "text-ink",
     good: "text-emerald-600",
     warn: "text-amber-600",
     bad: "text-rose-600",
@@ -109,7 +109,7 @@ export function StatCard({ value, label, tone = "neutral" }) {
   return (
     <div className="card-thin rounded-2xl px-4 py-4 text-center sm:px-5">
       <div className={`text-3xl font-bold tabular-nums ${tones[tone]}`}>{value}</div>
-      <div className="mt-1 text-xs font-mono uppercase tracking-widest text-neutral-400">
+      <div className="mt-1 text-xs font-mono uppercase tracking-widest text-ink-3">
         {label}
       </div>
     </div>
@@ -120,13 +120,13 @@ function HealthBar({ ok, total }) {
   const pct = total > 0 ? Math.round((ok / total) * 100) : 0;
   return (
     <div className="space-y-1.5">
-      <div className="flex items-center justify-between text-xs font-mono text-neutral-400">
+      <div className="flex items-center justify-between text-xs font-mono text-ink-3">
         <span>{pct}%</span>
         <span className="tabular-nums">
           {ok} / {total}
         </span>
       </div>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-black/8">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-line">
         <div
           className="h-full rounded-full bg-emerald-500 transition-[width] duration-700"
           style={{ width: `${pct}%` }}
@@ -183,9 +183,9 @@ export function MonitorSummary() {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <StatusDot tone={status.tone} />
-          <span className="text-sm font-medium text-neutral-700">{status.label}</span>
+          <span className="text-sm font-medium text-ink-2">{status.label}</span>
         </div>
-        <span className="font-mono text-xs text-neutral-400">
+        <span className="font-mono text-xs text-ink-3">
           {m.snapshotLabel}: {data?.snapshot_at ?? "—"}
         </span>
       </div>
@@ -203,9 +203,9 @@ export function MonitorSummary() {
       )}
 
       {error ? (
-        <div className="mt-6 text-sm text-neutral-500">
+        <div className="mt-6 text-sm text-ink-3">
           {m.error}{" "}
-          <button onClick={refresh} className="underline underline-offset-4 hover:text-neutral-900">
+          <button onClick={refresh} className="underline underline-offset-4 hover:text-ink">
             {m.retry}
           </button>
         </div>
@@ -236,12 +236,12 @@ export function MonitorSummary() {
       <div className="mt-7 flex items-center justify-between">
         <Link
           href="/monitor"
-          className="inline-flex items-center gap-2 text-neutral-950 transition-all hover:gap-3 hover:text-black"
+          className="inline-flex items-center gap-2 text-ink transition-all hover:gap-3 hover:text-ink"
         >
           {m.viewAll}
           <span aria-hidden>&rarr;</span>
         </Link>
-        <span className="font-mono text-[11px] text-neutral-400">{m.autoHourly}</span>
+        <span className="font-mono text-[11px] text-ink-3">{m.autoHourly}</span>
       </div>
     </div>
   );
@@ -289,29 +289,9 @@ export function MonitorBoard() {
 
   return (
     <div className="font-sans">
-      {/* Header */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[0.3em] text-neutral-400">
-            {m.eyebrow}
-          </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl">
-            {m.title}
-          </h1>
-          <p className="mt-2 max-w-2xl text-neutral-500">{m.subtitle}</p>
-        </div>
-        <button
-          onClick={refresh}
-          disabled={loading}
-          className="inline-flex items-center gap-2 self-start rounded-full border border-black/15 px-4 py-2 text-sm text-neutral-800 transition-all hover:border-black/40 hover:text-black disabled:opacity-50 sm:self-auto"
-        >
-          <span className={loading ? "animate-spin" : ""}>↻</span>
-          {loading ? m.loading : m.refresh}
-        </button>
-      </div>
-
-      {/* Meta line */}
-      <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-xs text-neutral-400">
+      {/* Meta line + refresh. The page title lives in the page's PageHeader. */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-1 font-mono text-xs text-ink-3">
         <span className="inline-flex items-center gap-2">
           <StatusDot tone={status.tone} />
           {status.label}
@@ -328,6 +308,15 @@ export function MonitorBoard() {
           </span>
         )}
       </div>
+        <button
+          onClick={refresh}
+          disabled={loading}
+          className="inline-flex items-center gap-2 self-start rounded-full border border-line-strong px-4 py-2 text-sm text-ink transition-all hover:border-ink hover:text-ink disabled:opacity-50 sm:self-auto"
+        >
+          <span className={loading ? "animate-spin" : ""}>↻</span>
+          {loading ? m.loading : m.refresh}
+        </button>
+      </div>
 
       {/* Cold-start explainer — why values can read null / — on first load.
           The monitor API sleeps on the free tier; the first request "boosts"
@@ -342,10 +331,10 @@ export function MonitorBoard() {
             style={{ background: "var(--accent)" }}
           />
           <div className="text-sm">
-            <p className="font-semibold text-neutral-800">{m.coldStartTitle}</p>
-            <p className="mt-1 text-neutral-600">{m.coldStartBody}</p>
+            <p className="font-semibold text-ink">{m.coldStartTitle}</p>
+            <p className="mt-1 text-ink-2">{m.coldStartBody}</p>
             {loading && (
-              <p className="mt-1 font-mono text-xs text-neutral-500">{m.coldStartWaking}</p>
+              <p className="mt-1 font-mono text-xs text-ink-3">{m.coldStartWaking}</p>
             )}
           </div>
         </div>
@@ -368,13 +357,13 @@ export function MonitorBoard() {
 
       {error ? (
         <div className="card mt-8 rounded-3xl p-10 text-center">
-          <p className="text-neutral-700">{m.error}</p>
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="text-ink-2">{m.error}</p>
+          <p className="mt-1 text-sm text-ink-3">
             {error === "timeout" ? m.timeoutHint : error}
           </p>
           <button
             onClick={refresh}
-            className="mt-5 rounded-full bg-neutral-950 px-5 py-2.5 text-sm font-medium text-white hover:bg-black"
+            className="mt-5 rounded-full bg-ink px-5 py-2.5 text-sm font-medium text-paper hover:bg-black"
           >
             {m.retry}
           </button>
@@ -412,8 +401,8 @@ export function MonitorBoard() {
           {!loading && data && (
             <div className="mt-8">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-                <h2 className="text-lg font-semibold text-neutral-950">{m.mapTitle}</h2>
-                <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-500">
+                <h2 className="text-lg font-semibold text-ink">{m.mapTitle}</h2>
+                <div className="flex flex-wrap items-center gap-4 text-xs text-ink-3">
                   <span className="inline-flex items-center gap-1.5">
                     <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
                     {m.statusOk}
@@ -431,7 +420,7 @@ export function MonitorBoard() {
               <div className="card overflow-hidden rounded-3xl p-1.5">
                 <StationMap stations={data.stations} lang={lang} m={m} onSelect={setSelected} />
               </div>
-              <p className="mt-2 text-xs text-neutral-400">{m.mapHint}</p>
+              <p className="mt-2 text-xs text-ink-3">{m.mapHint}</p>
             </div>
           )}
 
@@ -444,8 +433,8 @@ export function MonitorBoard() {
                   onClick={() => setFilter(f.id)}
                   className={`rounded-full px-4 py-1.5 text-sm transition-colors ${
                     filter === f.id
-                      ? "bg-neutral-950 text-white"
-                      : "card-thin text-neutral-600 hover:text-neutral-950"
+                      ? "bg-ink text-paper"
+                      : "card-thin text-ink-2 hover:text-ink"
                   }`}
                 >
                   {f.label}
@@ -460,7 +449,7 @@ export function MonitorBoard() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={m.searchPlaceholder}
-              className="w-full rounded-full border border-black/10 bg-white px-4 py-2 text-sm text-neutral-800 outline-none transition-colors placeholder:text-neutral-400 focus:border-black/30 sm:w-64"
+              className="w-full rounded-full border border-line bg-surface px-4 py-2 text-sm text-ink outline-none transition-colors placeholder:text-ink-3 focus:border-line-strong sm:w-64"
             />
           </div>
 
@@ -469,7 +458,7 @@ export function MonitorBoard() {
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-black/8 text-xs font-mono uppercase tracking-wider text-neutral-400">
+                  <tr className="border-b border-line text-xs font-mono uppercase tracking-wider text-ink-3">
                     <th className="px-5 py-3 font-medium">{m.colStatus}</th>
                     <th className="px-5 py-3 font-medium">{m.colStation}</th>
                     <th className="hidden px-5 py-3 font-medium sm:table-cell">{m.colArea}</th>
@@ -480,16 +469,16 @@ export function MonitorBoard() {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-black/5">
+                <tbody className="divide-y divide-line">
                   {loading ? (
                     <tr>
-                      <td colSpan={6} className="px-5 py-12 text-center text-neutral-400">
+                      <td colSpan={6} className="px-5 py-12 text-center text-ink-3">
                         {m.loading}
                       </td>
                     </tr>
                   ) : filtered.length === 0 ? (
                     <tr>
-                      <td colSpan={6} className="px-5 py-12 text-center text-neutral-400">
+                      <td colSpan={6} className="px-5 py-12 text-center text-ink-3">
                         {m.noResults}
                       </td>
                     </tr>
@@ -500,7 +489,7 @@ export function MonitorBoard() {
                         <tr
                           key={s.station_id}
                           onClick={() => setSelected(s)}
-                          className={`cursor-pointer transition-colors hover:bg-black/[0.03] ${st.row}`}
+                          className={`cursor-pointer transition-colors hover:bg-surface-2 ${st.row}`}
                         >
                           <td className="px-5 py-3">
                             <span
@@ -510,19 +499,19 @@ export function MonitorBoard() {
                               {statusLabel(s.status, m)}
                             </span>
                           </td>
-                          <td className="px-5 py-3 font-mono text-xs text-neutral-600">
+                          <td className="px-5 py-3 font-mono text-xs text-ink-2">
                             {s.station_id}
                           </td>
-                          <td className="hidden max-w-xs truncate px-5 py-3 text-neutral-700 sm:table-cell">
+                          <td className="hidden max-w-xs truncate px-5 py-3 text-ink-2 sm:table-cell">
                             {areaOf(s)}
                           </td>
-                          <td className="hidden px-5 py-3 text-neutral-500 md:table-cell">
+                          <td className="hidden px-5 py-3 text-ink-3 md:table-cell">
                             {s.station_type || "—"}
                           </td>
-                          <td className="px-5 py-3 text-right tabular-nums text-neutral-700">
+                          <td className="px-5 py-3 text-right tabular-nums text-ink-2">
                             {s.last_aqi ?? "—"}
                           </td>
-                          <td className="hidden px-5 py-3 text-right font-mono text-xs text-neutral-400 lg:table-cell">
+                          <td className="hidden px-5 py-3 text-right font-mono text-xs text-ink-3 lg:table-cell">
                             {s.last_recorded_at ?? "—"}
                           </td>
                         </tr>
@@ -534,7 +523,7 @@ export function MonitorBoard() {
             </div>
           </div>
 
-          <p className="mt-4 text-xs text-neutral-400">{m.howItWorks}</p>
+          <p className="mt-4 text-xs text-ink-3">{m.howItWorks}</p>
         </>
       )}
 

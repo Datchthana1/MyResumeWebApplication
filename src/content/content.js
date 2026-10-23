@@ -62,6 +62,39 @@ export const content = {
       seeDetailedExperience: "See detailed experience with photos",
       backToHome: "Back to home",
       askAi: "Ask AI",
+      liveMonitor: "Live monitor",
+      skipToContent: "Skip to content",
+      openMenu: "Open menu",
+      closeMenu: "Close menu",
+      onThisPage: "On this page",
+      explore: "Explore",
+      copy: "Copy",
+      copied: "Copied",
+      close: "Close",
+      openImage: "Open image",
+    },
+    explore: {
+      eyebrow: "Try it yourself",
+      title: "Things you can do here",
+      blurb:
+        "This site is more than a résumé — a few pieces of it are live systems I built.",
+      items: {
+        chat: {
+          title: "Ask the AI about me",
+          desc: "A chatbot that answers questions about my work, skills and projects — in English or Thai.",
+          cta: "Start a chat",
+        },
+        monitor: {
+          title: "Watch a live pipeline",
+          desc: "Hourly health of my Air Station data pipeline, plus a real-time earthquake feed.",
+          cta: "Open the monitor",
+        },
+        experience: {
+          title: "Read the full story",
+          desc: "Every role in detail, with photos from the office and the competition floor.",
+          cta: "See experience",
+        },
+      },
     },
     chat: {
       title: "Ask me anything",
@@ -73,6 +106,16 @@ export const content = {
       reset: "New chat",
       notice: "Powered by Ollama (gpt-oss) · history is not stored.",
       error: "Something went wrong. Please try again.",
+      suggestionsLabel: "Try asking",
+      suggestions: [
+        "What do you do at BDI?",
+        "What AI systems have you built?",
+        "Tell me about your thesis project",
+        "Which tools do you use for data engineering?",
+      ],
+      you: "You",
+      assistant: "Assistant",
+      thinking: "Thinking…",
     },
     hero: {
       greeting: "Hello, my name is",
@@ -426,6 +469,39 @@ export const content = {
       seeDetailedExperience: "ดูประสบการณ์แบบละเอียดพร้อมรูปภาพ",
       backToHome: "กลับหน้าแรก",
       askAi: "ถาม AI",
+      liveMonitor: "มอนิเตอร์สด",
+      skipToContent: "ข้ามไปยังเนื้อหา",
+      openMenu: "เปิดเมนู",
+      closeMenu: "ปิดเมนู",
+      onThisPage: "ในหน้านี้",
+      explore: "สำรวจ",
+      copy: "คัดลอก",
+      copied: "คัดลอกแล้ว",
+      close: "ปิด",
+      openImage: "เปิดรูปภาพ",
+    },
+    explore: {
+      eyebrow: "ลองใช้ด้วยตัวเอง",
+      title: "สิ่งที่คุณทำได้ในเว็บนี้",
+      blurb:
+        "เว็บนี้ไม่ใช่แค่เรซูเม่ — บางส่วนคือระบบที่ทำงานจริงซึ่งผมสร้างขึ้นเอง",
+      items: {
+        chat: {
+          title: "ถาม AI เกี่ยวกับผม",
+          desc: "แชตบอตที่ตอบคำถามเกี่ยวกับงาน ทักษะ และโปรเจกต์ของผม ได้ทั้งภาษาไทยและอังกฤษ",
+          cta: "เริ่มแชต",
+        },
+        monitor: {
+          title: "ดูไปป์ไลน์แบบสด",
+          desc: "สถานะรายชั่วโมงของไปป์ไลน์ข้อมูล Air Station พร้อมฟีดแผ่นดินไหวแบบเรียลไทม์",
+          cta: "เปิดมอนิเตอร์",
+        },
+        experience: {
+          title: "อ่านเรื่องราวแบบเต็ม",
+          desc: "ทุกบทบาทแบบละเอียด พร้อมรูปภาพจากที่ทำงานและเวทีการแข่งขัน",
+          cta: "ดูประสบการณ์",
+        },
+      },
     },
     chat: {
       title: "ถามผมได้ทุกเรื่อง",
@@ -437,6 +513,16 @@ export const content = {
       reset: "เริ่มแชตใหม่",
       notice: "ขับเคลื่อนด้วย Ollama (gpt-oss) · ไม่มีการเก็บประวัติ",
       error: "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง",
+      suggestionsLabel: "ลองถามดู",
+      suggestions: [
+        "คุณทำอะไรที่ BDI?",
+        "คุณเคยสร้างระบบ AI อะไรบ้าง?",
+        "เล่าเรื่องโปรเจกต์ธีสิสให้ฟังหน่อย",
+        "คุณใช้เครื่องมืออะไรในงาน Data Engineering?",
+      ],
+      you: "คุณ",
+      assistant: "ผู้ช่วย",
+      thinking: "กำลังคิด…",
     },
     hero: {
       greeting: "สวัสดีครับ ผมชื่อ",

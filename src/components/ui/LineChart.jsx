@@ -31,7 +31,7 @@ export default function LineChart({ points = [], color = "#10b981", unit = "", h
   if (points.length === 0 || vals.length === 0) {
     return (
       <div
-        className="flex items-center justify-center rounded-2xl bg-black/[0.02] text-sm text-neutral-400"
+        className="flex items-center justify-center rounded-2xl bg-surface-2 text-sm text-ink-3"
         style={{ height }}
       >
         —
@@ -151,13 +151,13 @@ export default function LineChart({ points = [], color = "#10b981", unit = "", h
       {/* tooltip */}
       {hover != null && points[hover]?.value != null && (
         <div
-          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-lg bg-neutral-900 px-2.5 py-1.5 text-xs text-white shadow-lg"
+          className="pointer-events-none absolute -translate-x-1/2 -translate-y-full rounded-lg bg-ink px-2.5 py-1.5 text-xs text-paper shadow-lg"
           style={{
             left: `${(xAt(hover) / W) * 100}%`,
             top: `${(yAt(points[hover].value) / H) * 100}%`,
           }}
         >
-          <div className="font-mono text-[10px] text-white/60">{points[hover].label}</div>
+          <div className="font-mono text-[10px] text-paper/60">{points[hover].label}</div>
           <div className="font-semibold tabular-nums">
             {fmt(points[hover].value)}
             {unit ? ` ${unit}` : ""}

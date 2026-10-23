@@ -1,8 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { MonitorBoard } from "@/components/monitor/Monitor";
 import { EarthquakeBoard } from "@/components/monitor/Earthquake";
+import PageHeader from "@/components/ui/PageHeader";
+import Waypoint from "@/components/ui/Waypoint";
 import { useLang } from "@/providers/LanguageProvider";
 
 export default function MonitorPage() {
@@ -11,17 +12,16 @@ export default function MonitorPage() {
   return (
     <div className="relative min-h-screen px-6 pb-16 pt-28">
       <div className="mx-auto max-w-5xl">
-        <Link
-          href="/#monitor"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-neutral-500 transition-colors hover:text-neutral-950"
-        >
-          <span aria-hidden>&larr;</span>
-          {t.ui.backToHome}
-        </Link>
+        <PageHeader
+          backHref="/#monitor"
+          eyebrow={t.monitor.eyebrow}
+          title={t.monitor.title}
+          blurb={t.monitor.subtitle}
+        />
 
         <MonitorBoard />
 
-        <div className="my-14 border-t border-black/8" />
+        <Waypoint className="my-14" />
 
         <EarthquakeBoard lang={lang} m={t.monitor} />
       </div>

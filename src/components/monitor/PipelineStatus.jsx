@@ -15,8 +15,8 @@ const STATE_STYLE = {
   up_for_retry: { dot: "bg-amber-500", ring: "ring-amber-400", text: "text-amber-600", live: false },
   queued: { dot: "bg-amber-400", ring: "ring-amber-300", text: "text-amber-600", live: false },
   scheduled: { dot: "bg-amber-400", ring: "ring-amber-300", text: "text-amber-600", live: false },
-  none: { dot: "bg-neutral-300", ring: "ring-neutral-200", text: "text-neutral-400", live: false },
-  unconfigured: { dot: "bg-neutral-300", ring: "ring-neutral-200", text: "text-neutral-400", live: false },
+  none: { dot: "bg-ink-3", ring: "ring-line", text: "text-ink-3", live: false },
+  unconfigured: { dot: "bg-ink-3", ring: "ring-line", text: "text-ink-3", live: false },
   unauthorized: { dot: "bg-rose-400", ring: "ring-rose-300", text: "text-rose-500", live: false },
   error: { dot: "bg-rose-400", ring: "ring-rose-300", text: "text-rose-500", live: false },
 };
@@ -67,17 +67,17 @@ export default function PipelineStatus({ m }) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-neutral-400">
+            <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink-3">
               {m.pipelineEyebrow}
             </span>
           </div>
-          <h2 className="mt-1 text-lg font-semibold text-neutral-950">{m.pipelineTitle}</h2>
-          <p className="mt-0.5 text-sm text-neutral-500">{m.pipelineSubtitle}</p>
+          <h2 className="mt-1 text-lg font-semibold text-ink">{m.pipelineTitle}</h2>
+          <p className="mt-0.5 text-sm text-ink-3">{m.pipelineSubtitle}</p>
         </div>
         <button
           onClick={load}
           disabled={loading}
-          className="inline-flex items-center gap-2 rounded-full border border-black/15 px-3 py-1.5 text-xs text-neutral-700 transition-all hover:border-black/40 hover:text-black disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-full border border-line-strong px-3 py-1.5 text-xs text-ink-2 transition-all hover:border-line-strong hover:text-ink disabled:opacity-50"
         >
           <span className={loading ? "animate-spin" : ""}>↻</span>
           {loading ? m.loading : m.refresh}
@@ -85,21 +85,21 @@ export default function PipelineStatus({ m }) {
       </div>
 
       {/* Headline state */}
-      <div className="mt-4 flex items-center gap-2.5 rounded-2xl bg-black/[0.03] px-4 py-3">
+      <div className="mt-4 flex items-center gap-2.5 rounded-2xl bg-surface-2 px-4 py-3">
         {active ? (
           <>
             <span className="relative inline-flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-accent" />
             </span>
-            <span className="text-sm font-medium text-neutral-800">
+            <span className="text-sm font-medium text-ink">
               {(m.pipelineActive || "{stage} is running now").replace("{stage}", active)}
             </span>
           </>
         ) : (
           <>
-            <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
-            <span className="text-sm text-neutral-500">
+            <span className="h-2.5 w-2.5 rounded-full bg-ink-3" />
+            <span className="text-sm text-ink-3">
               {data && !data.configured ? m.pipelineUnconfigured : m.pipelineIdle}
             </span>
           </>
@@ -122,7 +122,7 @@ export default function PipelineStatus({ m }) {
                 >
                   <span
                     className={`relative flex h-11 w-11 items-center justify-center rounded-full ring-2 transition-all ${sty.ring} ${
-                      isSel ? "scale-110 bg-white shadow-md" : "bg-white"
+                      isSel ? "scale-110 bg-surface shadow-md" : "bg-surface"
                     }`}
                   >
                     {sty.live && (
@@ -133,19 +133,19 @@ export default function PipelineStatus({ m }) {
                   <span className="flex flex-col items-center">
                     <span
                       className={`font-mono text-xs font-semibold ${
-                        isActive ? "text-accent" : "text-neutral-700"
+                        isActive ? "text-accent" : "text-ink-2"
                       }`}
                     >
                       {st.id}
                     </span>
-                    <span className="hidden max-w-[8rem] text-center text-[11px] leading-tight text-neutral-400 sm:block">
+                    <span className="hidden max-w-[8rem] text-center text-[11px] leading-tight text-ink-3 sm:block">
                       {st.name}
                     </span>
                   </span>
                 </button>
                 {/* connector */}
                 {i < stages.length - 1 && (
-                  <span className="mx-1 -mt-7 h-0.5 flex-1 rounded-full bg-gradient-to-r from-black/15 to-black/5 sm:mx-2" />
+                  <span className="mx-1 -mt-7 h-0.5 flex-1 rounded-full bg-gradient-to-r from-line-strong to-line sm:mx-2" />
                 )}
               </div>
             );
@@ -154,25 +154,25 @@ export default function PipelineStatus({ m }) {
 
         {/* Selected stage detail */}
         {stages[selected] && (
-          <div className="mt-6 rounded-2xl border border-black/8 p-4">
+          <div className="mt-6 rounded-2xl border border-line p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-semibold text-neutral-900">
+                <span className="font-mono text-sm font-semibold text-ink">
                   {stages[selected].id}
                 </span>
-                <span className="text-sm text-neutral-500">· {stages[selected].name}</span>
+                <span className="text-sm text-ink-3">· {stages[selected].name}</span>
               </div>
               <span
-                className={`inline-flex items-center gap-1.5 rounded-full bg-black/[0.04] px-2.5 py-0.5 text-xs font-medium ${styleFor(stages[selected].state).text}`}
+                className={`inline-flex items-center gap-1.5 rounded-full bg-surface-2 px-2.5 py-0.5 text-xs font-medium ${styleFor(stages[selected].state).text}`}
               >
                 <span className={`h-1.5 w-1.5 rounded-full ${styleFor(stages[selected].state).dot}`} />
                 {stateLabel(stages[selected].state)}
               </span>
             </div>
             {stages[selected].description && (
-              <p className="mt-2 text-sm text-neutral-600">{stages[selected].description}</p>
+              <p className="mt-2 text-sm text-ink-2">{stages[selected].description}</p>
             )}
-            <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-neutral-400">
+            <div className="mt-3 flex flex-wrap gap-x-6 gap-y-1 font-mono text-xs text-ink-3">
               {stages[selected].dag_id && <span>dag: {stages[selected].dag_id}</span>}
               {stages[selected].last_run_at && (
                 <span>
@@ -185,7 +185,7 @@ export default function PipelineStatus({ m }) {
       </div>
 
       {/* Footnotes */}
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-neutral-400">
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-ink-3">
         <span>{m.pipelineClickHint}</span>
         {error ? (
           <span className="text-rose-500">{error === "timeout" ? m.timeoutHint : m.error}</span>
